@@ -125,6 +125,7 @@ export default {
 
     this.axios.post(url, formData).then((res) => {
       this.info = "后端支棱起来了！！！";
+      console.log(res);
     });
   },
   methods: {
