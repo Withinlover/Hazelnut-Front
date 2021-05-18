@@ -3,7 +3,7 @@
     <div id="nav">
       <div id="nav-right">
         <router-link to="/" class="nav-right-item">
-          <img src="./assets/logo.png" />
+          <img src="./assets/hazelnut.png" />
         </router-link>
         <router-link to="/commodity" class="nav-right-item">商品</router-link>
         <router-link to="/demand" class="nav-right-item">需求</router-link>
@@ -63,11 +63,12 @@
 
 #nav {
   position: relative;
-  height: 2.5rem;
-  padding: 0.7rem 3rem;
-  border-bottom: solid #2c3e50;
+  height: 3rem;
+  padding: 0.1rem 0 0 8rem;
+  border-bottom: 0.1em outset #2c3e50;
   text-align: left;
-  background-color: aliceblue;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 2px rgba(0, 0, 0, 0.1);
 }
 
 #nav a {
