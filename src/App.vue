@@ -42,16 +42,18 @@
   position: relative;
   height: 3rem;
   padding: 0.1rem 0 0 8rem;
-  border-bottom: 0.1em outset #2c3e50;
+  border-bottom: 0.1em outset rgb(110, 91, 80);
   text-align: left;
+  color: rgb(110, 91, 80);
   background-color: rgb(255, 255, 255);
-  box-shadow: 0px 2px rgba(0, 0, 0, 0.1);
+
+  box-shadow: 0px 2px rgba(181, 158, 140, 0.2);
 }
 
 #nav a {
   font-weight: bold;
   text-decoration: none;
-  color: #2c3e50;
+  color: rgb(110, 91, 80);
   display: inline-block;
   font-size: 1.5rem;
   line-height: 2.5rem;
