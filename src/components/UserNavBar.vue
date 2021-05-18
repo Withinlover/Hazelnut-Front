@@ -9,6 +9,7 @@
       text-color="#ff9900"
       score-template="{value}">
     </el-rate>
+    
     <el-menu
       class="el-menu-vertical-demo"
       active-text-color="#B59E8C"
@@ -16,7 +17,7 @@
       router>
       <el-menu-item index="/user/info">
           <i class="el-icon-s-custom"></i>
-          <span>编辑资料</span>
+          <span>个人资料</span>
       </el-menu-item>
       <el-menu-item index="/user/released">
         <i class="el-icon-menu"></i>
