@@ -69,7 +69,7 @@
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: rgb(181, 158, 140);
 }
 
 #nav-right {
@@ -99,7 +99,7 @@
 .icon {
   width: 2em;
   height: 2em;
-  padding: 0.1em;
+  padding-left: 0.5em;
   /* vertical-align: -0.15em; */
   fill: currentColor;
   overflow: hidden;
