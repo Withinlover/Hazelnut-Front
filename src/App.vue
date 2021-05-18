@@ -9,6 +9,10 @@
         <router-link to="/demand" class="nav-right-item">需求</router-link>
       </div>
       <div id="nav-left">
+        <!-- <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-account"></use>
+        </svg> -->
+
         <svg
           t="1621301474411"
           class="nav-left-item"
@@ -117,6 +121,14 @@
 .nav-left-item {
   vertical-align: middle;
   margin: 0 1rem;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 </style>
 
