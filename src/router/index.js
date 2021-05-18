@@ -63,6 +63,18 @@ const routes = [{ // 登录注册页
         component: () =>
             import ('../views/UserHistory.vue')
     },
+    { // 用户 - 他人访问
+        path: '/user/watch',
+        name: 'UserWatch',
+        component: () =>
+            import ('../views/UserWatch.vue')
+    },
+    { // 管理员
+        path: '/admin',
+        name: 'Admin',
+        component: () =>
+            import ('../views/Admin.vue')
+    },
 ]
 
 const router = new VueRouter({
