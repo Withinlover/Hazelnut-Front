@@ -7,13 +7,17 @@ export default new Vuex.Store({
     state() {
         return {
             isLogin: false,
-            token: "",
+            token: ''
         }
     },
     mutations: {
         setToken(state, token) {
-            this.isLogin = true;
-            this.token = token;
+            state.isLogin = true
+            state.token = token
+        },
+        clearToken(state){
+            state.isLogin=false
+            state.token=''
         }
     },
     actions: {},
