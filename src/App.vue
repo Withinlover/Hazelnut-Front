@@ -125,7 +125,12 @@ export default {
     formData.append("username", "aaa");
     formData.append("password", "111");
 
-    this.axios.post(url, formData).then((res) => {
+    var data = {
+      "username" : "aaa",
+      "password" : "111"
+    }
+
+    this.axios.post(url, data).then((res) => {
       this.info = "后端支棱起来了！！！";
       console.log(res);
     });
