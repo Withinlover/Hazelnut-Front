@@ -5,17 +5,20 @@
         <div id="user-page-info">
           <div id="follow">
             <router-link to="/user/follow">
-              <i class="el-icon-user-solid">我的关注</i>
+              <i class="el-icon-user-solid menu-item"></i>
+              <span class="menu-text menu-item">关注</span>
             </router-link>
           </div>
           <div id="favorites">
             <router-link to="/user/favorites">
-              <i class="el-icon-s-goods">我的收藏</i>
+              <i class="el-icon-s-goods menu-item"></i>
+              <span class="menu-text menu-item">收藏</span>
             </router-link>
           </div>
           <div id="credit">
             <router-link to="/user/history">
-              <i class="el-icon-star-on">我的信用</i>
+              <i class="el-icon-star-on menu-item"></i>
+              <span class="menu-text menu-item">信用</span>
             </router-link>
           </div>
           <div id="base">
@@ -28,9 +31,9 @@
           <el-menu
             class="el-menu-vertical-demo"
             active-text-color="#B59E8C"
-            default-active="/user/info"
+            :default-active="this.$route.path"
             router>
-            <el-menu-item index="/user/info">
+            <el-menu-item index="/user">
               <i class="el-icon-s-custom"></i>
               <span>个人资料</span>
             </el-menu-item>
@@ -62,17 +65,44 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #user-page-info{
+  position: relative;
   margin: auto;
   margin-top: 3rem;
   border-radius: 100%;
-  border: solid;
+  border: solid rgb(181, 158,140) 0.1rem;
   height: 10rem;
   width: 10rem;
 }
+#user-page-info a{
+  text-decoration: none;
+}
+#follow,#favorites,#credit{
+  position: absolute;
+  background: rgb(224, 209, 193);
+  border-radius: 100%;
+  height: 3rem;
+  width: 3rem;
+}
 #follow{
-  background: blue;
-  position: relative;
-  left: -10rem;
+  left: -0.83rem;
+  top:1rem;
+}
+#favorites{
+  top:1rem;
+  right: -0.83rem;
+}
+#credit{
+  bottom: -1.5rem;
+  left: 3.5rem;
+}
+.menu-item{
+  color: rgb(110, 91,80);
+}
+.menu-text{
+  display: block;
+}
+#base{
+  margin: 1.5rem;
 }
 #user-page-menu{
   margin-top: 2rem;

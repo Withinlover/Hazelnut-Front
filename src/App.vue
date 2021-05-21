@@ -14,7 +14,7 @@
           <use xlink:href="#icon-remind"></use>
         </svg>
 
-        <router-link to="/user">
+        <router-link to="/user" exact-active-class="" active-class="router-link-exact-active">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-xinxibar_zhanghu"></use>
           </svg>

@@ -42,11 +42,10 @@ const routes = [
     },
     { // 个人主页
         path: '/user',
-        name: 'UserPage',
         component: () => import ('../views/UserPage.vue'),
         children:[
             { // 个人信息
-                path: 'info',
+                path: '',
                 name: 'UserInfo',
                 component:() => import('../components/user/UserInfo.vue')
             },
