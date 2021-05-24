@@ -9,11 +9,23 @@
         <el-col :xs="0" :sm="0" :md="1" :lg="2" :xl="3"> </el-col>
       </el-col>
     </el-row>
+
+    <el-upload
+      class="avatar-uploader"
+      action="http://123.57.194.168:8000/good/uploadimg/"
+      :headers="headers"
+      :show-file-list="false"
+      :on-success="handleAvatarSuccess"
+      :before-upload="beforeAvatarUpload"
+    >
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
+
   </div>
 </template>
 
 <style scoped>
-
 .middleContent {
   background-image: url("../assets/logo.png");
   background-repeat: no-repeat;
@@ -30,7 +42,6 @@
   border: solid;
   padding: 50px;
 }
-
 
 .el-row {
   margin: 50px;
@@ -83,6 +94,7 @@
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
 }
+
 </style>
 
 <script>
@@ -93,7 +105,29 @@ export default {
   data() {
     return {
       radio: "登录",
+      imageUrl: '',
+      headers: {
+        Authorization: "zht,yyds!"
+      }
     };
   },
+  methods: {
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isPNG = file.type === 'image/png';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG && !isPNG) {
+          this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return (isJPG || isPNG) && isLt2M;
+      }
+    }
 };
 </script>
