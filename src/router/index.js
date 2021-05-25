@@ -4,7 +4,8 @@ import Sign from '../views/Sign.vue'
 
 Vue.use(VueRouter)
 
-const routes = [{ // 登录注册页
+const routes = [
+    { // 登录注册页
         path: '/',
         name: 'Sign',
         component: Sign
@@ -39,31 +40,43 @@ const routes = [{ // 登录注册页
         component: () =>
             import ('../views/Release.vue')
     },
-    { // 用户 - 个人信息页
-        path: '/user/info',
-        name: 'UserInfo',
-        component: () =>
-            import ('../views/UserInfo.vue')
+    { // 个人主页
+        path: '/user',
+        component: () => import ('../views/UserPage.vue'),
+        children:[
+            { // 个人信息
+                path: '',
+                name: 'UserInfo',
+                component:() => import('../components/user/UserInfo.vue')
+            },
+            { // 当前发布
+                path: 'released',
+                name: 'UserReleased',
+                component:() => import('../components/user/UserReleased.vue')
+            },
+            { // 交易历史
+                path: 'history',
+                name: 'UserHistory',
+                component:() => import('../components/user/UserHistory.vue')
+            },
+            { // 消息记录
+                path: 'message',
+                name: 'UserMessage',
+                component:() => import('../components/user/UserMessage.vue')
+            },
+            { // 我的关注
+                path: 'follow',
+                name: 'UserFollow',
+                component:() => import('../components/user/UserFollow.vue')
+            },
+            { // 我的收藏
+                path: 'favorites',
+                name: 'UserFavorites',
+                component:() => import('../components/user/UserFavorites.vue')
+            }
+        ]
     },
-    { // 用户 - 已发布页
-        path: '/user/released',
-        name: 'UserReleased',
-        component: () =>
-            import ('../views/UserReleased.vue')
-    },
-    { // 用户 - 消息页
-        path: '/user/message',
-        name: 'UserMessage',
-        component: () =>
-            import ('../views/UserMessage.vue')
-    },
-    { // 用户 - 交易历史页
-        path: '/user/history',
-        name: 'UserHistory',
-        component: () =>
-            import ('../views/UserHistory.vue')
-    },
-    { // 用户 - 他人访问
+    { // 他人访问主页
         path: '/user/watch',
         name: 'UserWatch',
         component: () =>

@@ -1,0 +1,168 @@
+<template>
+  <div class="background">
+    <div class="tips">
+      <span> HazelNut 不会以任何理由要求您转账汇款，谨防诈骗 </span>
+    </div>
+
+    <el-row class="forms" v-show="radio == 0">
+      <div class="formsItem">
+        <div style="font-size: 14px; padding: 3px; margin-left: 10px">
+          用户名
+        </div>
+        <el-input placeholder="Username" v-model="username">
+          <i class="el-icon-user" slot="prepend"></i>
+        </el-input>
+      </div>
+      <div class="formsItem">
+        <div style="font-size: 14px; padding: 3px; margin-left: 10px">密码</div>
+        <el-input placeholder="Password" v-model="password" type="password">
+          <i class="el-icon-lock" slot="prepend"></i>
+        </el-input>
+      </div>
+      <el-row>
+        <el-col :span="6" :offset="18">
+          <router-link to="/user/info">
+            <span style="font-size: 12px">忘记密码？</span>
+          </router-link>
+        </el-col>
+      </el-row>
+    </el-row>
+
+    <el-row class="forms" v-show="radio == 1">
+      <div class="formsItem">
+        <div style="font-size: 14px; padding: 3px; margin-left: 10px">
+          用户名
+        </div>
+        <el-input placeholder="Username" v-model="username">
+          <i class="el-icon-user" slot="prepend"></i>
+        </el-input>
+      </div>
+      <div class="formsItem">
+        <div style="font-size: 14px; padding: 3px; margin-left: 10px">密码</div>
+        <el-input placeholder="Password" v-model="password" type="password">
+          <i class="el-icon-lock" slot="prepend"></i>
+        </el-input>
+      </div>
+      <div class="formsItem">
+        <div style="font-size: 14px; padding: 3px; margin-left: 10px">
+          重复密码
+        </div>
+        <el-input
+          placeholder="Repeat Password"
+          v-model="password2"
+          type="password"
+        >
+          <i class="el-icon-lock" slot="prepend"></i>
+        </el-input>
+      </div>
+      <div class="formsItem">
+        <div style="font-size: 14px; padding: 3px; margin-left: 10px">邮箱</div>
+        <el-input placeholder="Email Address" v-model="emailAddress">
+          <i class="el-icon-lock" slot="prepend"></i>
+        </el-input>
+      </div>
+      <div class="formsItem">
+        <div style="font-size: 14px; padding: 3px; margin-left: 10px">
+          验证码
+        </div>
+        <el-input placeholder="Verification Code" v-model="verificationCode">
+          <i class="el-icon-lock" slot="prepend"></i>
+        </el-input>
+      </div>
+    </el-row>
+
+    <el-row>
+      <el-button style="width: 40%" @click="onSignIn()"> 登录 </el-button>
+      <el-button style="width: 40%" @click="onSignUp()"> 注册 </el-button>
+    </el-row>
+    <el-row></el-row>
+  </div>
+</template>
+
+<style scoped>
+.background {
+  background-color: rgb(198, 194, 191);
+}
+
+.switch {
+  border: solid;
+  height: 40px;
+  line-height: 30px;
+  border-bottom: 3px solid rgb(224, 209, 193);
+}
+
+.tips {
+  height: 30px;
+  background-color: rgb(224, 209, 193);
+}
+
+.tips span {
+  font-size: 12px;
+  line-height: 30px;
+}
+
+.forms {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.formsItem {
+  text-align: left;
+}
+
+.forms .el-input {
+  margin: 5px;
+}
+
+.el-row {
+  margin-top: 10px;
+}
+</style>
+
+<script>
+export default {
+  name: "SignInForm",
+  data() {
+    return {
+      radio: 0,
+      username: "",
+      password: "",
+      password2: "",
+      emailAddress: "",
+      verificationCode: "",
+    };
+  },
+  methods: {
+    onSignIn() {
+      if (this.radio === 1) 
+        this.radio = 0;
+      else {
+        const url = "http://123.57.194.168:8000/login/";
+        var form = {
+          "username" : this.username,
+          "password" : this.password,
+        }
+        this.axios.post(url, form).then((res) => {
+          if (res.data['result'] === 0) {
+            alert(res.data['message']);
+          } else {
+            console.log(res.data);
+            this.$store.commit("setToken", res.data['token']);
+            this.$router.push({path: '/commodity'})
+          }
+        }) 
+      }
+    },
+    onSignUp() {
+      this.radio = 1;
+    }
+  },
+  mounted() {
+    if (this.$store.isLogin == true) {
+      this.$router.push({path: '/commodity'});
+    }
+  }
+};
+</script>

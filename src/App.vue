@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <div id="nav">
-      <div id="nav-right">
-        <router-link to="/" class="nav-right-item">
+      <div id="nav-left">
+        <router-link to="/" class="nav-left-item">
           <img src="./assets/hazelnut.png" />
         </router-link>
-        <router-link to="/commodity" class="nav-right-item">商品</router-link>
-        <router-link to="/demand" class="nav-right-item">需求</router-link>
+        <router-link to="/commodity" class="nav-left-item">商品</router-link>
+        <router-link to="/demand" class="nav-left-item">需求</router-link>
       </div>
 
-      <div id="nav-left">
+      <div id="nav-right">
         <svg class="icon" id="bell" aria-hidden="true">
           <use xlink:href="#icon-remind"></use>
         </svg>
 
-        <router-link to="/user/info">
+        <router-link to="/user" exact-active-class="" active-class="router-link-exact-active">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-xinxibar_zhanghu"></use>
           </svg>
@@ -74,26 +74,26 @@
   color: rgb(181, 158, 140);
 }
 
-#nav-right {
+#nav-left {
   display: inline-block;
   position: absolute;
   margin-left: 3rem;
   left: 0;
 }
 
-.nav-right-item {
+.nav-left-item {
   vertical-align: middle;
   margin: 0 1rem;
 }
 
-#nav-left {
+#nav-right {
   display: inline-block;
   position: absolute;
   margin-right: 3rem;
   right: 0;
 }
 
-.nav-left-item {
+.nav-right-item {
   vertical-align: middle;
   margin: 0 1rem;
 }
@@ -125,7 +125,12 @@ export default {
     formData.append("username", "aaa");
     formData.append("password", "111");
 
-    this.axios.post(url, formData).then((res) => {
+    var data = {
+      "username" : "aaa",
+      "password" : "111"
+    }
+
+    this.axios.post(url, data).then((res) => {
       this.info = "后端支棱起来了！！！";
       console.log(res);
     });
