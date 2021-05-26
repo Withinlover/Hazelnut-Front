@@ -7,8 +7,7 @@
         placeholder="请输入您想找的商品"
       ></el-input>
     </div>
-    <commodity-card></commodity-card >
-    <CommodityCard></CommodityCard>
+    <commodity-card />
     <div class="pool">
       <!-- all goods -->
     </div>
