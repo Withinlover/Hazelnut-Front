@@ -13,7 +13,6 @@
 </template>
 
 <style scoped>
-
 .middleContent {
   background-image: url("../assets/logo.png");
   background-repeat: no-repeat;
@@ -27,10 +26,8 @@
 }
 
 .loginArea {
-  border: solid;
   padding: 50px;
 }
-
 
 .el-row {
   margin: 50px;
@@ -90,10 +87,10 @@ import SignInForm from "../components/Sign/SignInForm.vue";
 
 export default {
   components: { SignInForm },
-  data() {
-    return {
-      radio: "登录",
-    };
-  },
+  mounted() {
+    if (this.$store.state.isLogin == true) {
+      this.$router.push({path: '/commodity'});
+    }
+  }
 };
 </script>

@@ -28,7 +28,7 @@
       </el-row>
     </el-row>
 
-    <el-row class="forms" v-show="radio == 1">
+    <el-row class="forms" v-show="radio == 1 || radio == 2">
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           用户名
@@ -58,15 +58,15 @@
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">邮箱</div>
         <el-input placeholder="Email Address" v-model="emailAddress">
-          <i class="el-icon-lock" slot="prepend"></i>
+          <i class="el-icon-message" slot="prepend"></i>
         </el-input>
       </div>
-      <div class="formsItem">
+      <div class="formsItem" v-show="radio == 2">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           验证码
         </div>
         <el-input placeholder="Verification Code" v-model="verificationCode">
-          <i class="el-icon-lock" slot="prepend"></i>
+          <i class="el-icon-key" slot="prepend"></i>
         </el-input>
       </div>
     </el-row>
@@ -136,10 +136,10 @@ export default {
   },
   methods: {
     onSignIn() {
-      if (this.radio === 1) 
+      if (this.radio === 1 || this.radio == 2) 
         this.radio = 0;
       else {
-        const url = "http://123.57.194.168:8000/login/";
+        const url = "http://123.57.194.168:8000/user/login/";
         var form = {
           "username" : this.username,
           "password" : this.password,
@@ -151,17 +151,47 @@ export default {
             console.log(res.data);
             this.$store.commit("setToken", res.data['token']);
             this.$router.push({path: '/commodity'})
+            console.log(this.$router.isLogin);
           }
         }) 
       }
     },
     onSignUp() {
-      this.radio = 1;
-    }
-  },
-  mounted() {
-    if (this.$store.isLogin == true) {
-      this.$router.push({path: '/commodity'});
+      if (this.radio === 0) 
+        this.radio = 1;
+      else if (this.radio === 1) {
+        if (this.username === '' || this.password === '') 
+          alert("用户名和密码不允许为空")
+        else if (this.password != this.password2) 
+          alert("两次输入的密码不一致");
+        else {
+          const url = "http://123.57.194.168:8000/user/email/";
+          var form = {
+            'email': this.emailAddress,
+          };
+          this.axios.post(url, form).then((res) => {
+            console.log(res.data);
+            alert(res.data['message']);
+            if (res.data['result'] === 1)
+              this.radio = 2;
+          })
+        }
+      } else {
+        const url = "http://123.57.194.168:8000/user/register/"
+        var form = {
+          'username': this.username,      
+          'password1': this.password,     
+          'password2': this.password2, 
+          'email': this.emailAddress,    
+          'code':  this.verificationCode, 
+        }
+        this.axios.post(url, form).then((res) => {
+          alert(res.data['message']);
+          if (res.data['result'] === 1) {
+            this.radio = 0;
+          } 
+        })
+      } 
     }
   }
 };

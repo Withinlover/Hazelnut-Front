@@ -22,10 +22,6 @@
       </div>
     </div>
     <router-view />
-    <div style="border: solid">
-      <h1>ElementUI + Axios 测试 (最终项目并不包含此内容)</h1>
-      <el-button type="primary" round>{{ info }}</el-button>
-    </div>
   </div>
 </template>
 
@@ -110,35 +106,33 @@
   width: 2.9em;
   height: 2.9em;
 }
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+
 </style>
 
-<script>
-export default {
-  data() {
-    return {
-      info: "我后端呢？？？",
-    };
-  },
-  mounted() {
-    const url = "http://123.57.194.168:8000/login/";
-    var formData = new FormData();
-    formData.append("username", "aaa");
-    formData.append("password", "111");
-
-    var data = {
-      "username" : "aaa",
-      "password" : "111"
-    }
-
-    this.axios.post(url, data).then((res) => {
-      this.info = "后端支棱起来了！！！";
-      console.log(res);
-    });
-  },
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
-  },
-};
-</script>
