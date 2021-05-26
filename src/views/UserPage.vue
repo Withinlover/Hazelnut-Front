@@ -64,6 +64,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#uer-page{
+  position: fixed;
+}
+
 #user-page-info{
   position: relative;
   margin: auto;

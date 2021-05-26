@@ -37,13 +37,19 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit">确认修改</el-button>
         <el-button type="primary" @click="onSignOut">登出账号</el-button>
+        <el-button type="primary" @click="onRelease">发布商品/需求</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <style scoped>
-
+.el-form{
+  margin: auto;
+  width: 40rem;
+  position: relative;
+  left:-2rem;
+}
 </style>
 
 <script>
@@ -68,6 +74,9 @@ export default {
       onSignOut(){
         this.$store.commit('clearToken')
         this.$router.push('/')
+      },
+      onRelease(){
+        this.$router.push('/release')
       }
     }
 }
