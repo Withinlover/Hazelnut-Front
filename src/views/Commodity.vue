@@ -1,6 +1,23 @@
 <template>
   <div class="Commodity">
-    <h1>This is a Commodity Page</h1>
+    <div>
+      <el-input
+        class="searchInput"
+        v-model="input"
+        
+        placeholder="请输入您想找的商品"
+      ></el-input>
+    </div>
   </div>
 </template>
 
+
+<style scoped>
+.Commodity {
+  
+}
+
+.searchinput {
+  width: 10px;
+}
+</style>
