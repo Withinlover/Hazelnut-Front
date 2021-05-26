@@ -1,55 +1,65 @@
 <template>
   <div id="user-message">
     <h1>消息记录</h1>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>卡片名称</span>
-        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-      </div>
-      <div v-for="o in 4" :key="o" class="text item">
-        {{'列表内容 ' + o }}
-      </div>
-    </el-card>
+    
+    <el-row :gutter="20">
+      <el-col
+      v-for="item in nowItems"
+      :key="item"
+      :span="12">
+        <div class="msg-item">
+
+        </div>
+      </el-col>
+    </el-row>
 
     <el-pagination
       background
       layout="prev, pager, next"
-      :total="100">
+      :page-size="pageSize"
+      :total="total"
+      :current-page="currentPage"
+      @current-change="updatePage">
     </el-pagination>
   </div>
 </template>
 
 <style scoped>
-.el-card {
-  margin: 2em auto 0rem auto;
+.el-col{
+  border-radius: 0.5rem;
 }
-
-.el-pagination{
-  margin-top: 2rem;
-}
-
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both
-}
-
-.box-card {
-  width: 480px;
+.msg-item{
+  background-color: red;
+  height: 4rem;
 }
 </style>
 
 <script>
-
+export default {
+  data(){
+    return {
+      pageSize:6,
+      currentPage:1,
+      allItems:[0,1,2,3,4,5,6,7,8,9,10,11]
+    }
+  },
+  computed:{
+    total(){
+      return this.allItems.length
+    },
+    nowItems(){
+      let start=this.pageSize*(this.currentPage-1)
+      let end=Math.min(this.total,start+this.pageSize)
+      return this.allItems.slice(start,end)
+    }
+  },
+  methods:{
+    updatePage(page){
+      this.currentPage=page
+    }
+  },
+  mounted(){
+    console.log('get message')
+  }
+}
 </script>
