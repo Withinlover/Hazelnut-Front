@@ -53,7 +53,6 @@ export default {
   data() {
     return {
       title: "Burger汉堡",
-      currentDate: "2021-2-14",
     };
   },
   methods: {},
