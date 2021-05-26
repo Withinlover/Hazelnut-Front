@@ -9,34 +9,6 @@
         <el-col :xs="0" :sm="0" :md="1" :lg="2" :xl="3"> </el-col>
       </el-col>
     </el-row>
-
-    <el-upload
-      class="avatar-uploader"
-      action="http://123.57.194.168:8000/good/uploadimg/"
-      :headers="headers"
-      :show-file-list="false"
-      :on-success="handleAvatarSuccess"
-      :before-upload="beforeAvatarUpload"
-    >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
-
-    <div style="width: 300px; margin: auto; text-align: left">
-      <el-upload
-        class="upload-demo"
-        action="http://123.57.194.168:8000/good/uploadimg/"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :file-list="fileList"
-        list-type="picture"
-      >
-        <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">
-          只能上传jpg/png文件，且不超过500kb
-        </div>
-      </el-upload>
-    </div>
   </div>
 </template>
 
@@ -54,7 +26,6 @@
 }
 
 .loginArea {
-  border: solid;
   padding: 50px;
 }
 
@@ -116,50 +87,10 @@ import SignInForm from "../components/Sign/SignInForm.vue";
 
 export default {
   components: { SignInForm },
-  data() {
-    return {
-      radio: "登录",
-      imageUrl: "",
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-        },
-      ],
-      headers: {
-        Authorization: "zht,yyds!",
-      },
-    };
-  },
-  methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isPNG = file.type === "image/png";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG && !isPNG) {
-        this.$message.error("上传头像图片只能是 JPG 或 PNG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return (isJPG || isPNG) && isLt2M;
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
-  },
+  mounted() {
+    if (this.$store.state.isLogin == true) {
+      this.$router.push({path: '/commodity'});
+    }
+  }
 };
 </script>
