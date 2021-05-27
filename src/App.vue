@@ -10,11 +10,18 @@
       </div>
 
       <div id="nav-right">
-        <svg class="icon" id="bell" aria-hidden="true">
-          <use xlink:href="#icon-remind"></use>
-        </svg>
+        <el-badge :value="12" is-dot class="reddot">
+          <!-- <svg class="icon" id="bell" aria-hidden="true">
+            <use xlink:href="#icon-remind"></use>
+          </svg> -->
+          <i class="el-icon-bell" id="bell" />
+        </el-badge>
 
-        <router-link to="/user" exact-active-class="" active-class="router-link-exact-active">
+        <router-link
+          to="/user"
+          exact-active-class=""
+          active-class="router-link-exact-active"
+        >
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-xinxibar_zhanghu"></use>
           </svg>
@@ -25,7 +32,7 @@
   </div>
 </template>
 
-<style>
+<style scope>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -42,8 +49,7 @@
   text-align: left;
   color: rgb(110, 91, 80);
   background-color: rgb(255, 255, 255);
-
-  box-shadow: 0px 2px rgba(181, 158, 140, 0.2);
+  box-shadow: 0px 3px 4px rgba(110, 91, 80, 0.2);
 }
 
 #nav a {
@@ -81,12 +87,17 @@
   vertical-align: middle;
   margin: 0 1rem;
 }
-
+.reddot {
+  height: -2px;
+  size: small;
+}
 #nav-right {
   display: inline-block;
   position: absolute;
   margin-right: 3rem;
   right: 0;
+
+  font-size: 2.3em;
 }
 
 .nav-right-item {
@@ -103,8 +114,8 @@
   overflow: hidden;
 }
 #bell {
-  width: 2.9em;
-  height: 2.9em;
+  position: relative;
+  bottom: 11px;
 }
 
 .avatar-uploader .el-upload {
@@ -116,7 +127,7 @@
 }
 
 .avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
+  border-color: #409eff;
 }
 
 .avatar-uploader-icon {
@@ -133,6 +144,5 @@
   height: 178px;
   display: block;
 }
-
 </style>
 

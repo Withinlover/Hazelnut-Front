@@ -17,7 +17,7 @@
           </div>
           <div id="credit">
             <router-link to="/user/history">
-              <i class="el-icon-star-on menu-item"></i>
+              <p class="menu-item">{{userCredit}}</p>
               <span class="menu-text menu-item">信用</span>
             </router-link>
           </div>
@@ -64,6 +64,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#uer-page{
+  position: fixed;
+}
+
 #user-page-info{
   position: relative;
   margin: auto;
@@ -95,6 +99,10 @@
   bottom: -1.5rem;
   left: 3.5rem;
 }
+#credit p{
+  margin: 0rem;
+  font-weight: bolder;
+}
 .menu-item{
   color: rgb(110, 91,80);
 }
@@ -115,7 +123,8 @@ export default {
     return {
       userImgUrl:'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       creditRating:5,
-      userName:'Matrix53'
+      userName:'Matrix53',
+      userCredit:4.7
     }
   }
 }
