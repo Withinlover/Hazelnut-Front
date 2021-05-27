@@ -17,6 +17,9 @@
 </template>
 
 <style>
+.commodity-card {
+  padding: 10px;
+}
 .bottom {
   margin-top: 13px;
   margin-bottom: 13px;

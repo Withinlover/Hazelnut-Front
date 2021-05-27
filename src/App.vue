@@ -14,7 +14,11 @@
           <use xlink:href="#icon-remind"></use>
         </svg>
 
-        <router-link to="/user" exact-active-class="" active-class="router-link-exact-active">
+        <router-link
+          to="/user"
+          exact-active-class=""
+          active-class="router-link-exact-active"
+        >
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-xinxibar_zhanghu"></use>
           </svg>
@@ -25,7 +29,7 @@
   </div>
 </template>
 
-<style>
+<style scope>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -42,8 +46,7 @@
   text-align: left;
   color: rgb(110, 91, 80);
   background-color: rgb(255, 255, 255);
-
-  box-shadow: 0px 2px rgba(181, 158, 140, 0.2);
+  box-shadow: 0px 3px 4px rgba(110, 91, 80, 0.2);
 }
 
 #nav a {
@@ -116,7 +119,7 @@
 }
 
 .avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
+  border-color: #409eff;
 }
 
 .avatar-uploader-icon {
@@ -133,6 +136,5 @@
   height: 178px;
   display: block;
 }
-
 </style>
 

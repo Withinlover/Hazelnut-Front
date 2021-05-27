@@ -1,10 +1,11 @@
 <template>
   <div class="Commodity">
-    <div>
+    <div class="search">
       <el-input
         class="searchInput"
         v-model="input"
         placeholder="请输入您想找的商品"
+        prefix-icon="el-icon-search"
       ></el-input>
     </div>
     <commodity-card />
@@ -14,6 +15,15 @@
     <el-backtop
       target=".page-component__scroll .el-scrollbar__wrap"
     ></el-backtop>
+
+    <div class="icon-group">
+      <div class="icon-circle-back">
+        <i class="el-icon-arrow-up iconAbs"></i>
+      </div>
+      <div class="icon-circle-back">
+        <i class="el-icon-plus iconAbs"></i>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,12 +35,49 @@
   align-items: center;
 }
 
-.searchinput {
-  margin: 10px;
+el-input {
   padding: 10px;
+  margin: 0;
+}
+.search {
+  padding: 20px;
+}
+.searchinput {
+  /* margin: 10px; */
+  padding: 1em;
   width: 10px;
-  flex: 1;
+  display: flex;
   /* cross-size: ; */
+}
+.icon-circle-back {
+  /* background-color: rgb(181, 158, 140); */
+  background-color: rgb(110, 91, 80);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 23px;
+  display: flex;
+  margin: 10px;
+  box-shadow: 2px 2px 5px rgb(177, 176, 176, 0.6);
+}
+.icon-circle-back:active {
+  background-color: rgb(110, 91, 80, 0.8);
+}
+
+.iconAbs {
+  align-self: center;
+  width: 2em;
+  padding-top: 20px;
+  height: 2em;
+  /* font-size: 4em; */
+  font-weight: 900;
+  color: rgb(224, 209, 193);
+}
+.icon-group {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  /* border: 3px solid #73ad21; */
 }
 </style>
 
