@@ -26,9 +26,11 @@
       <div class="icon-circle-back">
         <i class="el-icon-arrow-up iconAbs"></i>
       </div>
-      <div class="icon-circle-back">
-        <i class="el-icon-plus iconAbs"></i>
-      </div>
+      <router-link tag="dummy" to="/release">
+        <div class="icon-circle-back">
+          <i class="el-icon-plus iconAbs"></i>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -85,6 +87,7 @@ el-input {
   bottom: 30px;
   /* border: 3px solid #73ad21; */
 }
+
 </style>
 
 <script>

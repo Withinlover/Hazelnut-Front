@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .commodity-card {
   padding: 10px;
 }
@@ -70,7 +70,7 @@
 <script>
 export default {
   name: "CommodityCard",
-  props: ["imageUrl", "title", "price" ],
+  props: ["imageUrl", "title", "price"],
   data() {
     return {
       detail_url: "",

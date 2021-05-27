@@ -17,18 +17,27 @@
       </div>
       <div class="detail-text">
         <div class="title">{{ commoInfo.title }}</div>
-        <div class="releaser">
-          <img class="avatar" :src="commoInfo.releaser.avatar" />
-          <span class="name">{{ commoInfo.releaser.name }}</span>
-          <el-rate
-            v-model="commoInfo.releaser.credit"
-            :colors="colors"
-            disabled
-            text-color="#ff9900"
-            show-score
-          />
+        <div class="brief-line">
+          <div class="price">
+            <span class="rmb">¥</span>
+            <span class="priceNum">{{ commoInfo.price }}</span>
+          </div>
+          <div class="release-info">
+            <div class="releaser">
+              <img class="avatar" :src="commoInfo.releaser.avatar" />
+              <span class="name">{{ commoInfo.releaser.name }}</span>
+              <!-- <el-rate
+                v-model="commoInfo.releaser.credit"
+                :colors="colors"
+                disabled
+                text-color="#ff9900"
+                show-score
+              /> -->
+              <span class="rate">{{ commoInfo.releaser.credit }}</span>
+            </div>
+            <div class="release-data">发布于:{{ commoInfo.date }}</div>
+          </div>
         </div>
-        <div class="release-data">发布于:{{ commoInfo.date }}</div>
         <el-divider />
         <div class="description">{{ commoInfo.description }}</div>
         <div class="button-row">
@@ -37,6 +46,7 @@
         </div>
       </div>
     </div>
+    <comment-card />
   </div>
 </template>
 
@@ -44,6 +54,7 @@
 .detailPage {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .commo {
   border: 1px solid rgb(110, 91, 80, 0.8);
@@ -87,8 +98,23 @@
     sans-serif;
   font-weight: 900;
   font-size: 2em;
-  /* padding: 10px; */
   margin: 10px;
+}
+.brief-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+}
+.price {
+  color: red;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 2.3em;
+  margin: 10px;
+}
+.rmb {
+  font-size: smaller;
 }
 
 .avatar {
@@ -96,6 +122,10 @@
   width: 25px;
   border-radius: 50%;
   margin: 5px;
+}
+.release-info {
+  display: flex;
+  flex-direction: column;
 }
 .releaser {
   height: 25px;
@@ -110,12 +140,15 @@
   align-self: center;
   line-height: 30px;
   color: dimgrey;
+  font-size: smaller;
   margin-right: 5px;
 }
 el-rate {
   display: inline-block;
   position: relative;
-  /* r: 10px; */
+}
+.rate {
+  color: orange;
 }
 .release-data {
   color: rgb(153, 152, 152);
@@ -144,7 +177,10 @@ el-rate {
 </style>
 
 <script>
+import CommentCard from "../components/ItemDetail/Comment.vue";
+
 export default {
+  components: { CommentCard },
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
@@ -183,6 +219,7 @@ export default {
       carouselDirect: "horizontal",
       commoInfo: {
         title: "Burger 汉堡",
+        price: 18.5,
         releaser: {
           name: "luxia 林璐霞",
           avatar:

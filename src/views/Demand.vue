@@ -13,9 +13,11 @@
         <div class="icon-circle-back">
           <i class="el-icon-arrow-up iconAbs"></i>
         </div>
-        <div class="icon-circle-back">
-          <i class="el-icon-plus iconAbs"></i>
-        </div>
+        <router-link tag="dummy" to="/release">
+          <div class="icon-circle-back">
+            <i class="el-icon-plus iconAbs"></i>
+          </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -36,7 +38,6 @@
 .icon-circle-back:active {
   background-color: rgb(110, 91, 80, 0.8);
 }
-
 
 .iconAbs {
   align-self: center;
