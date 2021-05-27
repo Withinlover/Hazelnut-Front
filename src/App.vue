@@ -10,9 +10,12 @@
       </div>
 
       <div id="nav-right">
-        <svg class="icon" id="bell" aria-hidden="true">
-          <use xlink:href="#icon-remind"></use>
-        </svg>
+        <el-badge :value="12" is-dot="true" class="reddot">
+          <!-- <svg class="icon" id="bell" aria-hidden="true">
+            <use xlink:href="#icon-remind"></use>
+          </svg> -->
+          <i class="el-icon-bell" id="bell" />
+        </el-badge>
 
         <router-link
           to="/user"
@@ -84,12 +87,17 @@
   vertical-align: middle;
   margin: 0 1rem;
 }
-
+.reddot {
+  height: -2px;
+  size: small;
+}
 #nav-right {
   display: inline-block;
   position: absolute;
   margin-right: 3rem;
   right: 0;
+
+  font-size: 2.3em;
 }
 
 .nav-right-item {
@@ -106,8 +114,8 @@
   overflow: hidden;
 }
 #bell {
-  width: 2.9em;
-  height: 2.9em;
+  position: relative;
+  bottom: 11px;
 }
 
 .avatar-uploader .el-upload {

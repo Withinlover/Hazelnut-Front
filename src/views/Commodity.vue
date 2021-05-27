@@ -8,7 +8,11 @@
         prefix-icon="el-icon-search"
       ></el-input>
     </div>
-    <commodity-card />
+    <commodity-card
+      imageUrl="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+      title="Burger汉堡包"
+      price="18.5"
+    />
     <div class="pool">
       <!-- all goods -->
     </div>

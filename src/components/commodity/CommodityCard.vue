@@ -2,7 +2,7 @@
   <div class="commodity-card">
     <el-col :span="20">
       <el-card :body-style="{ padding: '0px' }" shadow="hover">
-        <img :src="image_url" class="image" />
+        <img :src="imageUrl" class="image" />
         <div style="padding: 14px">
           <span class="title">{{ title }}</span>
           <div class="bottom clearfix">
@@ -49,9 +49,10 @@
 }
 
 .title {
-  float: center;
+  /* float: center; */
   font-weight: bolder;
   margin-bottom: 15px;
+  padding: 15px;
 }
 .price {
   font-size: medium;
@@ -69,13 +70,9 @@
 <script>
 export default {
   name: "CommodityCard",
+  props: ["imageUrl", "title", "price" ],
   data() {
     return {
-      // title: "Burger汉堡这其实是一个超级长的标题blabla",
-      title: "Burger汉堡",
-      image_url:
-        "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-      price: 10.5,
       detail_url: "",
     };
   },
