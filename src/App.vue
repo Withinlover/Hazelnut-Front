@@ -115,7 +115,7 @@
 }
 #bell {
   position: relative;
-  bottom: 11px;
+  bottom: 12px;
 }
 
 .avatar-uploader .el-upload {
