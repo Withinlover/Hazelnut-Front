@@ -89,7 +89,7 @@ export default {
   components: { SignInForm },
   mounted() {
     if (this.$store.state.isLogin == true) {
-      this.$router.push({path: '/commodity'});
+      this.$router.push({path: '/commodity'});  
     }
   }
 };
