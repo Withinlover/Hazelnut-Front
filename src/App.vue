@@ -10,7 +10,7 @@
       </div>
 
       <div id="nav-right">
-        <el-badge :value="12" is-dot="true" class="reddot">
+        <el-badge :value="12" is-dot class="reddot">
           <!-- <svg class="icon" id="bell" aria-hidden="true">
             <use xlink:href="#icon-remind"></use>
           </svg> -->
