@@ -26,13 +26,6 @@
             <div class="releaser">
               <img class="avatar" :src="commoInfo.releaser.avatar" />
               <span class="name">{{ commoInfo.releaser.name }}</span>
-              <!-- <el-rate
-                v-model="commoInfo.releaser.credit"
-                :colors="colors"
-                disabled
-                text-color="#ff9900"
-                show-score
-              /> -->
               <span class="rate">{{ commoInfo.releaser.credit }}</span>
             </div>
             <div class="release-data">发布于:{{ commoInfo.date }}</div>
@@ -42,7 +35,13 @@
         <div class="description">{{ commoInfo.description }}</div>
         <div class="button-row">
           <el-button class="button" type="danger" round>举报</el-button>
-          <el-button class="button" type="primary" round>申请交易</el-button>
+          <el-button
+            class="button"
+            type="primary"
+            :disabled="commoInfo.isSold"
+            round
+            >申请交易</el-button
+          >
         </div>
       </div>
     </div>
@@ -58,7 +57,7 @@
 }
 .commo {
   border: 1px solid rgb(110, 91, 80, 0.8);
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: 2px 2px 3px rgb(110, 91, 80, 0.8);
   display: flex;
   overflow: hidden;
@@ -223,12 +222,13 @@ export default {
         releaser: {
           name: "luxia 林璐霞",
           avatar:
-            "https://via.placeholder.com/150/0000FF/808080 ?Text=Digital.com",
+            "https://via.placeholder.com/150/0000FF/808080?Text=Digital.com",
           credit: 4.4,
         },
         date: "2021-5-21",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin eros eget laoreet facilisis. Donec ornare pellentesque nisl, id viverra mi efficitur ut. In non urna purus. Nulla bibendum libero elit, eget tempor eros maximus sit amet. Donec sed nulla eget turpis efficitur ornare. Aliquam quis mi lobortis, commodo lectus nec, tempus quam. Fusce eu felis rhoncus, fringilla lacus non, condimentum quam.",
+        isSold: false,
       },
       colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
     };
