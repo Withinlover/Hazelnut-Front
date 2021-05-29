@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="newComm">
-      <img class="CommAva" :src="userInfo.avatar" />
+      <img class="commAva" :src="userInfo.avatar" />
       <el-input
         class="newCommIn"
         v-model="newComment"
@@ -30,8 +30,8 @@
   align-items: row;
 }
 .commAva {
-  height: 100px;
-  width: 100px;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
   margin: 5px;
 }
