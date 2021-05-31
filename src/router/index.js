@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Sign from '../views/Sign.vue'
+import store from '@/store/index.js'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,10 @@ const routes = [
     { // 个人主页
         path: '/user',
         component: () => import ('../views/UserPage.vue'),
+        beforeEnter:(to,from,next) =>{
+            if(store.state.isLogin) next()
+            else next('/')
+        },
         children:[
             { // 个人信息
                 path: '',
@@ -52,27 +57,47 @@ const routes = [
             { // 当前发布
                 path: 'released',
                 name: 'UserReleased',
-                component:() => import('../components/user/UserReleased.vue')
+                component:() => import('../components/user/UserReleased.vue'),
+                beforeEnter:(to,from,next) =>{
+                    if(store.state.isLogin) next()
+                    else next('/')
+                }
             },
             { // 交易历史
                 path: 'history',
                 name: 'UserHistory',
-                component:() => import('../components/user/UserHistory.vue')
+                component:() => import('../components/user/UserHistory.vue'),
+                beforeEnter:(to,from,next) =>{
+                    if(store.state.isLogin) next()
+                    else next('/')
+                }
             },
             { // 消息记录
                 path: 'message',
                 name: 'UserMessage',
-                component:() => import('../components/user/UserMessage.vue')
+                component:() => import('../components/user/UserMessage.vue'),
+                beforeEnter:(to,from,next) =>{
+                    if(store.state.isLogin) next()
+                    else next('/')
+                }
             },
             { // 我的关注
                 path: 'follow',
                 name: 'UserFollow',
-                component:() => import('../components/user/UserFollow.vue')
+                component:() => import('../components/user/UserFollow.vue'),
+                beforeEnter:(to,from,next) =>{
+                    if(store.state.isLogin) next()
+                    else next('/')
+                }
             },
             { // 我的收藏
                 path: 'favorites',
                 name: 'UserFavorites',
-                component:() => import('../components/user/UserFavorites.vue')
+                component:() => import('../components/user/UserFavorites.vue'),
+                beforeEnter:(to,from,next) =>{
+                    if(store.state.isLogin) next()
+                    else next('/')
+                }
             }
         ]
     },

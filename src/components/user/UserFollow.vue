@@ -2,13 +2,13 @@
   <div id="user-follow">
     <h1>我的关注</h1>
 
-    <div v-for="item in nowItems" :key="item" class="follow-item">
-      <el-avatar :size="50" :src="followUrl"></el-avatar>
+    <div v-for="item in nowItems" :key="item.id" class="follow-item">
+      <el-avatar :size="50" :src="item.url"></el-avatar>
       <div class="follow-info">
         <div class="follow-info-name">
-          <p>关注的用户名</p>
+          <p>{{item.name}}</p>
           <el-rate
-            v-model="value"
+            v-model="item.score"
             disabled
             show-score
             text-color="#ff9900"
@@ -16,8 +16,8 @@
           </el-rate>
         </div>
         <div class="follow-info-location">
-          <p>用户的年级</p>
-          <p>用户的校区</p>
+          <p>{{item.grade}}</p>
+          <p>{{item.location}}</p>
         </div>
       </div>
       <el-button type="primary" @click="cancelFollow(item)">取消关注</el-button>
@@ -88,9 +88,7 @@ export default {
     return {
       pageSize:6,
       currentPage:1,
-      allItems:[0,1,2,3,4,5,6,7,8,9,10,11],
-      followUrl:'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-      value:5
+      allItems:[]
     }
   },
   computed:{
@@ -108,11 +106,33 @@ export default {
       this.currentPage=page
     },
     cancelFollow(item){
-      console.log(item)
+      this.axios.post('/user/unfollow/',{
+        token:this.$store.state.token,
+        username:item.name
+      })
+      this.getFollowList()
+    },
+    getFollowList(){
+      this.axios.post('/user/followlist/',{
+        token:this.$store.state.token
+      }).then(res =>{
+        this.allItems=[]
+        let length=res.data.name.length
+        for(let i=0;i<length;i++){
+          let tmp={}
+          tmp.id=i
+          tmp.name=res.data.name[i]
+          tmp.grade=res.data.grade[i]
+          tmp.location=res.data.location[i]
+          tmp.score=res.data.score[i]
+          tmp.url=res.data.url[i]
+          this.allItems.push(tmp)
+        }
+      })
     }
   },
   mounted(){
-    console.log('get follow list')
+    this.getFollowList()
   }
 }
 </script>
