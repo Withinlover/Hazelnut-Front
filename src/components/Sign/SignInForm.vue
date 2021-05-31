@@ -139,7 +139,7 @@ export default {
       if (this.radio === 1 || this.radio == 2) 
         this.radio = 0;
       else {
-        const url = "http://123.57.194.168:8000/user/login/";
+        const url = "/user/login/";
         var form = {
           "username" : this.username,
           "password" : this.password,
@@ -165,7 +165,7 @@ export default {
         else if (this.password != this.password2) 
           alert("两次输入的密码不一致");
         else {
-          const url = "http://123.57.194.168:8000/user/email/";
+          const url = "/user/email/";
           var form = {
             'email': this.emailAddress,
           };
@@ -177,7 +177,7 @@ export default {
           })
         }
       } else {
-        const url = "http://123.57.194.168:8000/user/register/"
+        const url = "/user/register/"
         var form = {
           'username': this.username,      
           'password1': this.password,     

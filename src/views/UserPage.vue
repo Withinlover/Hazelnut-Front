@@ -126,6 +126,11 @@ export default {
       userName:'Matrix53',
       userCredit:4.7
     }
+  },
+  mounted(){
+    if(!this.$store.state.isLogin){
+      this.$router.replace('/')
+    }
   }
 }
 </script>

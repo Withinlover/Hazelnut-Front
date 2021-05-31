@@ -65,7 +65,7 @@
       </div>
       <div class="content">
         <el-upload
-          action="http://123.57.194.168:8000/good/uploadimg/"
+          action="/good/uploadimg/"
           :headers="headers"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
@@ -181,9 +181,9 @@ export default {
       if (this.step === 1) {
         var url, form;
         if (this.formType === "Demand") 
-          url = 'http://123.57.194.168:8000/demand/upload/';
+          url = '/demand/upload/';
         else 
-          url = 'http://123.57.194.168:8000/good/upload/';
+          url = '/good/upload/';
         form = {
           'token': this.$store.state.token,
           'name': this.title,

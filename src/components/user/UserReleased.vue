@@ -2,8 +2,18 @@
   <div id="user-released">
     <h1>当前发布</h1>
     <el-button-group>
-      <el-button type="primary" icon="el-icon-arrow-left">当前发布商品</el-button>
-      <el-button type="primary">当前发布需求<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+      <el-button 
+        type="primary" 
+        icon="el-icon-arrow-left"
+        @click="switchToCommodity">
+        当前发布商品
+      </el-button>
+      <el-button 
+        type="primary" 
+        @click="switchToDemand">
+        当前发布需求
+        <i class="el-icon-arrow-right el-icon--right"></i>
+      </el-button>
     </el-button-group>
 
     <div id="user-released-card">
@@ -95,6 +105,12 @@ export default {
   methods:{
     updatePage(page){
       this.currentPage=page
+    },
+    switchToCommodity(){
+
+    },
+    switchToDemand(){
+
     }
   }
 }
