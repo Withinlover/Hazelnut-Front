@@ -86,11 +86,34 @@ export default {
           this.name=res.data.name
           this.email=res.data.email
           this.form=res.data
+        },reason =>{
+          this.$message({
+            message:'请求超时，请检查网络设置',
+            type:'warning'
+          })
         })
       },
       updateInfo(){
         this.axios.post('/user/uploadinfo/',
         Object.assign({token:this.$store.state.token},this.form))
+        .then(res =>{
+          if(res.data.result == 1){
+            this.$message({
+              message:'修改个人信息成功',
+              type:'success'
+            })
+          }else{
+            this.$message({
+              message:'修改个人信息失败，请检查数据合法性',
+              type:'warning'
+            })
+          }
+        },reason =>{
+          this.$message({
+            message:'请求超时，请检查网络设置',
+            type:'warning'
+          })
+        })
       }
     },
     mounted(){
