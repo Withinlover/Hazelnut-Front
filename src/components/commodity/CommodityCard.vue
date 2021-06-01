@@ -68,7 +68,9 @@
 </style>
 
 <script>
+
 export default {
+
   name: "CommodityCard",
   props: ["imageUrl", "title", "price"],
   data() {

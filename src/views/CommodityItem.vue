@@ -16,7 +16,9 @@
         </el-carousel>
       </div>
       <div class="detail-text">
-        <div class="title">{{ commoInfo.title }}</div>
+        <div class="title">
+          <span class="commo-type">出</span>{{ commoInfo.title }}
+        </div>
         <div class="brief-line">
           <div class="price">
             <span class="rmb">¥</span>
@@ -66,6 +68,7 @@
 .commoNor {
   margin: 10px 10%;
   height: 500px;
+  width: 800px;
   flex-direction: row;
 }
 .commoWide {
@@ -81,8 +84,8 @@
   flex-direction: column;
   align-self: center;
 }
+
 .carousel {
-  /* align-self: ; */
   width: 400px;
   height: 500px;
   margin-right: 10px;
@@ -98,6 +101,17 @@
   font-weight: 900;
   font-size: 2em;
   margin: 10px;
+  text-align: center;
+}
+.commo-type {
+  color: white;
+
+  font-size: 50%;
+  padding: 3px;
+  margin: 8px;
+  background: red;
+  border-radius: 20%;
+  vertical-align: middle;
 }
 .brief-line {
   display: flex;
@@ -148,6 +162,7 @@ el-rate {
 }
 .rate {
   color: orange;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 .release-data {
   color: rgb(153, 152, 152);
@@ -164,6 +179,8 @@ el-rate {
 }
 .description {
   margin: 5px 10px 20px 10px;
+  text-align: justify;
+  padding: 7px;
 }
 .button-row {
   align-self: right;

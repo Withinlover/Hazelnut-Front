@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :class="cardStyle">
     <div class="newComm">
       <img class="commAva" :src="userInfo.avatar" />
       <el-input
@@ -63,12 +63,10 @@
 
 <style scoped>
 .card {
-  width: 400px;
-  /* height: 400px; */
+  /* width: 400px; */
   border: 0.1px solid rgb(110, 91, 80, 0.5);
   border-radius: 20px;
   box-shadow: 0 2px 12px 0 rgba(110, 91, 80, 0.2);
-  /* 2px 2px 3px rgb(110, 91, 80, 0.8); */
   margin: 10px;
   display: flex;
   flex-direction: column;
@@ -76,9 +74,16 @@
   padding: 5px;
   padding-bottom: 20px;
 }
+.card-nor {
+  width: 800px;
+}
+.car-thin {
+  width: 400px;
+  margin: 10px 10%;
+}
 .newComm {
   display: flex;
-  align-self: center;
+  align-self: flex-start;
   align-items: center;
   flex-direction: row;
   margin: 20px;
@@ -157,10 +162,14 @@
 
 <script>
 export default {
-  name: "CommentCard",
   props: [],
   data() {
     return {
+      window: {
+        width: 0,
+        height: 0,
+      },
+      cardStyle: "card-nor",
       newComment: "",
       test: "test",
       userInfo: {
@@ -208,6 +217,24 @@ export default {
       ],
     };
   },
-  methods: {},
+  name: "CommentCard",
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+      if (this.window.width > 850) {
+        this.cardStyle = "card-nor";
+      } else {
+        this.cardStyle = "card-thin";
+      }
+    },
+  },
 };
 </script>
