@@ -2,23 +2,33 @@
   <div id="user-released">
     <h1>当前发布</h1>
     <el-button-group>
-      <el-button type="primary" icon="el-icon-arrow-left">当前发布商品</el-button>
-      <el-button type="primary">当前发布需求<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+      <el-button 
+        type="primary" 
+        icon="el-icon-arrow-left"
+        @click="switchToCommodity"
+        :disabled="!isDemand">
+        当前发布商品
+      </el-button>
+      <el-button 
+        type="primary" 
+        @click="switchToDemand"
+        :disabled="isDemand">
+        当前发布需求
+        <i class="el-icon-arrow-right el-icon--right"></i>
+      </el-button>
     </el-button-group>
 
     <div id="user-released-card">
-      <el-card class="box-card" v-for="item in nowItems" :key="item">
-        <el-image src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
+      <el-card class="box-card" v-for="item in nowItems" :key="item.id">
+        <el-image :src="item.url"></el-image>
         <el-container>
           <el-aside width="7rem">
-            <h2 class="title">商品标题</h2>
+            <h2 class="title">{{item.name}}</h2>
             <el-divider></el-divider>
-            <h2 class="price">商品价格</h2>
+            <h2 class="price">{{item.price}}</h2>
           </el-aside>
           <el-main>
-            <p>
-              品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述
-            </p>
+            <p>{{item.description}}</p>
           </el-main>
         </el-container>
       </el-card>
@@ -76,7 +86,8 @@ export default {
     return {
       pageSize:4,
       currentPage:1,
-      allItems:[0,1,2,3,4]
+      allItems:[],
+      isDemand:false
     }
   },
   computed:{
@@ -90,11 +101,53 @@ export default {
     }
   },
   mounted(){
-    console.log('send request')
+    this.getGood()
   },
   methods:{
     updatePage(page){
       this.currentPage=page
+    },
+    switchToCommodity(){
+      this.isDemand=false
+      this.getGood()
+    },
+    switchToDemand(){
+      this.isDemand=true
+      this.getDemand()
+    },
+    getDemand(){
+      this.axios.post('demand/getdemand/',{
+        token:this.$store.state.token
+      }).then(res =>{
+        this.allItems=[]
+        let length=res.data.name.length
+        for(let i=0;i<length;i++){
+          let tmp={}
+          tmp.id=i
+          tmp.name=res.data.name[i]
+          tmp.description=res.data.description[i]
+          tmp.price=res.data.price[i]
+          tmp.url=res.data.url[i]
+          this.allItems.push(tmp)
+        }
+      })
+    },
+    getGood(){
+      this.axios.post('good/getgood/',{
+        token:this.$store.state.token
+      }).then(res =>{
+        this.allItems=[]
+        let length=res.data.name.length
+        for(let i=0;i<length;i++){
+          let tmp={}
+          tmp.id=i
+          tmp.name=res.data.name[i]
+          tmp.description=res.data.description[i]
+          tmp.price=res.data.price[i]
+          tmp.url=res.data.url[i]
+          this.allItems.push(tmp)
+        }
+      })
     }
   }
 }
