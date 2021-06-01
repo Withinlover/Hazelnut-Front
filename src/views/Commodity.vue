@@ -24,8 +24,11 @@
 
     <div class="icon-group">
       <div class="icon-circle-back">
-        <i class="el-icon-arrow-up iconAbs"></i>
+        <!-- <el-backtop target=".page-component__scroll .el-scrollbar__wrap"> -->
+          <i class="el-icon-arrow-up iconAbs"></i>
+        <!-- </el-backtop> -->
       </div>
+
       <router-link tag="dummy" to="/release">
         <div class="icon-circle-back">
           <i class="el-icon-plus iconAbs"></i>
@@ -87,7 +90,6 @@ el-input {
   bottom: 30px;
   /* border: 3px solid #73ad21; */
 }
-
 </style>
 
 <script>

@@ -56,9 +56,9 @@
   align-items: center;
 }
 .commo {
-  border: 1px solid rgb(110, 91, 80, 0.8);
+  border: 0.1px solid rgb(110, 91, 80, 0.5);
   border-radius: 20px;
-  box-shadow: 2px 2px 3px rgb(110, 91, 80, 0.8);
+  box-shadow: 0 2px 12px 0 rgba(110, 91, 80, 0.2);
   display: flex;
   overflow: hidden;
   justify-content: left;
