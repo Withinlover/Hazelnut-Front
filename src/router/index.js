@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Sign from '../views/Sign.vue'
-import store from '@/store/index.js'
 
 Vue.use(VueRouter)
 
@@ -44,10 +43,7 @@ const routes = [
     { // 个人主页
         path: '/user',
         component: () => import ('../views/UserPage.vue'),
-        beforeEnter:(to,from,next) =>{
-            if(store.state.isLogin) next()
-            else next('/')
-        },
+        meta:{requiresAuth:true},
         children:[
             { // 个人信息
                 path: '',
@@ -57,47 +53,27 @@ const routes = [
             { // 当前发布
                 path: 'released',
                 name: 'UserReleased',
-                component:() => import('../components/user/UserReleased.vue'),
-                beforeEnter:(to,from,next) =>{
-                    if(store.state.isLogin) next()
-                    else next('/')
-                }
+                component:() => import('../components/user/UserReleased.vue')
             },
             { // 交易历史
                 path: 'history',
                 name: 'UserHistory',
-                component:() => import('../components/user/UserHistory.vue'),
-                beforeEnter:(to,from,next) =>{
-                    if(store.state.isLogin) next()
-                    else next('/')
-                }
+                component:() => import('../components/user/UserHistory.vue')
             },
             { // 消息记录
                 path: 'message',
                 name: 'UserMessage',
-                component:() => import('../components/user/UserMessage.vue'),
-                beforeEnter:(to,from,next) =>{
-                    if(store.state.isLogin) next()
-                    else next('/')
-                }
+                component:() => import('../components/user/UserMessage.vue')
             },
             { // 我的关注
                 path: 'follow',
                 name: 'UserFollow',
-                component:() => import('../components/user/UserFollow.vue'),
-                beforeEnter:(to,from,next) =>{
-                    if(store.state.isLogin) next()
-                    else next('/')
-                }
+                component:() => import('../components/user/UserFollow.vue')
             },
             { // 我的收藏
                 path: 'favorites',
                 name: 'UserFavorites',
-                component:() => import('../components/user/UserFavorites.vue'),
-                beforeEnter:(to,from,next) =>{
-                    if(store.state.isLogin) next()
-                    else next('/')
-                }
+                component:() => import('../components/user/UserFavorites.vue')
             }
         ]
     },
@@ -119,6 +95,19 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
+})
+
+router.beforeEach((to,from,next)=>{
+    if(to.matched.some(record => record.meta.requiresAuth) 
+        && !router.app.$store.state.isLogin){
+        router.app.$message({
+            message:'尚未登录，请先登录',
+            type:'warning'
+        })
+        next('/')
+    }else{
+        next()
+    }
 })
 
 export default router

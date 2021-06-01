@@ -12,8 +12,10 @@
             disabled
             show-score
             text-color="#ff9900"
-            score-template="{value}">
+            score-template="{value}"
+            v-if="item.score>=0">
           </el-rate>
+          <p v-else>暂无交易记录</p>
         </div>
         <div class="follow-info-location">
           <p>{{item.grade}}</p>
@@ -37,6 +39,7 @@
 
 <style scoped>
 .follow-item{
+  position: relative;
   display: flex;
   flex-direction: row;
   flex-flow: wrap;
@@ -77,12 +80,19 @@
   margin-top: 0.1rem;
 }
 .el-button{
-  position: relative;
-  right: -25rem;
+  position: absolute;
+  right: 1rem;
+  top:0.5rem;
 }
 </style>
 
 <script>
+const map={
+  grade:['暂未填写年级','大一','大二','大三','大四'],
+  location:['暂未填写校区','沙河校区','学院路校区'],
+  defaultAvatar:'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+}
+
 export default {
   data(){
     return {
@@ -109,8 +119,18 @@ export default {
       this.axios.post('/user/unfollow/',{
         token:this.$store.state.token,
         username:item.name
+      }).then(res =>{
+        this.$message({
+          message:'取消关注成功',
+          type:'success'
+        })
+        this.getFollowList()
+      },reason =>{
+        this.$message({
+          message:'请求超时，请检查网络设置',
+          type:'error'
+        })
       })
-      this.getFollowList()
     },
     getFollowList(){
       this.axios.post('/user/followlist/',{
@@ -122,10 +142,10 @@ export default {
           let tmp={}
           tmp.id=i
           tmp.name=res.data.name[i]
-          tmp.grade=res.data.grade[i]
-          tmp.location=res.data.location[i]
-          tmp.score=res.data.score[i]
-          tmp.url=res.data.url[i]
+          tmp.grade=res.data.grade[i]<0? map.grade[0]:map.grade[res.data.grade[i]]
+          tmp.location=res.data.location[i]<0? map.location[0]:map.location[res.data.location[i]+1]
+          tmp.score=res.data.score[i].toFixed(1)
+          tmp.url=res.data.url[i] === 'NULL'? map.defaultAvatar:res.data.url[i]
           this.allItems.push(tmp)
         }
       })
