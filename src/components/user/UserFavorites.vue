@@ -123,7 +123,7 @@ export default {
         let length=res.data.name.length
         for(let i=0;i<length;i++){
           let tmp={}
-          tmp.id=i
+          tmp.id=res.data.id[i]
           tmp.name=res.data.name[i]
           tmp.description=res.data.description[i]
           tmp.price=res.data.price[i]
@@ -140,7 +140,7 @@ export default {
         let length=res.data.name.length
         for(let i=0;i<length;i++){
           let tmp={}
-          tmp.id=i
+          tmp.id=res.data.id[i]
           tmp.name=res.data.name[i]
           tmp.description=res.data.description[i]
           tmp.price=res.data.price[i]

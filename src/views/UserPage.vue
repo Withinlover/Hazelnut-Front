@@ -122,10 +122,27 @@ export default {
   data(){
     return {
       userImgUrl:'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-      creditRating:5,
-      userName:'Matrix53',
-      userCredit:4.7
+      userName:'正在加载',
+      userCredit:'?'
     }
+  },
+  methods:{
+    getBaseInfo(){
+      this.axios.post('/user/getuser/',{token:this.$store.state.token})
+      .then(res =>{
+        this.userImgUrl=res.data.url == 'NULL'? this.userImgUrl:res.data.url
+        this.userName=res.data.name
+        this.userCredit=res.data.score<0? '?':res.data.score.toFixed(1)
+      },reason =>{
+        this.$message({
+          message:'请求超时，请检查网络设置',
+          type:'error'
+        })
+      })
+    }
+  },
+  mounted(){
+    this.getBaseInfo()
   }
 }
 </script>

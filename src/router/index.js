@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Sign from '../views/Sign.vue'
+import store from '@/store/index.js'
 
 Vue.use(VueRouter)
 
@@ -99,12 +100,12 @@ const router = new VueRouter({
 
 router.beforeEach((to,from,next)=>{
     if(to.matched.some(record => record.meta.requiresAuth) 
-        && !router.app.$store.state.isLogin){
+        && !store.state.isLogin){
+        next('/')
         router.app.$message({
             message:'尚未登录，请先登录',
             type:'warning'
         })
-        next('/')
     }else{
         next()
     }
