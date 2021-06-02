@@ -218,10 +218,10 @@ export default {
     data(){
       return {
         formData:{
-          wxid: -1,
+          wxid: '',
           sex:-1,
           grade:-1,
-          telephone: -1,
+          telephone: '',
           location:-1
         },
         rawData:{
@@ -275,7 +275,10 @@ export default {
       },
       clickChange(){
         this.formData=JSON.parse(JSON.stringify(this.rawData))
+        if(this.rawData.wxid===-1) this.formData.wxid=''
+        if(this.rawData.telephone===-1) this.formData.telephone=''
         this.dialogFormVisible=true
+        this.$refs.form.clearValidate()
       },
       clickSubmit(){
         this.$refs.form.validate(valid =>{
@@ -306,6 +309,8 @@ export default {
         .then(res => {
           this.rawData=res.data
           this.formData=JSON.parse(JSON.stringify(this.rawData))
+          if(this.rawData.wxid===-1) this.formData.wxid=''
+          if(this.rawData.telephone===-1) this.formData.telephone=''
         },reason =>{
           this.$message({
             message:'请求超时，请检查网络设置',
