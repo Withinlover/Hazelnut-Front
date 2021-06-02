@@ -54,8 +54,8 @@
       </el-aside>
 
       <el-main>
-        <router-view>
-
+        <router-view
+          @updateAvatar="handleAvatarUpdate">
         </router-view>
       </el-main>
     </el-container>
@@ -130,7 +130,7 @@ export default {
     getBaseInfo(){
       this.axios.post('/user/getuser/',{token:this.$store.state.token})
       .then(res =>{
-        this.userImgUrl=res.data.url == 'NULL'? this.userImgUrl:res.data.url
+        this.userImgUrl=res.data.url === 'NULL'? this.userImgUrl:res.data.url
         this.userName=res.data.name
         this.userCredit=res.data.score<0? '?':res.data.score.toFixed(1)
       },reason =>{
@@ -139,6 +139,9 @@ export default {
           type:'error'
         })
       })
+    },
+    handleAvatarUpdate(avatarUrl){
+      this.userImgUrl=avatarUrl
     }
   },
   mounted(){

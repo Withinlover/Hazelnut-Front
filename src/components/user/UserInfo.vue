@@ -102,7 +102,8 @@
     </user-info-form>
 
     <user-avatar-form
-      ref="avatarForm">
+      ref="avatarForm"
+      @finishUpdate="handleAvatarUpdate">
     </user-avatar-form>
   </div>
 </template>
@@ -209,6 +210,9 @@ export default {
             type:'error'
           })
         })
+      },
+      handleAvatarUpdate(avatarUrl){
+        this.$emit('updateAvatar',avatarUrl)
       }
     },
     mounted(){
