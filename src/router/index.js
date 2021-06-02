@@ -99,7 +99,13 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to,from,next)=>{
-    if(to.matched.some(record => record.meta.requiresAuth) 
+    if(to.matched.length===0){
+        next('/')
+        router.app.$message({
+            message:'该页面不存在',
+            type:'warning'
+        })
+    }else if(to.matched.some(record => record.meta.requiresAuth) 
         && !store.state.isLogin){
         next('/')
         router.app.$message({
