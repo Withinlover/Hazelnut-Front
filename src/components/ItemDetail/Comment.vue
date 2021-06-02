@@ -1,5 +1,22 @@
 <template>
   <div class="card" :class="cardStyle">
+    <div class="applyTran">
+      <div class="apply-row" v-for="applier in applyForTrade" :key="applier">
+        <div class="apply-text">
+          <span class="applier-name">{{ applier.name }} </span>
+          申请交易
+        </div>
+        <div class="buttons">
+          <el-button class="reply-apply-button" type="primary" round
+            >同意</el-button
+          >
+          <el-button class="reply-apply-button" type="danger" round
+            >拒绝</el-button
+          >
+        </div>
+      </div>
+    </div>
+    <el-divider />
     <div class="newComm">
       <img class="commAva" :src="userInfo.avatar" />
       <el-input
@@ -81,6 +98,11 @@
   width: 400px;
   margin: 10px 10%;
 }
+
+el-divider {
+  width: 300px;
+}
+
 .newComm {
   display: flex;
   align-self: flex-start;
@@ -148,8 +170,7 @@
   margin-top: 5px;
   text-align: left;
 }
-.one-sub-comm {
-}
+
 .sub-comm-name {
   display: inline-block;
   color: #877;
@@ -158,10 +179,35 @@
   color: #aaa;
   padding-right: 10px;
 }
+.apply-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  margin-left: 30px;
+}
+
+.applier-name {
+  color: #877;
+}
+.buttons {
+  /* height: 20px; */
+  margin-right: 20px;
+  align-self: flex-end;
+}
+.el-divider--horizontal {
+  margin: 8px 0;
+  background: 0 0;
+  width: 90%;
+  align-self: center;
+  border-top: 1px solid #e8eaec;
+}
 </style>
 
 <script>
 export default {
+  name: "CommentCard",
   props: [],
   data() {
     return {
@@ -215,9 +261,22 @@ export default {
           ],
         },
       ],
+      applyForTrade: [
+        {
+          name: "Lou",
+          state: null,
+        },
+        {
+          name: "夏",
+          state: false,
+        },
+        {
+          name: "C语言程序设计",
+          state: true,
+        },
+      ],
     };
   },
-  name: "CommentCard",
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
