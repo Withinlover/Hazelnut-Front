@@ -8,7 +8,6 @@
           <div class="bottom clearfix">
             <span class="rmb">¥</span>
             <span class="price">{{ price }}</span>
-            <!-- <el-button type="text" class="button">操作按钮</el-button> -->
           </div>
         </div>
       </el-card>

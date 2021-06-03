@@ -25,7 +25,6 @@
 
 <style scoped>
 .icon-circle-back {
-  /* background-color: rgb(181, 158, 140); */
   background-color: rgb(110, 91, 80);
   border-radius: 50%;
   width: 40px;
@@ -44,7 +43,6 @@
   width: 2em;
   padding-top: 20px;
   height: 2em;
-  /* font-size: 4em; */
   font-weight: 900;
   color: rgb(224, 209, 193);
 }
@@ -52,6 +50,5 @@
   position: fixed;
   right: 30px;
   bottom: 30px;
-  /* border: 3px solid #73ad21; */
 }
 </style>

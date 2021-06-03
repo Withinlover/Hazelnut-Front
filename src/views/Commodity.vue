@@ -24,9 +24,7 @@
 
     <div class="icon-group">
       <div class="icon-circle-back">
-        <!-- <el-backtop target=".page-component__scroll .el-scrollbar__wrap"> -->
           <i class="el-icon-arrow-up iconAbs"></i>
-        <!-- </el-backtop> -->
       </div>
 
       <router-link tag="dummy" to="/release">
@@ -54,14 +52,11 @@ el-input {
   padding: 20px;
 }
 .searchinput {
-  /* margin: 10px; */
   padding: 1em;
   width: 10px;
   display: flex;
-  /* cross-size: ; */
 }
 .icon-circle-back {
-  /* background-color: rgb(181, 158, 140); */
   background-color: rgb(110, 91, 80);
   border-radius: 50%;
   width: 40px;
@@ -80,7 +75,6 @@ el-input {
   width: 2em;
   padding-top: 20px;
   height: 2em;
-  /* font-size: 4em; */
   font-weight: 900;
   color: rgb(224, 209, 193);
 }
@@ -88,7 +82,6 @@ el-input {
   position: fixed;
   right: 30px;
   bottom: 30px;
-  /* border: 3px solid #73ad21; */
 }
 </style>
 

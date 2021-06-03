@@ -61,14 +61,12 @@
                 {{ reply.name }}
               </div>
               :
-              <div class="sub-comm-name">@ {{ reply.toUser }}</div>
               {{ reply.content }}
 
               <div class="reply-comm-button">
                 <span class="reply-time">
                   {{ reply.time }}
                 </span>
-                <i class="el-icon-chat-line-square" /> 回复
               </div>
             </div>
           </div>
@@ -192,7 +190,6 @@ el-divider {
   color: #877;
 }
 .buttons {
-  /* height: 20px; */
   margin-right: 20px;
   align-self: flex-end;
 }
@@ -217,7 +214,6 @@ export default {
       },
       cardStyle: "card-nor",
       newComment: "",
-      test: "test",
       userInfo: {
         avatar:
           "https://via.placeholder.com/150/0000FF/808080?Text=Digital.com",
@@ -246,7 +242,6 @@ export default {
                 "https://via.placeholder.com/150/7700FF/808080?Text=Digital.com",
               name: "yizhe",
               toUser: "Louise",
-              content: "回复了一句",
               time: "2021-5-30 15:42",
             },
             {
@@ -254,7 +249,6 @@ export default {
               avatar:
                 "https://via.placeholder.com/150/7700FF/808080?Text=Digital.com",
               name: "夕",
-              toUser: "yizhe",
               content: "很有道理",
               time: "2021-6-19 23:59",
             },

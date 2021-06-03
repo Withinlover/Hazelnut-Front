@@ -105,7 +105,6 @@
 }
 .commo-type {
   color: white;
-
   font-size: 50%;
   padding: 3px;
   margin: 8px;
@@ -243,7 +242,6 @@ export default {
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin eros eget laoreet facilisis. Donec ornare pellentesque nisl, id viverra mi efficitur ut. In non urna purus. Nulla bibendum libero elit, eget tempor eros maximus sit amet. Donec sed nulla eget turpis efficitur ornare. Aliquam quis mi lobortis, commodo lectus nec, tempus quam. Fusce eu felis rhoncus, fringilla lacus non, condimentum quam.",
         isSold: false,
       },
-      colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
     };
   },
 };
