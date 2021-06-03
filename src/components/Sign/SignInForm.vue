@@ -1,10 +1,8 @@
 <template>
   <div class="background">
-    <div class="tips">
-      <span> HazelNut 不会以任何理由要求您转账汇款，谨防诈骗 </span>
-    </div>
-
+    <span>欢迎来到 Hazelnut 平台</span>
     <el-row class="forms" v-show="radio == 0">
+      <img src="../../assets/hazelnut.png" height="80px" style="margin-top: 10px"/>
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           用户名
@@ -19,13 +17,13 @@
           <i class="el-icon-lock" slot="prepend"></i>
         </el-input>
       </div>
-      <el-row>
+      <!-- <el-row>
         <el-col :span="6" :offset="18">
           <router-link to="/user/info">
-            <span style="font-size: 12px">忘记密码？</span>
+            <span style="font-size: 12px;">忘记密码？</span>
           </router-link>
         </el-col>
-      </el-row>
+      </el-row> -->
     </el-row>
 
     <el-row class="forms" v-show="radio == 1 || radio == 2">
@@ -80,8 +78,20 @@
 </template>
 
 <style scoped>
+
 .background {
-  background-color: rgb(198, 194, 191);
+  padding: 40px 20px;
+
+  border: #cccccc solid thin;
+  border-radius: 30px;
+
+  backdrop-filter: blur(20px);
+  background-color: rgba(255,255,255,0.5);
+
+  align-items: center;
+
+  height: 80%;
+
 }
 
 .switch {
@@ -102,7 +112,6 @@
 }
 
 .forms {
-  margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
   padding: 10px;
@@ -116,9 +125,6 @@
   margin: 5px;
 }
 
-.el-row {
-  margin-top: 10px;
-}
 </style>
 
 <script>
@@ -146,7 +152,7 @@ export default {
         }
         this.axios.post(url, form).then((res) => {
           if (res.data['result'] === 0) {
-            alert(res.data['message']);
+            this.$message.error(res.data['message'])
           } else {
             console.log(res.data);
             this.$store.commit("setToken", res.data['token']);
@@ -161,9 +167,9 @@ export default {
         this.radio = 1;
       else if (this.radio === 1) {
         if (this.username === '' || this.password === '') 
-          alert("用户名和密码不允许为空")
+          this.$message.error("用户名和密码不允许为空");
         else if (this.password != this.password2) 
-          alert("两次输入的密码不一致");
+          this.$message.error("两次输入的密码不一致");
         else {
           const url = "/user/email/";
           var form = {
@@ -171,9 +177,11 @@ export default {
           };
           this.axios.post(url, form).then((res) => {
             console.log(res.data);
-            alert(res.data['message']);
             if (res.data['result'] === 1)
-              this.radio = 2;
+              this.radio = 2,
+              this.$message.success(res.data['message']);
+            else
+              this.$message.error(res.data['message']);
           })
         }
       } else {
@@ -186,7 +194,7 @@ export default {
           'code':  this.verificationCode, 
         }
         this.axios.post(url, form).then((res) => {
-          alert(res.data['message']);
+          this.$message.error(res.data['message']);
           if (res.data['result'] === 1) {
             this.radio = 0;
           } 
