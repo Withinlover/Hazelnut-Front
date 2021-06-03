@@ -18,6 +18,8 @@
 <style scoped>
 .commodity-card {
   padding: 10px;
+  width: 250px;
+  margin: 10px;
 }
 .bottom {
   margin-top: 13px;
@@ -33,7 +35,9 @@
 }
 
 .image {
-  width: 100%;
+  width: 200px;
+  align-self: center;
+
   display: block;
 }
 
@@ -67,9 +71,7 @@
 </style>
 
 <script>
-
 export default {
-
   name: "CommodityCard",
   props: ["imageUrl", "title", "price"],
   data() {

@@ -8,15 +8,10 @@
         prefix-icon="el-icon-search"
       ></el-input>
     </div>
-    <a href="http://localhost:8080/commodity/item">
-      <commodity-card
-        imageUrl="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-        title="Burger汉堡包"
-        price="18.5"
-      />
-    </a>
+
     <div class="pool">
       <!-- all goods -->
+      <goods-cascade />
     </div>
     <el-backtop
       target=".page-component__scroll .el-scrollbar__wrap"
@@ -24,7 +19,7 @@
 
     <div class="icon-group">
       <div class="icon-circle-back">
-          <i class="el-icon-arrow-up iconAbs"></i>
+        <i class="el-icon-arrow-up iconAbs"></i>
       </div>
 
       <router-link tag="dummy" to="/release">
@@ -86,10 +81,10 @@ el-input {
 </style>
 
 <script>
-import CommodityCard from "../components/commodity/CommodityCard.vue";
+import GoodsCascade from "../components/commodity/GoodsCascade.vue";
 
 export default {
-  components: { CommodityCard },
+  components: { GoodsCascade },
   data() {
     return {};
   },
