@@ -384,6 +384,7 @@ export default {
       }
       this.replyTo = -1;
       this.inputContent = "";
+      this.inputPlaceHoldertext = "请输入评论";
       this.getComment();
     },
   },
