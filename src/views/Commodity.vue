@@ -11,18 +11,17 @@
 
     <div class="pool">
       <!-- all goods -->
-      <goods-cascade />
+      <goods-cascade casType="comm" />
     </div>
-    <el-backtop
-      target=".page-component__scroll .el-scrollbar__wrap"
-    ></el-backtop>
 
     <div class="icon-group">
-      <div class="icon-circle-back">
-        <i class="el-icon-arrow-up iconAbs"></i>
+      <div class="f">
+        <div @click="scrollToTop()" class="icon-circle-back">
+          <i class="el-icon-arrow-up iconAbs" />
+        </div>
       </div>
 
-      <router-link tag="dummy" to="/release">
+      <router-link tag="div" to="/release">
         <div class="icon-circle-back">
           <i class="el-icon-plus iconAbs"></i>
         </div>
@@ -86,7 +85,14 @@ import GoodsCascade from "../components/commodity/GoodsCascade.vue";
 export default {
   components: { GoodsCascade },
   data() {
-    return {};
+    return {
+      input: "",
+    };
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
   },
 };
 </script>

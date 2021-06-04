@@ -1,19 +1,23 @@
 <template>
   <div class="demand">
-    <h1>This is a Demand Page</h1>
     <div>
-      <el-input
-        class="searchInput"
-        v-model="input"
-        placeholder="请输入您想找的需求"
-        prefix-icon="el-icon-search"
-      ></el-input>
+      <div class="search">
+        <el-input
+          class="searchInput"
+          v-model="input"
+          placeholder="请输入您想找的商品"
+          prefix-icon="el-icon-search"
+        ></el-input>
+      </div>
 
+      <goods-cascade casType="demand" />
       <div class="icon-group">
-        <div class="icon-circle-back">
-          <i class="el-icon-arrow-up iconAbs"></i>
+        <div class="f">
+          <div @click="scrollToTop()" class="icon-circle-back">
+            <i class="el-icon-arrow-up iconAbs" />
+          </div>
         </div>
-        <router-link tag="dummy" to="/release">
+        <router-link tag="div" to="/release">
           <div class="icon-circle-back">
             <i class="el-icon-plus iconAbs"></i>
           </div>
@@ -24,6 +28,18 @@
 </template>
 
 <style scoped>
+.demand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+el-input {
+  padding: 10px;
+  margin: 0;
+}
+.search {
+  padding: 20px;
+}
 .icon-circle-back {
   background-color: rgb(110, 91, 80);
   border-radius: 50%;
@@ -52,3 +68,19 @@
   bottom: 30px;
 }
 </style>
+<script>
+import GoodsCascade from "../components/commodity/GoodsCascade.vue";
+export default {
+  components: { GoodsCascade },
+  data() {
+    return {
+      input: "",
+    };
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
+  },
+};
+</script>
