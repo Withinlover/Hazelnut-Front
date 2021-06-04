@@ -23,13 +23,13 @@
           <el-radio label="2" border>发布商品</el-radio>
         </el-radio-group>
         <el-divider></el-divider>
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="家用电器" value="shanghai" />
-          <el-option label="二手书籍" value="beijing" />
-          <el-option label="服装首饰" value="shanghai" />
-          <el-option label="日用品" value="beijing" />
-          <el-option label="成人用品" value="shanghai" />
-          <el-option label="ZHTYYDS" value="beijing" />
+        <el-select v-model="form.region" placeholder="请选择商品分类">
+          <el-option label="家用电器" value="家用电器" />
+          <el-option label="二手书籍" value="二手书籍" />
+          <el-option label="服装首饰" value="服装首饰" />
+          <el-option label="日用品" value="日用品" />
+          <el-option label="成人用品" value="成人用品" />
+          <el-option label="ZHTYYDS" value="ZHTYYDS" />
         </el-select>
       </el-form-item>
 
