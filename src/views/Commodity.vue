@@ -11,7 +11,7 @@
 
     <div class="pool">
       <!-- all goods -->
-      <goods-cascade casType="comm" />
+      <goods-cascade casType="commodity" />
     </div>
 
     <div class="icon-group">
