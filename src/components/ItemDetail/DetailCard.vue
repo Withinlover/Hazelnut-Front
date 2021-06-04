@@ -1,7 +1,6 @@
 <template>
   <div class="detailPage">
-    <!-- {{ window.width }}
-    {{ window.height }} -->
+ 
     <div class="commo" :class="carouselStyle">
       <div class="block">
         <el-carousel
@@ -10,6 +9,7 @@
           interval="5000"
           :direction="carouselDirect"
         >
+        
           <el-carousel-item v-for="item in imageUrls" :key="item">
             <img class="commo-image" :src="item" />
           </el-carousel-item>
@@ -27,6 +27,7 @@
           </div>
           <div class="release-info">
             <div class="releaser">
+             
               <img class="avatar" :src="commoInfo.releaser.avatar" />
               <span class="name">{{ commoInfo.releaser.name }}</span>
               <span class="rate">{{ commoInfo.releaser.credit }}</span>
@@ -41,10 +42,12 @@
           <el-button
             class="button"
             type="primary"
-            :disabled="commoInfo.isSold"
+            :disabled="false"
             round
+            @click="applyForTrade"
             >申请交易</el-button
           >
+          <!-- commoInfo.isSold -->
         </div>
       </div>
     </div>
@@ -191,13 +194,39 @@
 <script>
 export default {
   name: "DetailCard",
-  props: ["commoType"],
+  props: ["commoType", "goodId"],
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
+  },
+
+  async mounted() {
+    let res = "";
+    if (this.$props.commoType === "出") {
+      res = await this.axios.post("good/goodinfo/", { id: this.$props.goodId });
+    } else if (this.$props.commoType === "收") {
+      res = await this.axios.post("demand/demandinfo/", {
+        id: this.$props.goodId,
+      });
+    }
+
+    let data = res.data;
+    this.imageUrls = data.imageUrls;
+    this.commoInfo = {
+      title: data.title,
+      price: data.price,
+      releaser: {
+        name: data.name,
+        avatar: data.avatar,
+        credit: data.credit,
+      },
+      date: data.date,
+      description: data.description,
+      isSold: data.isSold,
+    };
   },
   methods: {
     handleResize() {
@@ -214,6 +243,28 @@ export default {
         this.carouselDirect = "vertical";
       }
     },
+    async applyForTrade() {
+      let res = await this.axios.post("trade/apply/", {
+        token: this.$store.state.token, //当前登录用户的token
+        objectid: this.$props.goodId, // 商品ID或需求ID
+        type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
+      });
+
+      if (res.data.result === 1) {
+        this.$notify({
+          title: "申请交易成功",
+          message: "请耐心等待帖主回复",
+          type: "success",
+        });
+      } else {
+        this.$notify(
+          this.$notify.error({
+            title: "申请交易失败",
+            message: "换个商品看看吧",
+          })
+        );
+      }
+    },
   },
 
   data() {
@@ -228,20 +279,7 @@ export default {
       },
       carouselStyle: "commoNor",
       carouselDirect: "horizontal",
-      commoInfo: {
-        title: "Burger 汉堡",
-        price: 18.5,
-        releaser: {
-          name: "luxia 林璐霞",
-          avatar:
-            "https://via.placeholder.com/150/0000FF/808080?Text=Digital.com",
-          credit: 4.4,
-        },
-        date: "2021-5-21",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin eros eget laoreet facilisis. Donec ornare pellentesque nisl, id viverra mi efficitur ut. In non urna purus. Nulla bibendum libero elit, eget tempor eros maximus sit amet. Donec sed nulla eget turpis efficitur ornare. Aliquam quis mi lobortis, commodo lectus nec, tempus quam. Fusce eu felis rhoncus, fringilla lacus non, condimentum quam.",
-        isSold: false,
-      },
+      commoInfo: {},
     };
   },
 };

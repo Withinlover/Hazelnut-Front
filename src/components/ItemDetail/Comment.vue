@@ -26,26 +26,25 @@
       />
       <el-button class="commit-button" type="primary" round>评论</el-button>
     </div>
-
-    <div class="all-comm">
+    <div class="all-comm" :hidden="!hasComment">
       <div v-for="comment in comments" :key="comment.id">
         <div clas="one-comm">
           <div class="comm-layer0">
             <div class="display-info">
-              <img class="commAva" :src="comment.avatar" />
+              <img class="commAva" :src="comment.url" />
               <div class="display-text">
                 <div class="comm-name">
-                  {{ comment.name }}
+                  {{ comment.username }}
                 </div>
                 <div class="comm-time">
-                  {{ comment.time }}
+                  {{ comment.sendtime }}
                 </div>
               </div>
             </div>
           </div>
           <div class="comm-text">
             <span>
-              {{ comment.content }}
+              {{ comment.text }}
             </span>
             <div class="reply-comm-button">
               <i class="el-icon-chat-line-square" /> 回复
@@ -54,18 +53,18 @@
           <div class="sub-comm">
             <div
               class="one-sub-comm"
-              v-for="reply in comment.replys"
+              v-for="reply in comment.subreply"
               :key="reply.id"
             >
               <div class="sub-comm-name">
-                {{ reply.name }}
+                {{ reply.username }}
               </div>
               :
-              {{ reply.content }}
+              {{ reply.text }}
 
               <div class="reply-comm-button">
                 <span class="reply-time">
-                  {{ reply.time }}
+                  {{ reply.sendtime }}
                 </span>
               </div>
             </div>
@@ -205,9 +204,39 @@ el-divider {
 <script>
 export default {
   name: "CommentCard",
-  props: [],
+  props: ["commoType", "goodId"],
+  computed: {
+    hasComment() {
+      return this.comments !== "NULL";
+    },
+  },
+  async mounted() {
+    // all comments
+    let res = await this.axios.post("message/getreply/", {
+      objectid: this.$props.goodId, // 商品ID或需求ID
+      type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
+    });
+
+    this.data = res.data;
+    this.comments = res.data.reply;
+
+    //  user avatar
+    let user = await this.axios.post("user/getuser/", {
+      token: this.$store.state.token,
+    });
+    this.userInfo.avatar = user.data.url;
+
+    // trade list
+    let trade = await this.axios.post("trade/applylist/", {
+      token: this.$store.state.token, //当前登录用户的token
+      objectid: this.$props.goodId, // 商品ID或需求ID
+      type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
+    });
+    console.log(trade);
+  },
   data() {
     return {
+      data: "",
       window: {
         width: 0,
         height: 0,
@@ -218,55 +247,12 @@ export default {
         avatar:
           "https://via.placeholder.com/150/0000FF/808080?Text=Digital.com",
       },
-      comments: [
-        {
-          id: 1,
-          avatar:
-            "https://via.placeholder.com/150/7700FF/808080?Text=Digital.com",
-          name: "yizhe",
-          content: "说了句啥",
-          time: "2021-5-19 19:07",
-          replys: [],
-        },
-        {
-          id: 2,
-          avatar:
-            "https://via.placeholder.com/150/7777FF/808080?Text=Digital.com",
-          name: "Louise",
-          content: "另一条评论",
-          time: "2021-5-29 07:07",
-          replys: [
-            {
-              id: 3,
-              avatar:
-                "https://via.placeholder.com/150/7700FF/808080?Text=Digital.com",
-              name: "yizhe",
-              toUser: "Louise",
-              time: "2021-5-30 15:42",
-            },
-            {
-              id: 4,
-              avatar:
-                "https://via.placeholder.com/150/7700FF/808080?Text=Digital.com",
-              name: "夕",
-              content: "很有道理",
-              time: "2021-6-19 23:59",
-            },
-          ],
-        },
-      ],
+
+      comments: [],
       applyForTrade: [
         {
           name: "Lou",
           state: null,
-        },
-        {
-          name: "夏",
-          state: false,
-        },
-        {
-          name: "C语言程序设计",
-          state: true,
         },
       ],
     };

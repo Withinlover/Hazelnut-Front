@@ -15,66 +15,68 @@ const routes = [
         path: '/commodity',
         name: 'Commodity',
         component: () =>
-            import ('../views/Commodity.vue')
+            import('../views/Commodity.vue')
     },
     { // 需求浏览页
         path: '/demand',
         name: 'Demand',
         component: () =>
-            import ('../views/Demand.vue')
+            import('../views/Demand.vue')
     },
     { // 商品详情页
-        path: '/commodity/item',
+        path: '/commodity/item/:goodId',
         name: 'CommodityItem',
         component: () =>
-            import ('../views/CommodityItem.vue')
+            import('../views/CommodityItem.vue'),
+        props: true
     },
     { // 需求详情页
-        path: '/demand/item',
+        path: '/demand/item/:goodId',
         name: 'DemandItem',
         component: () =>
-            import ('../views/DemandItem.vue')
+            import('../views/DemandItem.vue'),
+        props: true
     },
     { // 发布页
         path: '/release',
         name: 'Release',
         component: () =>
-            import ('../views/Release.vue')
+            import('../views/Release.vue')
     },
     { // 个人主页
         path: '/user',
-        component: () => import ('../views/UserPage.vue'),
-        meta:{requiresAuth:true},
-        children:[
+        component: () => import('../views/UserPage.vue'),
+        meta: { requiresAuth: true },
+        children: [
             { // 个人信息
                 path: '',
                 name: 'UserInfo',
-                component:() => import('../components/user/UserInfo.vue')
+                component: () => import('../components/user/UserInfo.vue')
             },
             { // 当前发布
                 path: 'released',
                 name: 'UserReleased',
-                component:() => import('../components/user/UserReleased.vue')
+                component: () => import('../components/user/UserReleased.vue')
             },
             { // 交易历史
                 path: 'history',
                 name: 'UserHistory',
-                component:() => import('../components/user/UserHistory.vue')
+                component: () => import('../components/user/UserHistory.vue')
             },
             { // 消息记录
                 path: 'message',
                 name: 'UserMessage',
-                component:() => import('../components/user/UserMessage.vue')
+                component: () => import('../components/user/UserMessage.vue')
             },
             { // 我的关注
                 path: 'follow',
                 name: 'UserFollow',
-                component:() => import('../components/user/UserFollow.vue')
+                component: () => import('../components/user/UserFollow.vue')
             },
             { // 我的收藏
                 path: 'favorites',
                 name: 'UserFavorites',
-                component:() => import('../components/user/UserFavorites.vue')
+                component: () => import('../components/user/UserFavorites.vue')
             }
         ]
     },
@@ -82,13 +84,13 @@ const routes = [
         path: '/user/watch',
         name: 'UserWatch',
         component: () =>
-            import ('../views/UserWatch.vue')
+            import('../views/UserWatch.vue')
     },
     { // 管理员
         path: '/admin',
         name: 'Admin',
         component: () =>
-            import ('../views/Admin.vue')
+            import('../views/Admin.vue')
     },
 ]
 
@@ -98,21 +100,21 @@ const router = new VueRouter({
     routes
 })
 
-router.beforeEach((to,from,next)=>{
-    if(to.matched.length===0){
+router.beforeEach((to, from, next) => {
+    if (to.matched.length === 0) {
         next('/')
         router.app.$message({
-            message:'该页面不存在',
-            type:'warning'
+            message: '该页面不存在',
+            type: 'warning'
         })
-    }else if(to.matched.some(record => record.meta.requiresAuth) 
-        && !store.state.isLogin){
+    } else if (to.matched.some(record => record.meta.requiresAuth)
+        && !store.state.isLogin) {
         next('/')
         router.app.$message({
-            message:'尚未登录，请先登录',
-            type:'warning'
+            message: '尚未登录，请先登录',
+            type: 'warning'
         })
-    }else{
+    } else {
         next()
     }
 })
