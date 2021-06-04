@@ -1,31 +1,47 @@
 <template>
   <div class="card" :class="cardStyle">
+    <!-- 申请交易 -->
     <div class="applyTran">
-      <div class="apply-row" v-for="applier in applyForTrade" :key="applier">
+      <div class="apply-row" v-for="applier in applyForTrade" :key="applier.id">
         <div class="apply-text">
           <span class="applier-name">{{ applier.name }} </span>
           申请交易
         </div>
         <div class="buttons">
-          <el-button class="reply-apply-button" type="primary" round
+          <el-button
+            class="reply-apply-button"
+            type="primary"
+            @click="acceptApply(applier.id)"
+            round
             >同意</el-button
           >
-          <el-button class="reply-apply-button" type="danger" round
+          <el-button
+            class="reply-apply-button"
+            type="danger"
+            @click="refuseApply(applier.id)"
+            round
             >拒绝</el-button
           >
         </div>
       </div>
     </div>
-    <el-divider />
+    <el-divider v-if="owned" />
+
+    <!-- 增加评论 -->
     <div class="newComm">
       <img class="commAva" :src="userInfo.avatar" />
       <el-input
         class="newCommIn"
-        v-model="newComment"
-        placeholder="请输入评论"
+        id="newCommInput"
+        v-model="inputContent"
+        :placeholder="inputPlaceHoldertext"
       />
-      <el-button class="commit-button" type="primary" round>评论</el-button>
+      <el-button class="commit-button" type="primary" @click="postCommnet" round
+        >评论</el-button
+      >
     </div>
+
+    <!-- 查看所有评论 -->
     <div class="all-comm" :hidden="!hasComment">
       <div v-for="comment in comments" :key="comment.id">
         <div clas="one-comm">
@@ -46,7 +62,10 @@
             <span>
               {{ comment.text }}
             </span>
-            <div class="reply-comm-button">
+            <div
+              class="reply-comm-button"
+              @click="setReplyTo(comment.id, comment.username)"
+            >
               <i class="el-icon-chat-line-square" /> 回复
             </div>
           </div>
@@ -212,13 +231,7 @@ export default {
   },
   async mounted() {
     // all comments
-    let res = await this.axios.post("message/getreply/", {
-      objectid: this.$props.goodId, // 商品ID或需求ID
-      type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
-    });
-
-    this.data = res.data;
-    this.comments = res.data.reply;
+    this.getComment();
 
     //  user avatar
     let user = await this.axios.post("user/getuser/", {
@@ -227,16 +240,15 @@ export default {
     this.userInfo.avatar = user.data.url;
 
     // trade list
-    let trade = await this.axios.post("trade/applylist/", {
-      token: this.$store.state.token, //当前登录用户的token
-      objectid: this.$props.goodId, // 商品ID或需求ID
-      type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
-    });
-    console.log(trade);
+    this.getApply();
   },
+
   data() {
     return {
-      data: "",
+      owned: false,
+      replyTo: -1,
+      inputPlaceHoldertext: "请输入评论",
+      inputContent: "",
       window: {
         width: 0,
         height: 0,
@@ -244,17 +256,11 @@ export default {
       cardStyle: "card-nor",
       newComment: "",
       userInfo: {
-        avatar:
-          "https://via.placeholder.com/150/0000FF/808080?Text=Digital.com",
+        avatar: "",
       },
 
       comments: [],
-      applyForTrade: [
-        {
-          name: "Lou",
-          state: null,
-        },
-      ],
+      applyForTrade: [],
     };
   },
   created() {
@@ -273,6 +279,112 @@ export default {
       } else {
         this.cardStyle = "card-thin";
       }
+    },
+    async getApply() {
+      let trade = await this.axios.post("trade/applylist/", {
+        token: this.$store.state.token, //当前登录用户的token
+        objectid: this.$props.goodId, // 商品ID或需求ID
+        type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
+      });
+      this.owned = trade.data.result === 1;
+      this.applyForTrade = trade.data.apply;
+    },
+    async acceptApply(id) {
+      let res = await this.axios.post("trade/confirm/", {
+        token: this.$store.state.token, //当前登录用户的token,后台会进行验证该用户是不是交易涉及到商品的拥有者
+        applyID: id, //交易请求ID
+        confirm: 1, //同意(1)或拒绝0
+      });
+
+      if (res.data.result === 1) {
+        this.$notify({
+          title: "已达成交易",
+          message: "记得和卖家交易哦",
+          type: "success",
+        });
+      } else {
+        this.$notify(
+          this.$notify.error({
+            title: "同意交易失败",
+            message: "等会再试试吧",
+          })
+        );
+      }
+      this.getApply();
+    },
+    async refuseApply(id) {
+      let res = await this.axios.post("trade/confirm/", {
+        token: this.$store.state.token, //当前登录用户的token,后台会进行验证该用户是不是交易涉及到商品的拥有者
+        applyID: id, //交易请求ID
+        confirm: -1, //同意(1)或拒绝0
+      });
+      if (res.data.result === 1) {
+        this.$notify({
+          title: "已拒绝交易",
+          message: "再看看有什么合适的交易吧",
+          type: "success",
+        });
+      } else {
+        this.$notify(
+          this.$notify.error({
+            title: "拒绝失败",
+            message: "等会再试试吧",
+          })
+        );
+      }
+      this.getApply();
+    },
+    setReplyTo(id, name) {
+      console.log(id);
+      this.replyTo = id;
+      this.inputPlaceHoldertext = "回复" + name + ":";
+
+      document.getElementById("newCommInput").focus();
+    },
+    async getComment() {
+      let res = await this.axios.post("message/getreply/", {
+        objectid: this.$props.goodId, // 商品ID或需求ID
+        type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
+      });
+
+      this.comments = res.data.reply;
+    },
+    async postCommnet() {
+      console.log(this.inputContent);
+      this.inputContent = this.inputContent.trim();
+
+      if (this.inputContent === "") {
+        this.$message({
+          message: "评论不能为空",
+          type: "warning",
+        });
+      } else {
+        // comment isn't empty
+        let res = await this.axios.post("message/reply/", {
+          token: this.$store.state.token,
+          objectid: this.$props.goodId, // 商品ID或需求ID
+          type: this.commoType === "出" ? 0 : 1, //0表示商品,1表示需求
+          reply: this.replyTo, // 被回复的留言ID,如果没有,传-1
+          text: this.inputContent, //留言内容
+        });
+        if (res.data.result === 1) {
+          this.$notify({
+            title: "评论成功",
+            message: "",
+            type: "success",
+          });
+        } else {
+          this.$notify(
+            this.$notify.error({
+              title: "评论失败",
+              message: "等会再试试吧",
+            })
+          );
+        }
+      }
+      this.replyTo = -1;
+      this.inputContent = "";
+      this.getComment();
     },
   },
 };

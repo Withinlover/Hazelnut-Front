@@ -1,15 +1,14 @@
 <template>
   <div class="detailPage">
- 
     <div class="commo" :class="carouselStyle">
       <div class="block">
         <el-carousel
           class="carousel"
           height="500px"
-          interval="5000"
+          :interval="5000"
           :direction="carouselDirect"
         >
-        
+          <!-- {{imageUrls}} -->
           <el-carousel-item v-for="item in imageUrls" :key="item">
             <img class="commo-image" :src="item" />
           </el-carousel-item>
@@ -27,7 +26,6 @@
           </div>
           <div class="release-info">
             <div class="releaser">
-             
               <img class="avatar" :src="commoInfo.releaser.avatar" />
               <span class="name">{{ commoInfo.releaser.name }}</span>
               <span class="rate">{{ commoInfo.releaser.credit }}</span>
@@ -264,6 +262,7 @@ export default {
           })
         );
       }
+      this.$router.go(this.$router.currentRoute);
     },
   },
 
@@ -279,7 +278,13 @@ export default {
       },
       carouselStyle: "commoNor",
       carouselDirect: "horizontal",
-      commoInfo: {},
+      commoInfo: {
+        releaser: {
+          name: "",
+          avatar: "",
+          credit: 0,
+        },
+      },
     };
   },
 };
