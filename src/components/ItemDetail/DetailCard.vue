@@ -43,9 +43,9 @@
             :disabled="commoInfo.isSold && !commoInfo.canTrade"
             round
             @click="applyForTrade"
-            >申请交易</el-button
+            >{{ commoInfo.isSold ? "已卖出" : "申请交易" }}</el-button
           >
-
+          <!-- {{ this.data.isSold }} -->
           <!-- commoInfo.isSold -->
         </div>
       </div>
@@ -210,40 +210,7 @@ export default {
   },
 
   async mounted() {
-    let res = "";
-
-    try {
-      if (this.$props.commoType === "出") {
-        res = await this.axios.post("good/goodinfo/", {
-          id: this.$props.goodId,
-          token: this.$store.state.isLogin ? this.$store.state.token : null,
-        });
-      } else if (this.$props.commoType === "收") {
-        res = await this.axios.post("demand/demandinfo/", {
-          id: this.$props.goodId,
-          token: this.$store.state.isLogin ? this.$store.state.token : null,
-        });
-      }
-    } catch (e) {
-      this.$router.push({ path: "/error" });
-    }
-
-    let data = res.data;
-    this.data = res.data;
-    this.imageUrls = data.imageUrls;
-    this.commoInfo = {
-      title: data.title,
-      price: data.price,
-      releaser: {
-        name: data.name,
-        avatar: data.avatar,
-        credit: data.credit,
-      },
-      date: data.date,
-      description: data.description,
-      isSold: data.isSold,
-      canTrade: data.canTrade,
-    };
+    this.getDetail();
   },
   methods: {
     handleResize() {
@@ -285,7 +252,44 @@ export default {
           })
         );
       }
-      this.$router.go(this.$router.currentRoute);
+      // this.$router.go(this.$router.currentRoute);
+      this.getDetail();
+    },
+    async getDetail() {
+      let res = "";
+
+      try {
+        if (this.$props.commoType === "出") {
+          res = await this.axios.post("good/goodinfo/", {
+            id: this.$props.goodId,
+            token: this.$store.state.isLogin ? this.$store.state.token : null,
+          });
+        } else if (this.$props.commoType === "收") {
+          res = await this.axios.post("demand/demandinfo/", {
+            id: this.$props.goodId,
+            token: this.$store.state.isLogin ? this.$store.state.token : null,
+          });
+        }
+      } catch (e) {
+        this.$router.push({ path: "/error" });
+      }
+
+      let data = res.data;
+      this.data = res.data;
+      this.imageUrls = data.imageUrls;
+      this.commoInfo = {
+        title: data.title,
+        price: data.price,
+        releaser: {
+          name: data.name,
+          avatar: data.avatar,
+          credit: data.credit,
+        },
+        date: data.date,
+        description: data.description,
+        isSold: data.isSold,
+        canTrade: data.canTrade,
+      };
     },
   },
 

@@ -350,7 +350,6 @@ export default {
       this.comments = res.data.reply;
     },
     async postCommnet() {
-      console.log(this.inputContent);
       this.inputContent = this.inputContent.trim();
 
       if (this.inputContent === "") {
