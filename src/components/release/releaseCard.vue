@@ -24,12 +24,12 @@
         </el-radio-group>
         <el-divider></el-divider>
         <el-select v-model="form.region" placeholder="请选择商品分类">
-          <el-option label="家用电器" value="家用电器" />
-          <el-option label="二手书籍" value="二手书籍" />
-          <el-option label="服装首饰" value="服装首饰" />
-          <el-option label="日用品" value="日用品" />
-          <el-option label="成人用品" value="成人用品" />
-          <el-option label="ZHTYYDS" value="ZHTYYDS" />
+          <el-option
+            v-for="category in categoris"
+            :key="category.id"
+            :label="category.name"
+            :value="category.id"
+          />
         </el-select>
       </el-form-item>
 
@@ -50,7 +50,7 @@
         <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
       <el-form-item style="text-align: right">
-        <el-button type="primary" @click="next">下一步</el-button>
+        <el-button type="primary" @click="next">创建</el-button>
       </el-form-item>
     </el-form>
 
@@ -98,7 +98,6 @@
         <el-button type="primary" @click="finish">完成</el-button>
       </el-form-item>
     </el-form>
-    
   </el-card>
 </template>
 
@@ -130,24 +129,58 @@ export default {
         price: "",
         rate: 1,
       },
+      releaseID: -1,
+      categoris: ["后端炸了"],
       active: 0,
       dialogImageUrl: "",
       dialogVisible: false,
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
     next() {
-      if (this.active < 2) this.active += 1;
+      if (this.active === 0) {
+        if (this.form.name === "") {
+          this.$message.error("请填写标题");
+        } else if (this.form.region === "") {
+          this.$message.error("请选择商品分类");
+        } else if (this.form.price === "") {
+          this.$message.error(
+            "请填写商品价格(仅填写数字部分，单位为元，如：11.5)"
+          );
+        } else {
+          var url, data;
+          if (this.type === "1")
+            url = "/good/upload/";
+          else 
+            url = '/demand/upload/';
+          data = {
+            token: this.$store.state.token,
+            name: this.form.name, //商品名称
+            description: '[ ' + this.form.rate + ' 成新] ' + this.form.desc, //商品描述
+            category: parseInt(this.form.region), //分类序号
+            price: parseFloat(this.form.price), //价格
+          };
+          console.log(typeof 11.5)
+          console.log(data);
+          this.axios.post(url, data).then((res) => {
+            console.log(res.data);
+            this.releaseID = res.data['id'];
+            this.$message.success('创建商品成功，您的商品 ID: ' + this.releaseID);
+            this.active += 1;
+          })
+        }
+      } else if (this.active === 1) {
+        this.active += 1;
+      } else {
+        this.active += 1;
+      }
     },
     cancel() {
-      this.active = 0
+      this.active = 0;
     },
     finish() {
-      this.active = 0
-      this.$router.push({path: '/commodity'});  
+      this.active = 0;
+      this.$router.push({ path: "/commodity" });
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -156,6 +189,26 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+  },
+  mounted() {
+    var url, data;
+    url = "good/category/";
+    this.axios.get(url).then((res) => {
+      // console.log(res.data);
+      if (res.data["result"] == 1) {
+        var categoris = res.data["category"];
+
+        this.categoris = [];
+        for (var i in categoris) {
+          this.categoris[i] = {
+            id: i,
+            name: categoris[i],
+          };
+        }
+      } else {
+        this.$message.error("后端跑路了");
+      }
+    });
   },
 };
 </script>
