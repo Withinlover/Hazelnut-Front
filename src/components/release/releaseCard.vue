@@ -206,7 +206,10 @@ export default {
     }
   },
   mounted() {
-    console.log(this.axios.defaults.baseURL);
+    if (this.$store.state.isLogin === false) {
+      this.$message.error('尚未登录，请先登录账号');
+      this.$router.push('/');
+    }
     var url, data;
     url = "good/category/";
     this.axios.get(url).then((res) => {
