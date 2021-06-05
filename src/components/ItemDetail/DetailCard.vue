@@ -91,7 +91,9 @@
   height: 500px;
   margin-right: 10px;
 }
-
+.commo-image {
+  height: 100%;
+}
 .detail-text {
   display: flex;
   flex-direction: column;
@@ -180,8 +182,12 @@
   padding: 7px;
 }
 .button-row {
-  align-self: right;
+  margin-bottom: 30px;
 }
+.button-row:last-of-type {
+  margin-top: auto;
+}
+
 .button {
   margin: 10px;
   align-self: right;
