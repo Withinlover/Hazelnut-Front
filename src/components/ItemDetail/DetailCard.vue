@@ -45,9 +45,11 @@
             @click="applyForTrade"
             >申请交易</el-button
           >
+
           <!-- commoInfo.isSold -->
         </div>
       </div>
+      {{ data }}
     </div>
   </div>
 </template>
@@ -218,6 +220,7 @@ export default {
     }
 
     let data = res.data;
+    this.data = res.data;
     this.imageUrls = data.imageUrls;
     this.commoInfo = {
       title: data.title,
@@ -274,6 +277,7 @@ export default {
 
   data() {
     return {
+      data: "",
       imageUrls: [
         "https://via.placeholder.com/500",
         "https://via.placeholder.com/500/FFFF00/000000?Text=WebsiteBuilders.com",

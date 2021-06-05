@@ -92,6 +92,12 @@ const routes = [
         component: () =>
             import('../views/Admin.vue')
     },
+    {
+        path: '/error',
+        name: 'error',
+        component: () =>
+            import('../views/Error.vue')
+    }
 ]
 
 const router = new VueRouter({
