@@ -57,7 +57,8 @@
     <el-form :model="form" label-width="80px" v-show="active === 1">
       <el-form-item label="商品图片">
         <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :headers="headers"
+          :action='getUrl()'
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
@@ -94,7 +95,7 @@
         <span>{{ form.desc }}</span>
       </el-form-item>
       <el-form-item style="text-align: right">
-        <el-button type="primary" @click="cancel">重新填写</el-button>
+        <el-button type="primary" @click="cancel">发布下一个</el-button>
         <el-button type="primary" @click="finish">完成</el-button>
       </el-form-item>
     </el-form>
@@ -129,6 +130,9 @@ export default {
         price: "",
         rate: 1,
       },
+      headers: {
+        authorization: -1
+      },
       releaseID: -1,
       categoris: ["后端炸了"],
       active: 0,
@@ -149,7 +153,7 @@ export default {
           );
         } else {
           var url, data;
-          if (this.type === "1")
+          if (this.form.type == 2)
             url = "/good/upload/";
           else 
             url = '/demand/upload/';
@@ -160,16 +164,21 @@ export default {
             category: parseInt(this.form.region), //分类序号
             price: parseFloat(this.form.price), //价格
           };
-          console.log(typeof 11.5)
-          console.log(data);
           this.axios.post(url, data).then((res) => {
-            console.log(res.data);
-            this.releaseID = res.data['id'];
-            this.$message.success('创建商品成功，您的商品 ID: ' + this.releaseID);
-            this.active += 1;
+            if (res.data['result'] === 1) {
+              console.log(res.data);
+              this.releaseID = res.data['id'];
+              this.$message.success('创建商品成功，您的商品 ID: ' + this.releaseID);
+              this.headers.authorization = this.releaseID;
+              console.log(this.headers);
+              this.active += 1;
+            } else {
+              this.$message.error('来自后端的消息：' + res.data['message']);
+            }
           })
         }
       } else if (this.active === 1) {
+        
         this.active += 1;
       } else {
         this.active += 1;
@@ -189,8 +198,18 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+    getUrl() {
+      if (this.form.type == 2) 
+        return this.axios.defaults.baseURL + '/good/uploadimg/';
+      else 
+        return this.axios.defaults.baseURL + '/demand/uploadimg/'
+    }
   },
   mounted() {
+    if (this.$store.state.isLogin === false) {
+      this.$message.error('尚未登录，请先登录账号');
+      this.$router.push('/');
+    }
     var url, data;
     url = "good/category/";
     this.axios.get(url).then((res) => {
