@@ -40,7 +40,7 @@
           <el-button
             class="button"
             type="primary"
-            :disabled="false"
+            :disabled="commoInfo.isSold && !commoInfo.canTrade"
             round
             @click="applyForTrade"
             >申请交易</el-button
@@ -49,7 +49,7 @@
           <!-- commoInfo.isSold -->
         </div>
       </div>
-      {{ data }}
+      <!-- {{ data }} -->
     </div>
   </div>
 </template>
@@ -211,12 +211,21 @@ export default {
 
   async mounted() {
     let res = "";
-    if (this.$props.commoType === "出") {
-      res = await this.axios.post("good/goodinfo/", { id: this.$props.goodId });
-    } else if (this.$props.commoType === "收") {
-      res = await this.axios.post("demand/demandinfo/", {
-        id: this.$props.goodId,
-      });
+
+    try {
+      if (this.$props.commoType === "出") {
+        res = await this.axios.post("good/goodinfo/", {
+          id: this.$props.goodId,
+          token: this.$store.state.isLogin ? this.$store.state.token : null,
+        });
+      } else if (this.$props.commoType === "收") {
+        res = await this.axios.post("demand/demandinfo/", {
+          id: this.$props.goodId,
+          token: this.$store.state.isLogin ? this.$store.state.token : null,
+        });
+      }
+    } catch (e) {
+      this.$router.push({ path: "/error" });
     }
 
     let data = res.data;
@@ -233,6 +242,7 @@ export default {
       date: data.date,
       description: data.description,
       isSold: data.isSold,
+      canTrade: data.canTrade,
     };
   },
   methods: {
@@ -251,11 +261,15 @@ export default {
       }
     },
     async applyForTrade() {
-      let res = await this.axios.post("trade/apply/", {
-        token: this.$store.state.token, //当前登录用户的token
-        objectid: this.$props.goodId, // 商品ID或需求ID
-        type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
-      });
+      try {
+        let res = await this.axios.post("trade/apply/", {
+          token: this.$store.state.token, //当前登录用户的token
+          objectid: this.$props.goodId, // 商品ID或需求ID
+          type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
+        });
+      } catch (e) {
+        this.$router.push({ path: "/error" });
+      }
 
       if (res.data.result === 1) {
         this.$notify({
@@ -278,10 +292,7 @@ export default {
   data() {
     return {
       data: "",
-      imageUrls: [
-        "https://via.placeholder.com/500",
-        "https://via.placeholder.com/500/FFFF00/000000?Text=WebsiteBuilders.com",
-      ],
+      imageUrls: ["https://via.placeholder.com/500"],
       window: {
         width: 0,
         height: 0,

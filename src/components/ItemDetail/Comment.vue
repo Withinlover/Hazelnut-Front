@@ -256,7 +256,7 @@ export default {
       cardStyle: "card-nor",
       newComment: "",
       userInfo: {
-        avatar: "",
+        avatar: "https://via.placeholder.com/500",
       },
 
       comments: [],
