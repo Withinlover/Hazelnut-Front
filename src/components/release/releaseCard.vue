@@ -58,7 +58,7 @@
       <el-form-item label="商品图片">
         <el-upload
           :headers="headers"
-          :action='getUrl()'
+          :action="getUrl()"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
@@ -131,7 +131,7 @@ export default {
         rate: 1,
       },
       headers: {
-        authorization: -1
+        authorization: -1,
       },
       releaseID: -1,
       categoris: ["后端炸了"],
@@ -153,32 +153,31 @@ export default {
           );
         } else {
           var url, data;
-          if (this.form.type == 2)
-            url = "/good/upload/";
-          else 
-            url = '/demand/upload/';
+          if (this.form.type == 2) url = "/good/upload/";
+          else url = "/demand/upload/";
           data = {
             token: this.$store.state.token,
             name: this.form.name, //商品名称
-            description: '[ ' + this.form.rate + ' 成新] ' + this.form.desc, //商品描述
+            description: "[ " + this.form.rate + " 成新] " + this.form.desc, //商品描述
             category: parseInt(this.form.region), //分类序号
             price: parseFloat(this.form.price), //价格
           };
           this.axios.post(url, data).then((res) => {
-            if (res.data['result'] === 1) {
+            if (res.data["result"] === 1) {
               console.log(res.data);
-              this.releaseID = res.data['id'];
-              this.$message.success('创建商品成功，您的商品 ID: ' + this.releaseID);
+              this.releaseID = res.data["id"];
+              this.$message.success(
+                "创建商品成功，您的商品 ID: " + this.releaseID
+              );
               this.headers.authorization = this.releaseID;
               console.log(this.headers);
               this.active += 1;
             } else {
-              this.$message.error('来自后端的消息：' + res.data['message']);
+              this.$message.error("来自后端的消息：" + res.data["message"]);
             }
-          })
+          });
         }
       } else if (this.active === 1) {
-        
         this.active += 1;
       } else {
         this.active += 1;
@@ -199,16 +198,15 @@ export default {
       this.dialogVisible = true;
     },
     getUrl() {
-      if (this.form.type == 2) 
-        return this.axios.defaults.baseURL + '/good/uploadimg/';
-      else 
-        return this.axios.defaults.baseURL + '/demand/uploadimg/'
-    }
+      if (this.form.type == 2)
+        return this.axios.defaults.baseURL + "/good/uploadimg/";
+      else return this.axios.defaults.baseURL + "/demand/uploadimg/";
+    },
   },
   mounted() {
     if (this.$store.state.isLogin === false) {
-      this.$message.error('尚未登录，请先登录账号');
-      this.$router.push('/');
+      this.$message.error("尚未登录，请先登录账号");
+      this.$router.push("/");
     }
     var url, data;
     url = "good/category/";
