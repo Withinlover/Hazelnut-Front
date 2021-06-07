@@ -1,7 +1,7 @@
 <template>
   <div class="detailPage">
-    <detail-card commoType="出" />
-    <comment-card />
+    <detail-card commoType="出" :goodId="goodId" />
+    <comment-card commoType="出" :goodId="goodId" />
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import CommentCard from "../components/ItemDetail/Comment.vue";
 import DetailCard from "../components/ItemDetail/DetailCard.vue";
 export default {
   components: { CommentCard, DetailCard },
-
+  props: ["goodId"],
   data() {
     return {};
   },

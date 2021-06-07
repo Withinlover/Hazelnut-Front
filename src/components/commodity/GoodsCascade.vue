@@ -8,11 +8,13 @@
       style="overflow: auto"
     >
       <div v-for="good in col" :key="good.id">
-        <commodity-card
-          :imageUrl="good.urls"
-          :title="good.name"
-          :price="good.price"
-        />
+        <router-link :to="toUrl(casType, good.id)" tag="div">
+          <commodity-card
+            :imageUrl="good.urls"
+            :title="good.name"
+            :price="good.price"
+          />
+        </router-link>
       </div>
     </div>
   </div>
@@ -41,7 +43,7 @@ export default {
   name: "GoodsCascade",
   props: ["casType"],
   components: { CommodityCard },
-
+  computed: {},
   data() {
     return {
       allGoods: [],
@@ -52,16 +54,14 @@ export default {
   },
 
   async mounted() {
-    // console.log(this.$props.casType);
     let res = "";
-    if (this.$props.casType === "comm") {
+    if (this.$props.casType === "commodity") {
       res = await this.axios.post("good/allgood/", {});
       this.allGoods = res.data.good;
     } else if (this.$props.casType === "demand") {
       res = await this.axios.post("demand/alldemand/", {});
       this.allGoods = res.data.demand;
     }
-    console.log(this.allGoods[0]);
     if (this.allGoods.length === 0) return;
     this.cascadeCol[3].push(this.allGoods.pop());
     this.loaded = true;
@@ -76,6 +76,9 @@ export default {
         if (this.allGoods.length === 0) return;
         this.cascadeCol[i].push(this.allGoods.pop());
       }
+    },
+    toUrl(casType, id) {
+      return "/" + casType + "/item/" + id;
     },
   },
 };
