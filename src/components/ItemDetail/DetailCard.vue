@@ -40,11 +40,12 @@
           <el-button
             class="button"
             type="primary"
-            :disabled="commoInfo.isSold && !commoInfo.canTrade"
+            :disabled="!commoInfo.canTrade"
             round
             @click="applyForTrade"
             >{{ commoInfo.isSold ? "已卖出" : "申请交易" }}</el-button
           >
+          <!-- {{ commoInfo.isSold }}{{ !commoInfo.canTrade }} -->
           <!-- {{ this.data.isSold }} -->
           <!-- commoInfo.isSold -->
         </div>
@@ -228,14 +229,21 @@ export default {
       }
     },
     async applyForTrade() {
+      let res = "";
       try {
-        let res = await this.axios.post("trade/apply/", {
+        console.log({
           token: this.$store.state.token, //当前登录用户的token
           objectid: this.$props.goodId, // 商品ID或需求ID
-          type: this.commoType === "出" ? 0 : 1, // 0表示商品,1表示需求
+          type: `${this.commoType === "出" ? 0 : 1}`, // 0表示商品,1表示需求
+        });
+        res = await this.axios.post("trade/apply/", {
+          token: this.$store.state.token, //当前登录用户的token
+          objectid: this.$props.goodId, // 商品ID或需求ID
+          type: `${this.commoType === "出" ? 0 : 1}`, // 0表示商品,1表示需求
         });
       } catch (e) {
         this.$router.push({ path: "/error" });
+        return;
       }
 
       if (res.data.result === 1) {
