@@ -20,7 +20,10 @@
         </router-link>
       </div>
       <div id="base">
-        <el-avatar :size="80" :src="userImgUrl"></el-avatar>
+        <el-avatar
+          :size="80"
+          :src="userImgUrl">
+        </el-avatar>
         <div style="font-size:1.5rem;">{{userName}}</div>
       </div>
     </div>
@@ -56,20 +59,22 @@
   position: relative;
   margin: auto;
   margin-top: 3rem;
-  border-radius: 100%;
-  border: solid rgb(181, 158,140) 0.1rem;
   height: 10rem;
   width: 10rem;
+  border-radius: 100%;
+  border: solid #ffffff 0.1rem;
+  box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
 #user-info a{
   text-decoration: none;
 }
 #follow,#favorites,#credit{
   position: absolute;
-  background: rgb(224, 209, 193);
-  border-radius: 100%;
   height: 3rem;
   width: 3rem;
+  background: rgb(224, 209, 193);
+  border-radius: 100%;
+  box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
 #follow{
   left: -0.83rem;
@@ -95,6 +100,9 @@
 }
 #base{
   margin: 1.5rem;
+}
+#base .el-avatar{
+  box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
 #user-menu > *{
   margin-top: 2rem;
