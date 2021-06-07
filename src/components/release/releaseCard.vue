@@ -58,8 +58,9 @@
       <el-form-item label="商品图片">
         <el-upload
           :headers="headers"
-          :action='getUrl()'
+          :action="getUrl()"
           list-type="picture-card"
+          :on-success="handleSuccess"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
         >
@@ -80,7 +81,12 @@
       </el-form-item>
 
       <el-form-item label="类别">
-        <span>{{ form.type }} {{ form.region }}</span>
+        <span
+          >{{ form.type == 2 ? "商品：" : "需求：" }}
+          {{
+            form.region == "" ? form.region : categoris[form.region].name
+          }}</span
+        >
       </el-form-item>
 
       <el-form-item label="预期价格">
@@ -88,12 +94,21 @@
       </el-form-item>
 
       <el-form-item label="几成新">
-        <span> {{ form.rate }} </span>
+        <span> {{ form.rate + " 成新" }} </span>
       </el-form-item>
 
       <el-form-item label="补充信息">
         <span>{{ form.desc }}</span>
       </el-form-item>
+
+      <el-form-item label="商品图片" style="line-height: 0px">
+        <el-col :span="7" v-for="img in imgUrls" :key="img.id" :offset="img.id % 3 == 0 ? 0 : 1">
+          <el-card :body-style="{ padding: '0px'}" >
+            <img :src="img.url" class="image" width="100%" />
+          </el-card>
+        </el-col>
+      </el-form-item>
+
       <el-form-item style="text-align: right">
         <el-button type="primary" @click="cancel">发布下一个</el-button>
         <el-button type="primary" @click="finish">完成</el-button>
@@ -111,6 +126,10 @@
   padding: 20px;
   padding-bottom: 20px;
   text-align: left;
+}
+
+.imgBlock {
+  display: inline-block;
 }
 </style>
 
@@ -131,13 +150,14 @@ export default {
         rate: 1,
       },
       headers: {
-        authorization: -1
+        authorization: -1,
       },
       releaseID: -1,
-      categoris: ["后端炸了"],
+      categoris: [{ id: 0, name: "后端炸了" }],
       active: 0,
       dialogImageUrl: "",
       dialogVisible: false,
+      imgUrls: [],
     };
   },
   methods: {
@@ -153,32 +173,31 @@ export default {
           );
         } else {
           var url, data;
-          if (this.form.type == 2)
-            url = "/good/upload/";
-          else 
-            url = '/demand/upload/';
+          if (this.form.type == 2) url = "/good/upload/";
+          else url = "/demand/upload/";
           data = {
             token: this.$store.state.token,
             name: this.form.name, //商品名称
-            description: '[ ' + this.form.rate + ' 成新] ' + this.form.desc, //商品描述
+            description: "[ " + this.form.rate + " 成新] " + this.form.desc, //商品描述
             category: parseInt(this.form.region), //分类序号
             price: parseFloat(this.form.price), //价格
           };
           this.axios.post(url, data).then((res) => {
-            if (res.data['result'] === 1) {
+            if (res.data["result"] === 1) {
               console.log(res.data);
-              this.releaseID = res.data['id'];
-              this.$message.success('创建商品成功，您的商品 ID: ' + this.releaseID);
+              this.releaseID = res.data["id"];
+              this.$message.success(
+                "创建商品成功，您的商品 ID: " + this.releaseID
+              );
               this.headers.authorization = this.releaseID;
               console.log(this.headers);
               this.active += 1;
             } else {
-              this.$message.error('来自后端的消息：' + res.data['message']);
+              this.$message.error("来自后端的消息：" + res.data["message"]);
             }
-          })
+          });
         }
       } else if (this.active === 1) {
-        
         this.active += 1;
       } else {
         this.active += 1;
@@ -192,23 +211,37 @@ export default {
       this.$router.push({ path: "/commodity" });
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
+      // console.log(fileList);
+      this.imgUrls = new Array();
+      for (var item in fileList) {
+        console.log(fileList[item].response.url);
+        this.imgUrls[item] = { id: item, url: fileList[item].response.path };
+      }
+      console.log(this.imgUrls);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+    handleSuccess(response, file, fileList) {
+      this.imgUrls = new Array();
+      for (var item in fileList) {
+        console.log(fileList[item].response.url);
+        this.imgUrls[item] = { id: item, url: fileList[item].response.path };
+      }
+      console.log(this.imgUrls);
+    },
     getUrl() {
-      if (this.form.type == 2) 
-        return this.axios.defaults.baseURL + '/good/uploadimg/';
-      else 
-        return this.axios.defaults.baseURL + '/demand/uploadimg/'
-    }
+      if (this.form.type == 2)
+        return this.axios.defaults.baseURL + "/good/uploadimg/";
+      else return this.axios.defaults.baseURL + "/demand/uploadimg/";
+    },
   },
   mounted() {
     if (this.$store.state.isLogin === false) {
-      this.$message.error('尚未登录，请先登录账号');
-      this.$router.push('/');
+      this.$message.error("尚未登录，请先登录账号");
+      this.$router.push("/");
     }
     var url, data;
     url = "good/category/";
