@@ -1,18 +1,35 @@
 <template>
-  <div id="app">
-    <base-nav-bar />
-    <router-view />
+  <div id="nav">
+    <div id="nav-left">
+      <router-link to="/" class="nav-left-item">
+        <img src="../../assets/hazelnut.png" />
+      </router-link>
+      <router-link to="/commodity" class="nav-left-item">商品</router-link>
+      <router-link to="/demand" class="nav-left-item">需求</router-link>
+    </div>
+
+    <div id="nav-right">
+      <el-badge :value="12" is-dot class="reddot">
+        <!-- <svg class="icon" id="bell" aria-hidden="true">
+            <use xlink:href="#icon-remind"></use>
+          </svg> -->
+        <i class="el-icon-bell" id="bell" />
+      </el-badge>
+
+      <router-link
+        to="/user"
+        exact-active-class=""
+        active-class="router-link-exact-active"
+      >
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-xinxibar_zhanghu"></use>
+        </svg>
+      </router-link>
+    </div>
   </div>
 </template>
 
-<style scope>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<style scoped>
 
 #nav {
   position: relative;
@@ -119,11 +136,8 @@
 }
 </style>
 
-
 <script>
-import BaseNavBar from './components/navbar/BaseNavBar.vue'
 export default {
-  components: { BaseNavBar },
-  
+  name: 'BaseNavBar'
 }
 </script>
