@@ -280,6 +280,7 @@ export default {
         }
       } catch (e) {
         this.$router.push({ path: "/error" });
+        return;
       }
 
       let data = res.data;
