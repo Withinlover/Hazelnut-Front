@@ -84,13 +84,13 @@
 
     <div id="button">
       <el-row type="flex" justify="center">
-        <el-col :span="4">
+        <el-col :span="5">
           <el-button type="primary" @click="clickChangeInfo">修改资料</el-button>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="5">
           <el-button type="primary" @click="clickChangeAvatar">修改头像</el-button>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="5">
           <el-button type="primary" @click="clickSignOut">登出账号</el-button>
         </el-col>
       </el-row>
@@ -109,10 +109,19 @@
 </template>
 
 <style scoped>
+h1{
+  font-size: 30px;
+}
 #show-form{
-  width: 50rem;
+  width: 760px;
+  height: 240px;
   margin: auto;
-  margin-top: 6rem;
+  margin-top: 75px;
+  padding: 20px 10px;
+  border-radius: 30px;
+  border: 1.5px solid #dddddd;
+  background: rgba(255, 255, 255,0.4);
+  backdrop-filter: blur(3px);
 }
 
 .el-tag{
@@ -134,18 +143,26 @@
 }
 
 #button{
-  margin-top: 5rem;
+  margin: auto;
+  margin-top: 10px;
+  height:50px;
+  width: 760px;
+  padding: 5px 10px 0px 10px;
+  border-radius: 20px;
+  border: 1.5px solid #dddddd;
+  background: rgba(255, 255, 255,0.4);
+  backdrop-filter: blur(3px);
 }
 
 #button .el-button{
-  height: 2.7rem;
+  height: 45px;
   font-size: 1rem;
 }
 </style>
 
 <script>
-import UserInfoForm from './util/UserInfoForm.vue'
-import UserAvatarForm from './util/UserAvatarForm.vue'
+import UserInfoForm from './form/UserInfoForm.vue'
+import UserAvatarForm from './form/UserAvatarForm.vue'
 const map={
   sex:['男','女'],
   grade:['大一','大二','大三','大四'],
