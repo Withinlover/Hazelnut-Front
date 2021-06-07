@@ -24,18 +24,18 @@
       </el-card>
     </div>
     
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :page-size="pageSize"
+    <pag-bar
+      @updatePage="updatePage"
       :total="total"
-      :current-page="currentPage"
-      @current-change="updatePage">
-    </el-pagination>
+      :pageSize="pageSize">
+    </pag-bar>
   </div>
 </template>
 
 <style scoped>
+h1{
+  font-size: 30px;
+}
 #user-released-card{
   display: flex;
   flex-wrap: wrap;
@@ -71,22 +71,29 @@
 </style>
 
 <script>
+import ButtonBar from './nav/ButtonBar.vue'
+import PagBar from './nav/PagBar.vue'
+
 export default {
+  components:{
+    ButtonBar,
+    PagBar
+  },
   data(){
     return {
       pageSize:4,
       currentPage:1,
-      allItems:[0,1,2,3,4]
+      Goods:[0,1,2,3,4]
     }
   },
   computed:{
     nowItems(){
       let start=this.pageSize*(this.currentPage-1)
       let end=Math.min(this.total,start+this.pageSize)
-      return this.allItems.slice(start,end)
+      return this.Goods.slice(start,end)
     },
     total(){
-      return this.allItems.length
+      return this.Goods.length
     }
   },
   mounted(){

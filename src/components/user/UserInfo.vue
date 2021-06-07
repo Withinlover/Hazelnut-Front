@@ -109,6 +109,9 @@
 </template>
 
 <style scoped>
+h1{
+  font-size: 30px;
+}
 #show-form{
   width: 50rem;
   margin: auto;
@@ -144,8 +147,8 @@
 </style>
 
 <script>
-import UserInfoForm from './util/UserInfoForm.vue'
-import UserAvatarForm from './util/UserAvatarForm.vue'
+import UserInfoForm from './form/UserInfoForm.vue'
+import UserAvatarForm from './form/UserAvatarForm.vue'
 const map={
   sex:['男','女'],
   grade:['大一','大二','大三','大四'],
