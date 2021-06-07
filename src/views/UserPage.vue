@@ -39,7 +39,7 @@ export default {
   },
   methods:{
     handleAvatarUpdate(avatarUrl){
-      this.$refs.NavBar.updateAvatar(avatarUrl)
+      this.$refs.navbar.updateAvatar(avatarUrl)
     }
   }
 }

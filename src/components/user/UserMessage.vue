@@ -65,17 +65,17 @@ export default {
     return {
       pageSize:5,
       currentPage:1,
-      Goods:[]
+      Informs:[]
     }
   },
   computed:{
     total(){
-      return this.Goods.length
+      return this.Informs.length
     },
     nowItems(){
       let start=this.pageSize*(this.currentPage-1)
       let end=Math.min(this.total,start+this.pageSize)
-      return this.Goods.slice(start,end)
+      return this.Informs.slice(start,end)
     }
   },
   methods:{
@@ -88,7 +88,7 @@ export default {
     this.axios.post('/inform/infolist/',{
       token:this.$store.state.token
     }).then(res=>{
-      this.Goods=res.data.inform
+      this.Informs=res.data.inform
     })
   }
 }
