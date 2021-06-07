@@ -3,19 +3,25 @@
     class="good-card"
     @click="clickCard">
     <div class="good-img">
-      <img :src="imgUrl"/>
+      <img :src="imgUrl" />
     </div>
     <div class="good-info">
       <div class="good-info-base">
-        <div class="good-name">
-          {{goodName}}
+        <div class="good-name-box">
+          <p class="good-name">
+            {{goodName}}
+          </p>
         </div>
-        <div class="good-price">
-          ￥{{goodPrice}}
+        <div class="good-price-box">
+          <p class="good-price">
+            ￥{{goodPrice}}
+          </p>
         </div>
       </div>
-      <div class="good-info-text">
-        {{goodInfo}}
+      <div class="good-info-text-box">
+        <p class="good-info-text">
+          {{goodInfo}}
+        </p>
       </div>
     </div>
   </div>
@@ -51,7 +57,7 @@ img{
 }
 .good-info{
   margin: auto;
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -61,26 +67,47 @@ img{
   flex-direction: column;
   margin-right: 4px;
 }
-.good-name{
-  width: 90px;
-  padding:0px 5px;
-  border-radius: 10px;
+.good-name-box{
+  width: 84px;
+  height: 66px;
+  padding:0px 8px;
+  border-radius: 20px;
   border: 1px #dddddd solid;
-  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.good-price{
+.good-name{
+  font-size: 18px;
+  font-weight: bold;
+}
+.good-price-box{
   margin-top: 4px;
   width: 100px;
-  border-radius: 10px;
+  height: 30px;
+  border-radius: 20px;
   border: 1px #dddddd solid;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.good-price{
+  margin: auto;
   font-size: 20px;
   color: crimson;
   font-weight: bold;
 }
-.good-info-text{
+.good-info-text-box{
   width: 150px;
-  border-radius: 10px;
+  height: 100px;
+  border-radius: 20px;
   border: 1px #dddddd solid;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.good-info-text{
+  margin: auto;
 }
 
 </style>
