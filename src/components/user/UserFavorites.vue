@@ -1,22 +1,14 @@
 <template>
   <div id="user-favorites">
     <h1>我的收藏</h1>
-    <el-button-group>
-      <el-button 
-        type="primary" 
-        icon="el-icon-arrow-left"
-        @click="switchToCommodity"
-        :disabled="!isDemand">
-        当前收藏商品
-      </el-button>
-      <el-button 
-        type="primary" 
-        @click="switchToDemand"
-        :disabled="isDemand">
-        当前收藏需求
-        <i class="el-icon-arrow-right el-icon--right"></i>
-      </el-button>
-    </el-button-group>
+
+    <button-bar
+      leftText="当前收藏商品"
+      rightText="当前收藏需求"
+      :isLeft="!isDemand"
+      @clickLeft="switchToCommodity"
+      @clickRight="switchToDemand">
+    </button-bar>
 
     <div id="user-favorites-card">
       <el-card class="box-card" v-for="item in nowItems" :key="item.id">
@@ -34,18 +26,18 @@
       </el-card>
     </div>
     
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :page-size="pageSize"
+    <pag-bar
+      @updatePage="updatePage"
       :total="total"
-      :current-page="currentPage"
-      @current-change="updatePage">
-    </el-pagination>
+      :pageSize="pageSize">
+    </pag-bar>
   </div>
 </template>
 
 <style scoped>
+h1{
+  font-size: 30px;
+}
 #user-favorites-card{
   display: flex;
   flex-wrap: wrap;
@@ -81,12 +73,19 @@
 </style>
 
 <script>
+import ButtonBar from './nav/ButtonBar.vue'
+import PagBar from './nav/PagBar.vue'
+
 export default {
+  components:{
+    ButtonBar,
+    PagBar
+  },
   data(){
     return {
       pageSize:4,
       currentPage:1,
-      allItems:[],
+      Goods:[],
       isDemand:false
     }
   },
@@ -94,10 +93,10 @@ export default {
     nowItems(){
       let start=this.pageSize*(this.currentPage-1)
       let end=Math.min(this.total,start+this.pageSize)
-      return this.allItems.slice(start,end)
+      return this.Goods.slice(start,end)
     },
     total(){
-      return this.allItems.length
+      return this.Goods.length
     }
   },
   mounted(){
@@ -119,7 +118,7 @@ export default {
       this.axios.post('user/demandcollectlist/',{
         token:this.$store.state.token
       }).then(res =>{
-        this.allItems=[]
+        this.Goods=[]
         let length=res.data.name.length
         for(let i=0;i<length;i++){
           let tmp={}
@@ -128,7 +127,7 @@ export default {
           tmp.description=res.data.description[i]
           tmp.price=res.data.price[i]
           tmp.url=res.data.url[i]
-          this.allItems.push(tmp)
+          this.Goods.push(tmp)
         }
       })
     },
@@ -136,7 +135,7 @@ export default {
       this.axios.post('user/goodcollectlist/',{
         token:this.$store.state.token
       }).then(res =>{
-        this.allItems=[]
+        this.Goods=[]
         let length=res.data.name.length
         for(let i=0;i<length;i++){
           let tmp={}
@@ -145,7 +144,7 @@ export default {
           tmp.description=res.data.description[i]
           tmp.price=res.data.price[i]
           tmp.url=res.data.url[i]
-          this.allItems.push(tmp)
+          this.Goods.push(tmp)
         }
       })
     }

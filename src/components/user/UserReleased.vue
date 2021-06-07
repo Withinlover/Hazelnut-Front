@@ -1,151 +1,100 @@
 <template>
   <div id="user-released">
     <h1>当前发布</h1>
-    <el-button-group>
-      <el-button 
-        type="primary" 
-        icon="el-icon-arrow-left"
-        @click="switchToCommodity"
-        :disabled="!isDemand">
-        当前发布商品
-      </el-button>
-      <el-button 
-        type="primary" 
-        @click="switchToDemand"
-        :disabled="isDemand">
-        当前发布需求
-        <i class="el-icon-arrow-right el-icon--right"></i>
-      </el-button>
-    </el-button-group>
 
-    <div id="user-released-card">
-      <el-card class="box-card" v-for="item in nowItems" :key="item.id">
-        <el-image :src="item.url"></el-image>
-        <el-container>
-          <el-aside width="7rem">
-            <h2 class="title">{{item.name}}</h2>
-            <el-divider></el-divider>
-            <h2 class="price">{{item.price}}</h2>
-          </el-aside>
-          <el-main>
-            <p>{{item.description}}</p>
-          </el-main>
-        </el-container>
-      </el-card>
-    </div>
+    <button-bar
+      leftText="当前发布商品"
+      rightText="当前发布需求"
+      :isLeft="isGood"
+      @clickLeft="switchToGood"
+      @clickRight="switchToDemand">
+    </button-bar>
+
+    <good-list
+      v-if="total"
+      :isDemand="!isGood"
+      :curPage="curPage"
+      :goodList="Goods"
+      :pageSize="pageSize">
+    </good-list>
+    <logo-hint
+      v-else
+      :hint="hint">
+    </logo-hint>
     
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :page-size="pageSize"
+    <pag-bar
+      @updatePage="updatePage"
       :total="total"
-      :current-page="currentPage"
-      @current-change="updatePage">
-    </el-pagination>
+      :pageSize="pageSize">
+    </pag-bar>
   </div>
 </template>
 
 <style scoped>
-#user-released-card{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.el-card {
-  margin: 1rem 0.5rem 0rem 0.5rem;
-  width: 25rem;
-  height:20rem;
-}
-
-.el-card .el-image{
-  height: 10rem;
-  width: 20rem;
-}
-
-.title{
-  margin-bottom: 0.5rem;
-}
-
-.price{
-  margin-top: 0.5rem;
-}
-
-.el-divider{
-  margin: 0rem;
-}
-
-.el-pagination {
-  margin-top: 1rem;
+h1{
+  font-size: 30px;
 }
 </style>
 
 <script>
+import LogoHint from './hint/LogoHint.vue'
+import ButtonBar from './nav/ButtonBar.vue'
+import PagBar from './nav/PagBar.vue'
+import GoodList from './good/GoodList.vue'
+
 export default {
+  components:{
+    LogoHint,
+    ButtonBar,
+    PagBar,
+    GoodList
+  },
   data(){
     return {
       pageSize:4,
-      currentPage:1,
-      allItems:[],
-      isDemand:false
+      curPage:1,
+      Goods:[],
+      isGood:true
     }
   },
   computed:{
-    nowItems(){
-      let start=this.pageSize*(this.currentPage-1)
-      let end=Math.min(this.total,start+this.pageSize)
-      return this.allItems.slice(start,end)
-    },
     total(){
-      return this.allItems.length
+      return this.Goods.length
+    },
+    hint(){
+      return '当前没有发布'+(this.isDemand? '需求':'商品')+'哦'
     }
   },
   mounted(){
-    this.getGood()
+    this.updateGood()
   },
   methods:{
     updatePage(page){
-      this.currentPage=page
+      this.curPage=page
     },
-    switchToCommodity(){
-      this.isDemand=false
-      this.getGood()
+    switchToGood(){
+      this.isGood=true
+      this.updateGood()
     },
     switchToDemand(){
-      this.isDemand=true
-      this.getDemand()
+      this.isGood=false
+      this.updateGood()
     },
-    getDemand(){
-      this.axios.post('demand/getdemand/',{
+    updateGood(){
+      let url=this.isGood? 'good/getgood/':'demand/getdemand/'
+      this.axios.post(url,{
         token:this.$store.state.token
       }).then(res =>{
-        this.allItems=[]
+        this.Goods=[]
         let length=res.data.name.length
         for(let i=0;i<length;i++){
           let tmp={}
           tmp.id=res.data.id[i]
           tmp.name=res.data.name[i]
-          tmp.description=res.data.description[i]
+          tmp.info=res.data.description[i]
           tmp.price=res.data.price[i]
           tmp.url=res.data.url[i]
-          this.allItems.push(tmp)
-        }
-      })
-    },
-    getGood(){
-      this.axios.post('good/getgood/',{
-        token:this.$store.state.token
-      }).then(res =>{
-        this.allItems=[]
-        let length=res.data.name.length
-        for(let i=0;i<length;i++){
-          let tmp={}
-          tmp.id=res.data.id[i]
-          tmp.name=res.data.name[i]
-          tmp.description=res.data.description[i]
-          tmp.price=res.data.price[i]
-          tmp.url=res.data.url[i]
-          this.allItems.push(tmp)
+          this.Goods.push(tmp)
         }
       })
     }
