@@ -24,6 +24,7 @@
         </p>
       </div>
     </div>
+    <slot></slot>
   </div>
 </template>
 

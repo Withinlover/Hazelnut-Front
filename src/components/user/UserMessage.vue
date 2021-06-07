@@ -9,19 +9,27 @@
         :key="item.id">
         <reply-notice 
           v-if="item.name==='留言回复通知'"
-          :isRead="item.isread">
+          :isRead="item.isread"
+          :id="item.id"
+          @read="read(item)">
         </reply-notice>
         <apply-notice 
           v-else-if="item.name==='交易申请通知'"
-          :isRead="item.isread">
+          :isRead="item.isread"
+          :id="item.id"
+          @read="read(item)">
         </apply-notice>
         <banned-notice
-          v-else-if="'商品封禁通知'"
-          :isRead="item.isread">
+          v-else-if="item.name==='商品封禁通知'"
+          :isRead="item.isread"
+          :id="item.id"
+          @read="read(item)">
         </banned-notice>
         <finish-notice
           v-else
-          :isRead="item.isread">
+          :isRead="item.isread"
+          :id="item.id"
+          @read="read(item)">
         </finish-notice>
       </div>
     </div>
@@ -33,7 +41,8 @@
     <pag-bar
       @updatePage="updatePage"
       :total="total"
-      :pageSize="pageSize">
+      :pageSize="pageSize"
+      class="pag-bar">
     </pag-bar>
   </div>
 </template>
@@ -41,6 +50,9 @@
 <style scoped>
 h1{
   font-size: 30px;
+}
+.pag-bar{
+  margin-top: 10px;
 }
 </style>
 
@@ -63,7 +75,7 @@ export default {
   },
   data(){
     return {
-      pageSize:5,
+      pageSize:6,
       currentPage:1,
       Informs:[]
     }
@@ -82,6 +94,9 @@ export default {
     updatePage(page){
       this.currentPage=page
       console.log(this.pageSize)
+    },
+    read(item){
+      item.isread=true
     }
   },
   mounted(){

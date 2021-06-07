@@ -62,7 +62,7 @@ export default {
       return this.Goods.length
     },
     hint(){
-      return '当前没有发布'+(this.isDemand? '需求':'商品')+'哦'
+      return '当前没有发布'+(this.isGood? '商品':'需求')+'哦'
     }
   },
   mounted(){
