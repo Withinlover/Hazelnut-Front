@@ -25,6 +25,10 @@
       <el-button type="primary" @click="cancelFollow(item)">取消关注</el-button>
       <el-divider></el-divider>
     </div>
+    <logo-hint
+      v-if="!total"
+      :hint="hint">
+    </logo-hint>
 
     <pag-bar
       @updatePage="updatePage"
@@ -88,6 +92,7 @@ h1{
 
 <script>
 import PagBar from './nav/PagBar.vue'
+import LogoHint from './hint/LogoHint.vue'
 const map={
   grade:['暂未填写年级','大一','大二','大三','大四'],
   location:['暂未填写校区','沙河校区','学院路校区'],
@@ -96,23 +101,25 @@ const map={
 
 export default {
   components:{
-    PagBar
+    PagBar,
+    LogoHint
   },
   data(){
     return {
       pageSize:6,
       currentPage:1,
-      Goods:[]
+      allItems:[],
+      hint:'当前还没有关注任何人哦'
     }
   },
   computed:{
     total(){
-      return this.Goods.length
+      return this.allItems.length
     },
     nowItems(){
       let start=this.pageSize*(this.currentPage-1)
       let end=Math.min(this.total,start+this.pageSize)
-      return this.Goods.slice(start,end)
+      return this.allItems.slice(start,end)
     }
   },
   methods:{
@@ -140,7 +147,7 @@ export default {
       this.axios.post('/user/followlist/',{
         token:this.$store.state.token
       }).then(res =>{
-        this.Goods=[]
+        this.allItems=[]
         let length=res.data.name.length
         for(let i=0;i<length;i++){
           let tmp={}
@@ -148,9 +155,9 @@ export default {
           tmp.name=res.data.name[i]
           tmp.grade=res.data.grade[i]<0? map.grade[0]:map.grade[res.data.grade[i]]
           tmp.location=res.data.location[i]<0? map.location[0]:map.location[res.data.location[i]+1]
-          tmp.score=res.data.score[i].toFixed(1)
+          tmp.score=res.data.score[i]
           tmp.url=res.data.url[i] === 'NULL'? map.defaultAvatar:res.data.url[i]
-          this.Goods.push(tmp)
+          this.allItems.push(tmp)
         }
       })
     }
