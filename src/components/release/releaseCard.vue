@@ -161,15 +161,22 @@ export default {
     };
   },
   methods: {
+    checkPrice(price) {
+      console.log(price);
+      var pattern = new RegExp("^\\d*(\.\\d{1,2})?$")
+      if (pattern.test(price) === false)
+        return false;
+      return parseFloat(price) <= 20000;
+    },
     next() {
       if (this.active === 0) {
         if (this.form.name === "") {
           this.$message.error("请填写标题");
         } else if (this.form.region === "") {
           this.$message.error("请选择商品分类");
-        } else if (this.form.price === "") {
+        } else if (this.form.price === "" || !this.checkPrice(this.form.price)) {
           this.$message.error(
-            "请填写商品价格(仅填写数字部分，单位为元，如：11.5)"
+            "请正确填写商品价格(不超过 20000元，如：11.5)"
           );
         } else {
           var url, data;
