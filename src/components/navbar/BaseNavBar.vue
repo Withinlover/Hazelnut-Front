@@ -9,8 +9,13 @@
     </el-row>
 
     <el-row id="nav-right">
-      <el-badge id="DotBell" :value="1" is-dot :hidden="this.$store.state.dotIsHidden">
-        <i class="el-icon-bell" id="bell" />
+      <el-badge
+        id="DotBell"
+        :value="1"
+        is-dot
+        :hidden="this.$store.state.dotIsHidden" 
+      >
+        <i class="el-icon-bell" id="bell" @click="showMessage"/>
       </el-badge>
 
       <router-link
@@ -138,7 +143,7 @@ export default {
   data() {
     return {
       dotIsHidden: false,
-    }
+    };
   },
   methods: {
     hasNewInfo() {
@@ -158,12 +163,15 @@ export default {
           }
           isdot = !isdot;
           this.dotIsHidden = !isdot;
-        } 
+        }
       });
     },
+    showMessage() {
+      this.$router.push('/user/message').catch((err) => {err});
+    }
   },
   mounted() {
     this.hasNewInfo();
-  }
+  },
 };
 </script>
