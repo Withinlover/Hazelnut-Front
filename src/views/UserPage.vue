@@ -1,22 +1,29 @@
 <template>
   <div id="user-page">
     <div id="background"></div>
-    <el-container>
-      <el-aside width="20rem">
-        <nav-bar ref="navbar"></nav-bar>
-      </el-aside>
-
-      <el-main>
-        <router-view
-          @updateAvatar="handleAvatarUpdate">
-        </router-view>
-      </el-main>
-    </el-container>
+    <div class="aside">
+      <nav-bar
+        ref="navbar">
+      </nav-bar>
+    </div>
+    <div class="main">
+      <router-view
+        @updateAvatar="handleAvatarUpdate">
+      </router-view>
+    </div>
   </div>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#user-page{
+  min-width: 1366px;
+  max-width: 2000px;
+  margin: auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+}
 #background{
   position: fixed;
   background: #FFFFFF;  /* fallback for old browsers */
@@ -27,6 +34,13 @@
   right: 0;
   bottom: 0;
   z-index: -100;
+}
+.aside{
+  width: 330px;
+}
+.main{
+  width:1000px;
+  margin:auto;
 }
 </style>
 
