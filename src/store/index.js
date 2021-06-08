@@ -23,7 +23,7 @@ const store = new Vuex.Store({
             sessionStorage.setItem('token', '')
         },
         updateDot(state, value) {
-            dotIsHidden = value;
+            state.dotIsHidden = value;
         }
     },
     actions: {},

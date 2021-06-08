@@ -117,7 +117,17 @@ router.beforeEach((to, from, next) => {
     var data = {
         "token": router.app.$store.state.token,
     }
-    router.app.axios.post()
+    router.app.axios.post(url, data).then((res) => {
+        if (res.data['result'] === 1) {
+            var isdot = true;
+            var list = res.data.inform;
+            for (var i in list) {
+                isdot &= list[i].isread;
+            }
+            isdot = !isdot;
+            router.app.$store.commit('updateDot', !isdot);
+        }
+    })
     if (to.matched.length === 0) {
         next('/')
         router.app.$message({
