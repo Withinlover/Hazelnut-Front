@@ -5,26 +5,27 @@
     <div class="good-img">
       <img :src="imgUrl" />
     </div>
-    <div class="good-info">
-      <div class="good-info-base">
-        <div class="good-name-box">
-          <p class="good-name">
-            {{goodName}}
-          </p>
+    <slot>
+      <div class="good-info">
+        <div class="good-info-base">
+          <div class="good-name-box">
+            <p class="good-name">
+              {{goodName}}
+            </p>
+          </div>
+          <div class="good-price-box">
+            <p class="good-price">
+              ￥{{goodPrice}}
+            </p>
+          </div>
         </div>
-        <div class="good-price-box">
-          <p class="good-price">
-            ￥{{goodPrice}}
+        <div class="good-info-text-box">
+          <p class="good-info-text">
+            {{goodInfo}}
           </p>
         </div>
       </div>
-      <div class="good-info-text-box">
-        <p class="good-info-text">
-          {{goodInfo}}
-        </p>
-      </div>
-    </div>
-    <slot></slot>
+    </slot>
   </div>
 </template>
 

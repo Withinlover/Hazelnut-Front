@@ -16,7 +16,7 @@
 <style scoped>
 .base-notice{
   margin:auto;
-  margin-top: 8px;
+  margin-top: 10px;
   width: 600px;
   border: solid 1.5px #dddddd;
   border-radius: 25px;

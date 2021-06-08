@@ -50,9 +50,10 @@
 <style scoped>
 h1{
   font-size: 30px;
+  margin-bottom: 90px;
 }
 .pag-bar{
-  margin-top: 10px;
+  margin-top: 20px;
 }
 </style>
 
