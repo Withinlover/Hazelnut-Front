@@ -113,6 +113,11 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    var url = 'inform/infolist/';
+    var data = {
+        "token": router.app.$store.state.token,
+    }
+    router.app.axios.post()
     if (to.matched.length === 0) {
         next('/')
         router.app.$message({
@@ -130,5 +135,6 @@ router.beforeEach((to, from, next) => {
         next()
     }
 })
+
 
 export default router

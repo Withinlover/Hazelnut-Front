@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <base-nav-bar />
+    <base-nav-bar ref="navbar"></base-nav-bar>
     <router-view />
+    <div ref="a"></div>
   </div>
 </template>
 

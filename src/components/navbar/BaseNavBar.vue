@@ -1,18 +1,15 @@
 <template>
-  <div id="nav">
-    <div id="nav-left">
+  <el-row id="nav">
+    <el-row id="nav-left">
       <router-link to="/" class="nav-left-item">
         <img src="../../assets/hazelnut.png" />
       </router-link>
       <router-link to="/commodity" class="nav-left-item">商品</router-link>
       <router-link to="/demand" class="nav-left-item">需求</router-link>
-    </div>
+    </el-row>
 
-    <div id="nav-right">
-      <el-badge :value="12" is-dot class="reddot">
-        <!-- <svg class="icon" id="bell" aria-hidden="true">
-            <use xlink:href="#icon-remind"></use>
-          </svg> -->
+    <el-row id="nav-right">
+      <el-badge id="DotBell" :value="1" is-dot :hidden="this.$store.state.dotIsHidden">
         <i class="el-icon-bell" id="bell" />
       </el-badge>
 
@@ -22,15 +19,14 @@
         active-class="router-link-exact-active"
       >
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-xinxibar_zhanghu"></use>
+          <use xlink:href="#icon-xinxibar_zhanghu" />
         </svg>
       </router-link>
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <style scoped>
-
 #nav {
   position: relative;
   height: 3rem;
@@ -138,6 +134,36 @@
 
 <script>
 export default {
-  name: 'BaseNavBar'
-}
+  name: "BaseNavBar",
+  data() {
+    return {
+      dotIsHidden: false,
+    }
+  },
+  methods: {
+    hasNewInfo() {
+      var url,
+        data,
+        isdot = true;
+      url = "inform/infolist/";
+      data = {
+        token: this.$store.state.token,
+      };
+      this.axios.post(url, data).then((res) => {
+        if (res.data.result == 1) {
+          console.log(res.data.inform);
+          var list = res.data.inform;
+          for (var i in list) {
+            isdot &= list[i].isread;
+          }
+          isdot = !isdot;
+          this.dotIsHidden = !isdot;
+        } 
+      });
+    },
+  },
+  mounted() {
+    this.hasNewInfo();
+  }
+};
 </script>
