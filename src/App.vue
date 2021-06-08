@@ -7,7 +7,7 @@
 
 <style scope>
 #app {
-  min-width: 1366px;
+  min-width: 800px;
   overflow: auto;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
