@@ -17,7 +17,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #user-page{
-  min-width: 1366px;
+  min-width: 800px;
   max-width: 2000px;
   margin: auto;
   overflow: auto;
@@ -37,6 +37,7 @@
 }
 .aside{
   width: 330px;
+  min-width: 250px;
 }
 .main{
   width:1000px;
