@@ -14,7 +14,7 @@
       v-if="total"
       :isDemand="!isGood"
       :curPage="curPage"
-      :goodList="Goods"
+      :goodList="goods"
       :pageSize="pageSize">
     </good-list>
     <logo-hint
@@ -53,13 +53,13 @@ export default {
     return {
       pageSize:4,
       curPage:1,
-      Goods:[],
+      goods:[],
       isGood:true
     }
   },
   computed:{
     total(){
-      return this.Goods.length
+      return this.goods.length
     },
     hint(){
       return '当前没有发布'+(this.isGood? '商品':'需求')+'哦'
@@ -85,7 +85,7 @@ export default {
       this.axios.post(url,{
         token:this.$store.state.token
       }).then(res =>{
-        this.Goods=[]
+        this.goods=[]
         let length=res.data.name.length
         for(let i=0;i<length;i++){
           let tmp={}
@@ -94,7 +94,7 @@ export default {
           tmp.info=res.data.description[i]
           tmp.price=res.data.price[i]
           tmp.url=res.data.url[i]
-          this.Goods.push(tmp)
+          this.goods.push(tmp)
         }
       })
     }

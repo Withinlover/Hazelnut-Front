@@ -10,7 +10,10 @@
       <div class="accept">
         {{text}}
       </div>
-      <div class="rate" v-if="!isRate">
+      <div class="after-rate" v-if="isRate">
+        已评分
+      </div>
+      <div class="rate" v-else>
         <el-rate
           v-model="rate"
           allow-half
@@ -44,9 +47,18 @@
 .accept{
   margin-top: 10px;
   margin-bottom: 10px;
+  width: 75%;
   font-size: 16px;
   font-weight: bold;
   color: #999999;
+}
+.after-rate{
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  border: solid 1px #dddddd;
+  border-radius: 20px;
+  color: rgb(110, 91,80);
+  font-weight: bold;
 }
 .rate{
   margin: 0px auto 10px 202px;
@@ -117,6 +129,11 @@ export default {
         this.$message({
           type:'success',
           message:'评分成功'
+        })
+      },reason =>{
+        this.$message({
+          type:'error',
+          message:'请求超时，请检查网络设置'
         })
       })
     }

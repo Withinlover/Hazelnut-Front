@@ -10,13 +10,13 @@
       @clickRight="switchToDemand">
     </button-bar>
 
-    <good-list
+    <history-list
       v-if="total"
       :isDemand="!isGood"
       :curPage="curPage"
-      :goodList="Goods"
+      :goodList="goods"
       :pageSize="pageSize">
-    </good-list>
+    </history-list>
     <logo-hint
       v-else
       :hint="hint"
@@ -41,26 +41,26 @@ h1{
 import LogoHint from './hint/LogoHint.vue'
 import ButtonBar from './nav/ButtonBar.vue'
 import PagBar from './nav/PagBar.vue'
-import GoodList from './good/GoodList.vue'
+import HistoryList from './good/HistoryList.vue'
 
 export default {
   components:{
     LogoHint,
     ButtonBar,
     PagBar,
-    GoodList
+    HistoryList
   },
   data(){
     return {
       pageSize:4,
       curPage:1,
-      Goods:[],
+      goods:[],
       isGood:true
     }
   },
   computed:{
     total(){
-      return this.Goods.length
+      return this.goods.length
     },
     hint(){
       return '当前没有历史交易的'+(this.isGood? '商品':'需求')+'哦'
@@ -85,16 +85,10 @@ export default {
       this.axios.post('/trade/history/',{
         token:this.$store.state.token
       }).then(res =>{
-        this.Goods=[]
-        let length=res.data.name.length
-        for(let i=0;i<length;i++){
-          let tmp={}
-          tmp.id=res.data.id[i]
-          tmp.name=res.data.name[i]
-          tmp.info=res.data.description[i]
-          tmp.price=res.data.price[i]
-          tmp.url=res.data.url[i]
-          this.Goods.push(tmp)
+        if(this.isGood){
+          this.goods=res.data.history.filter(item => item.type===0)
+        }else{
+          this.goods=res.data.history.filter(item => item.type===1)
         }
       })
     }
