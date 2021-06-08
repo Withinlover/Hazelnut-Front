@@ -20,7 +20,10 @@
         </router-link>
       </div>
       <div id="base">
-        <el-avatar :size="80" :src="userImgUrl"></el-avatar>
+        <el-avatar
+          :size="80"
+          :src="userImgUrl">
+        </el-avatar>
         <div style="font-size:1.5rem;">{{userName}}</div>
       </div>
     </div>
@@ -55,36 +58,38 @@
 #user-info{
   position: relative;
   margin: auto;
-  margin-top: 3rem;
+  margin-top: 48px;
+  height: 160px;
+  width: 160px;
   border-radius: 100%;
-  border: solid rgb(181, 158,140) 0.1rem;
-  height: 10rem;
-  width: 10rem;
+  border: solid #ffffff 1.6px;
+  box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
 #user-info a{
   text-decoration: none;
 }
 #follow,#favorites,#credit{
   position: absolute;
+  height: 48px;
+  width: 48px;
   background: rgb(224, 209, 193);
   border-radius: 100%;
-  height: 3rem;
-  width: 3rem;
+  box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
 #follow{
-  left: -0.83rem;
-  top:1rem;
+  left: -13.28px;
+  top:16px;
 }
 #favorites{
-  top:1rem;
-  right: -0.83rem;
+  top:16px;
+  right: -13.28px;
 }
 #credit{
-  bottom: -1.5rem;
-  left: 3.5rem;
+  bottom: -24px;
+  left: 56px;
 }
 #credit p{
-  margin: 0rem;
+  margin: 0px;
   font-weight: bolder;
 }
 .menu-item{
@@ -94,10 +99,13 @@
   display: block;
 }
 #base{
-  margin: 1.5rem;
+  margin: 24px;
+}
+#base .el-avatar{
+  box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
 #user-menu > *{
-  margin-top: 2rem;
+  margin-top: 32px;
   background-color: transparent;
 }
 </style>

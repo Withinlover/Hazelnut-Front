@@ -8,6 +8,8 @@
 
 <style scope>
 #app {
+  min-width: 800px;
+  overflow: auto;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

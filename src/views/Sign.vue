@@ -1,7 +1,7 @@
 <template>
   <div class="sign">
     <div class="backgroundColor"></div>
-    <el-row :gutter="10">
+    <el-row :gutter="0">
       <el-col class="middleContent">
         <el-col :xs="8" :sm="12" :md="14" :lg="15" :xl="16"> </el-col>
         <el-col :xs="16" :sm="12" :md="9" :lg="7" :xl="5">
@@ -18,7 +18,7 @@
   background: #B7989146;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #94716b46, #b7989146);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #94716B46, #B7989146); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

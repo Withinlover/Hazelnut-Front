@@ -1,28 +1,27 @@
 <template>
-  <div id="user-history">
+  <div id="user-favorites">
     <h1>交易历史</h1>
-    <el-button-group>
-      <el-button type="primary" icon="el-icon-arrow-left">已交易的商品</el-button>
-      <el-button type="primary">已解决的需求<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-    </el-button-group>
 
-    <div id="user-released-card">
-      <el-card class="box-card" v-for="item in nowItems" :key="item">
-        <el-image src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
-        <el-container>
-          <el-aside width="7rem">
-            <h2 class="title">商品标题</h2>
-            <el-divider></el-divider>
-            <h2 class="price">商品价格</h2>
-          </el-aside>
-          <el-main>
-            <p>
-              品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述
-            </p>
-          </el-main>
-        </el-container>
-      </el-card>
-    </div>
+    <button-bar
+      leftText="已交易的商品"
+      rightText="已解决的需求"
+      :isLeft="isGood"
+      @clickLeft="switchToGood"
+      @clickRight="switchToDemand">
+    </button-bar>
+
+    <history-list
+      v-if="total"
+      :isDemand="!isGood"
+      :curPage="curPage"
+      :goodList="goods"
+      :pageSize="pageSize">
+    </history-list>
+    <logo-hint
+      v-else
+      :hint="hint"
+      style="margin-top:10px;">
+    </logo-hint>
     
     <pag-bar
       @updatePage="updatePage"
@@ -36,72 +35,62 @@
 h1{
   font-size: 30px;
 }
-#user-released-card{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.el-card {
-  margin: 1rem 0.5rem 0rem 0.5rem;
-  width: 25rem;
-  height:20rem;
-}
-
-.el-card .el-image{
-  height: 10rem;
-  width: 20rem;
-}
-
-.title{
-  margin-bottom: 0.5rem;
-}
-
-.price{
-  margin-top: 0.5rem;
-}
-
-.el-divider{
-  margin: 0rem;
-}
-
-.el-pagination {
-  margin-top: 1rem;
-}
 </style>
 
 <script>
+import LogoHint from './hint/LogoHint.vue'
 import ButtonBar from './nav/ButtonBar.vue'
 import PagBar from './nav/PagBar.vue'
+import HistoryList from './good/HistoryList.vue'
 
 export default {
   components:{
+    LogoHint,
     ButtonBar,
-    PagBar
+    PagBar,
+    HistoryList
   },
   data(){
     return {
       pageSize:4,
-      currentPage:1,
-      Goods:[0,1,2,3,4]
+      curPage:1,
+      goods:[],
+      isGood:true
     }
   },
   computed:{
-    nowItems(){
-      let start=this.pageSize*(this.currentPage-1)
-      let end=Math.min(this.total,start+this.pageSize)
-      return this.Goods.slice(start,end)
-    },
     total(){
-      return this.Goods.length
+      return this.goods.length
+    },
+    hint(){
+      return '当前没有历史交易的'+(this.isGood? '商品':'需求')+'哦'
     }
   },
   mounted(){
-    console.log('send request')
+    this.updateGood()
   },
   methods:{
     updatePage(page){
-      this.currentPage=page
+      this.curPage=page
+    },
+    switchToGood(){
+      this.isGood=true
+      this.updateGood()
+    },
+    switchToDemand(){
+      this.isGood=false
+      this.updateGood()
+    },
+    updateGood(){
+      this.axios.post('/trade/history/',{
+        token:this.$store.state.token
+      }).then(res =>{
+        if(this.isGood){
+          this.goods=res.data.history.filter(item => item.type===0)
+        }else{
+          this.goods=res.data.history.filter(item => item.type===1)
+        }
+      })
     }
   }
 }
