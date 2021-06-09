@@ -7,13 +7,13 @@
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           用户名
         </div>
-        <el-input id="signInUserName" placeholder="Username" v-model="username">
+        <el-input placeholder="Username" v-model="username">
           <i class="el-icon-user" slot="prepend"></i>
         </el-input>
       </div>
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">密码</div>
-        <el-input id="signInPassword" placeholder="Password" v-model="password" type="password">
+        <el-input placeholder="Password" v-model="password" type="password">
           <i class="el-icon-lock" slot="prepend"></i>
         </el-input>
       </div>
@@ -31,13 +31,13 @@
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           用户名
         </div>
-        <el-input id="signUpUsername" placeholder="Username" v-model="username">
+        <el-input placeholder="Username" v-model="username">
           <i class="el-icon-user" slot="prepend"></i>
         </el-input>
       </div>
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">密码</div>
-        <el-input id="signUpPassword" placeholder="Password" v-model="password" type="password">
+        <el-input placeholder="Password" v-model="password" type="password">
           <i class="el-icon-lock" slot="prepend"></i>
         </el-input>
       </div>
@@ -46,7 +46,6 @@
           重复密码
         </div>
         <el-input
-          id="signUpRepeatPassword"
           placeholder="Repeat Password"
           v-model="password2"
           type="password"
@@ -56,7 +55,7 @@
       </div>
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">邮箱</div>
-        <el-input id="signUpEmail" placeholder="Email Address" v-model="emailAddress">
+        <el-input placeholder="Email Address" v-model="emailAddress">
           <i class="el-icon-message" slot="prepend"></i>
         </el-input>
       </div>
@@ -64,15 +63,15 @@
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           验证码
         </div>
-        <el-input id="signUpVerificationCode" placeholder="Verification Code" v-model="verificationCode">
+        <el-input placeholder="Verification Code" v-model="verificationCode">
           <i class="el-icon-key" slot="prepend"></i>
         </el-input>
       </div>
     </el-row>
 
     <el-row>
-      <el-button id="signInButton" style="width: 40%" @click="onSignIn()"> 登录 </el-button>
-      <el-button id="signUpButton" style="width: 40%" @click="onSignUp()"> 注册 </el-button>
+      <el-button style="width: 40%" @click="onSignIn()"> 登录 </el-button>
+      <el-button style="width: 40%" @click="onSignUp()"> 注册 </el-button>
     </el-row>
     <el-row></el-row>
   </div>
