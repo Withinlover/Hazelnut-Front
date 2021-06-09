@@ -153,6 +153,11 @@ export default {
     };
   },
   methods: {
+    
+    sleep (time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    },
+
     onSignIn() {
       if (this.radio === 1 || this.radio == 2) 
         this.radio = 0;
@@ -169,7 +174,11 @@ export default {
           } else {
             console.log(res.data);
             this.$store.commit("setToken", res.data['token']);
-            this.$router.push({path: '/commodity'})
+            this.message = res.data['message'];
+            this.$message.success(res.data['message']);
+            this.sleep(3000).then(() => {
+              this.$router.push({path: '/commodity'});
+            })
             console.log(this.$router.isLogin);
           }
         }) 
