@@ -1,5 +1,6 @@
 <template>
   <div class="background">
+    <div id="hide" class="hide"> {{ message }}</div>
     <span>欢迎来到 Hazelnut 平台</span>
     <el-row class="forms" v-show="radio == 0">
       <img src="../../assets/hazelnut.png" height="80px" style="margin-top: 10px"/>
@@ -7,13 +8,13 @@
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           用户名
         </div>
-        <el-input id="signInUserName" placeholder="Username" v-model="username">
+        <el-input placeholder="Username" v-model="username">
           <i class="el-icon-user" slot="prepend"></i>
         </el-input>
       </div>
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">密码</div>
-        <el-input id="signInPassword" placeholder="Password" v-model="password" type="password">
+        <el-input placeholder="Password" v-model="password" type="password">
           <i class="el-icon-lock" slot="prepend"></i>
         </el-input>
       </div>
@@ -31,13 +32,13 @@
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           用户名
         </div>
-        <el-input id="signUpUsername" placeholder="Username" v-model="username">
+        <el-input placeholder="Username" v-model="username">
           <i class="el-icon-user" slot="prepend"></i>
         </el-input>
       </div>
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">密码</div>
-        <el-input id="signUpPassword" placeholder="Password" v-model="password" type="password">
+        <el-input placeholder="Password" v-model="password" type="password">
           <i class="el-icon-lock" slot="prepend"></i>
         </el-input>
       </div>
@@ -46,7 +47,6 @@
           重复密码
         </div>
         <el-input
-          id="signUpRepeatPassword"
           placeholder="Repeat Password"
           v-model="password2"
           type="password"
@@ -56,7 +56,7 @@
       </div>
       <div class="formsItem">
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">邮箱</div>
-        <el-input id="signUpEmail" placeholder="Email Address" v-model="emailAddress">
+        <el-input placeholder="Email Address" v-model="emailAddress">
           <i class="el-icon-message" slot="prepend"></i>
         </el-input>
       </div>
@@ -64,21 +64,30 @@
         <div style="font-size: 14px; padding: 3px; margin-left: 10px">
           验证码
         </div>
-        <el-input id="signUpVerificationCode" placeholder="Verification Code" v-model="verificationCode">
+        <el-input placeholder="Verification Code" v-model="verificationCode">
           <i class="el-icon-key" slot="prepend"></i>
         </el-input>
       </div>
     </el-row>
 
     <el-row>
-      <el-button id="signInButton" style="width: 40%" @click="onSignIn()"> 登录 </el-button>
-      <el-button id="signUpButton" style="width: 40%" @click="onSignUp()"> 注册 </el-button>
+      <el-button style="width: 40%" @click="onSignIn()"> 登录 </el-button>
+      <el-button style="width: 40%" @click="onSignUp()"> 注册 </el-button>
     </el-row>
     <el-row></el-row>
   </div>
 </template>
 
 <style scoped>
+.hide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  z-index: -9999;
+  color: rgba(255,255,255,0);
+}
 
 .background {
   padding: 40px 20px;
@@ -139,6 +148,7 @@ export default {
       password2: "",
       emailAddress: "",
       verificationCode: "",
+      message: "123",
     };
   },
   methods: {
@@ -153,7 +163,8 @@ export default {
         }
         this.axios.post(url, form).then((res) => {
           if (res.data['result'] === 0) {
-            this.$message.error(res.data['message'])
+            this.$message.error(res.data['message']);
+            this.message = res.data['message'];
           } else {
             console.log(res.data);
             this.$store.commit("setToken", res.data['token']);
@@ -167,10 +178,14 @@ export default {
       if (this.radio === 0) 
         this.radio = 1;
       else if (this.radio === 1) {
-        if (this.username === '' || this.password === '') 
+        if (this.username === '' || this.password === '') {
           this.$message.error("用户名和密码不允许为空");
-        else if (this.password != this.password2) 
+          this.message = "用户名和密码不允许为空";
+        }
+        else if (this.password != this.password2) {
           this.$message.error("两次输入的密码不一致");
+          this.message = "两次输入的密码不一致";
+        }
         else {
           const url = "/user/email/";
           var form = {
