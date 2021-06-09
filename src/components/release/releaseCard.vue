@@ -163,7 +163,7 @@ export default {
   methods: {
     checkPrice(price) {
       console.log(price);
-      var pattern = new RegExp("^\\d*(\.\\d{1,2})?$")
+      var pattern = new RegExp("^\\d*(\\.\\d{1,2})?$")
       if (pattern.test(price) === false)
         return false;
       return parseFloat(price) <= 20000;
