@@ -1,5 +1,6 @@
 <template>
   <div class="background">
+    <div id="hide" class="hide"> {{ message }}</div>
     <span>欢迎来到 Hazelnut 平台</span>
     <el-row class="forms" v-show="radio == 0">
       <img src="../../assets/hazelnut.png" height="80px" style="margin-top: 10px"/>
@@ -78,6 +79,15 @@
 </template>
 
 <style scoped>
+.hide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  z-index: -9999;
+  color: rgba(255,255,255,0);
+}
 
 .background {
   padding: 40px 20px;
@@ -138,6 +148,7 @@ export default {
       password2: "",
       emailAddress: "",
       verificationCode: "",
+      message: "123",
     };
   },
   methods: {
@@ -152,7 +163,8 @@ export default {
         }
         this.axios.post(url, form).then((res) => {
           if (res.data['result'] === 0) {
-            this.$message.error(res.data['message'])
+            this.$message.error(res.data['message']);
+            this.message = res.data['message'];
           } else {
             console.log(res.data);
             this.$store.commit("setToken", res.data['token']);
@@ -166,10 +178,14 @@ export default {
       if (this.radio === 0) 
         this.radio = 1;
       else if (this.radio === 1) {
-        if (this.username === '' || this.password === '') 
+        if (this.username === '' || this.password === '') {
           this.$message.error("用户名和密码不允许为空");
-        else if (this.password != this.password2) 
+          this.message = "用户名和密码不允许为空";
+        }
+        else if (this.password != this.password2) {
           this.$message.error("两次输入的密码不一致");
+          this.message = "两次输入的密码不一致";
+        }
         else {
           const url = "/user/email/";
           var form = {
