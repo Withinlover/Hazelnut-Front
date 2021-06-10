@@ -176,7 +176,7 @@ export default {
             this.$store.commit("setToken", res.data['token']);
             this.message = res.data['message'];
             this.$message.success(res.data['message']);
-            this.sleep(3000).then(() => {
+            this.sleep(1000).then(() => {
               this.$router.push({path: '/commodity'});
             })
             console.log(this.$router.isLogin);

@@ -38,7 +38,7 @@
   position: relative;
   height: 3rem;
   padding: 0.1rem 0 0 8rem;
-  border-bottom: 0.1em outset rgb(110, 91, 80);
+  /* border-bottom: 0.1em outset rgb(110, 91, 80); */
   text-align: left;
   color: rgb(110, 91, 80);
   background-color: rgb(255, 255, 255);
