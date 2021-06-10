@@ -49,7 +49,7 @@ import CommodityCard from "./CommodityCard.vue";
 
 export default {
   name: "GoodsCascade",
-  props: ["casType", "casKeyword"],
+  props: ["casType", "casKeyword", "casCata"],
   components: { CommodityCard },
   computed: {},
   data() {
@@ -64,20 +64,24 @@ export default {
 
   async mounted() {
     let res = "";
-    if (this.$props.casKeyword !== "") {
+
+    if (this.$props.casCata === "") this.$props.casCata = "0";
+
+    if (this.$props.casKeyword !== "" || this.$props.casCata !== "0") {
       // show searching result
       if (this.$props.casType === "commodity") {
         res = await this.axios.post("search/", {
           type: 0,
           key: this.$props.casKeyword,
+          category: this.$props.casCata,
         });
         this.allGoods = res.data.object;
       } else if (this.$props.casType === "demand") {
         res = await this.axios.post("search/", {
-          type: 0,
+          type: 1,
           key: this.$props.casKeyword,
+          category: this.$props.casCata,
         });
-        console.log(res.data.len);
         this.allGoods = res.data.object;
       }
     } else {
@@ -93,7 +97,6 @@ export default {
 
     if (this.allGoods.length === 0) {
       this.hasGoods = false;
-      console.log("no good");
       this.loaded = true;
       return;
     }

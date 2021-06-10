@@ -7,14 +7,29 @@
         placeholder="请输入您想找的商品"
         prefix-icon="el-icon-search"
         @change="enterSearch"
-      ></el-input>
+      >
+        <el-select
+          class="select-search"
+          v-model="selectType"
+          slot="prepend"
+          placeholder="选择分类"
+          @change="enterSearch"
+        >
+          <el-option
+            v-for="(type, index) in allTypes"
+            :label="type"
+            :value="index"
+            :key="index"
+          />
+        </el-select>
+      </el-input>
     </div>
 
     <div class="pool">
-      <!-- all goods -->
       <goods-cascade
         casType="commodity"
         :casKeyword="casKeyword"
+        :casCata="selectType"
         :key="casKey"
       />
     </div>
@@ -47,12 +62,16 @@ el-input {
   padding: 10px;
   margin: 0;
 }
+
+.select-search {
+  width: 120px;
+}
 .search {
   padding: 20px;
 }
 .searchinput {
   padding: 1em;
-  width: 10px;
+  width: 30px;
   display: flex;
 }
 .icon-circle-back {
@@ -94,7 +113,19 @@ export default {
       input: "",
       casKey: 0,
       casKeyword: "",
+      selectType: "",
+      allTypes: [],
     };
+  },
+  async mounted() {
+    let res = "";
+    try {
+      res = await this.axios.get("/good/category");
+    } catch (e) {
+      return;
+    }
+    this.allTypes = res.data.category;
+    this.allTypes.unshift("全部分类");
   },
   methods: {
     scrollToTop() {
