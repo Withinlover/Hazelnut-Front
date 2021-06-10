@@ -6,12 +6,17 @@
         v-model="input"
         placeholder="请输入您想找的商品"
         prefix-icon="el-icon-search"
+        @change="enterSearch"
       ></el-input>
     </div>
 
     <div class="pool">
       <!-- all goods -->
-      <goods-cascade casType="commodity" />
+      <goods-cascade
+        casType="commodity"
+        :casKeyword="casKeyword"
+        :key="casKey"
+      />
     </div>
 
     <div class="icon-group">
@@ -87,11 +92,19 @@ export default {
   data() {
     return {
       input: "",
+      casKey: 0,
+      casKeyword: "",
     };
   },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
+    },
+    enterSearch(e) {
+      // console.log(this.input);
+      this.casKeyword = this.input;
+      this.casKey++;
+      this.input = "";
     },
   },
 };

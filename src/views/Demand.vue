@@ -1,28 +1,27 @@
 <template>
   <div class="demand">
-    <div>
-      <div class="search">
-        <el-input
-          class="searchInput"
-          v-model="input"
-          placeholder="请输入您想找的商品"
-          prefix-icon="el-icon-search"
-        ></el-input>
+    <div class="search">
+      <el-input
+        class="searchInput"
+        v-model="input"
+        placeholder="请输入您想找的商品"
+        prefix-icon="el-icon-search"
+        @change="enterSearch"
+      ></el-input>
+    </div>
+    <goods-cascade casType="demand" :casKeyword="casKeyword" :key="casKey" />
+    <div class="icon-group">
+      <div class="f">
+        <div @click="scrollToTop()" class="icon-circle-back">
+          <i class="el-icon-arrow-up iconAbs" />
+        </div>
       </div>
 
-      <goods-cascade casType="demand" />
-      <div class="icon-group">
-        <div class="f">
-          <div @click="scrollToTop()" class="icon-circle-back">
-            <i class="el-icon-arrow-up iconAbs" />
-          </div>
+      <router-link tag="div" to="/release">
+        <div class="icon-circle-back">
+          <i class="el-icon-plus iconAbs"></i>
         </div>
-        <router-link tag="div" to="/release">
-          <div class="icon-circle-back">
-            <i class="el-icon-plus iconAbs"></i>
-          </div>
-        </router-link>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -33,12 +32,18 @@
   flex-direction: column;
   align-items: center;
 }
+
 el-input {
   padding: 10px;
   margin: 0;
 }
 .search {
   padding: 20px;
+}
+.searchinput {
+  padding: 1em;
+  width: 10px;
+  display: flex;
 }
 .icon-circle-back {
   background-color: rgb(110, 91, 80);
@@ -75,11 +80,19 @@ export default {
   data() {
     return {
       input: "",
+      casKey: 0,
+      casKeyword: "",
     };
   },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
+    },
+    enterSearch(e) {
+      // console.log(this.input);
+      this.casKeyword = this.input;
+      this.casKey++;
+      this.input = "";
     },
   },
 };

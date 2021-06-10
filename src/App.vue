@@ -8,7 +8,7 @@
 
 <style scope>
 #app {
-  min-width: 800px;
+  min-width: 700px;
   overflow: auto;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -20,9 +20,8 @@
 
 
 <script>
-import BaseNavBar from './components/navbar/BaseNavBar.vue'
+import BaseNavBar from "./components/navbar/BaseNavBar.vue";
 export default {
   components: { BaseNavBar },
-  
-}
+};
 </script>

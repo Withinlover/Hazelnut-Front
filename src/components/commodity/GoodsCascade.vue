@@ -1,6 +1,10 @@
 <template>
   <div class="cascade" v-if="this.loaded">
+    <div class="not-find" :hidden="hasGoods">
+      没有查到任何商品哦，换个关键词再试试吧
+    </div>
     <div
+      :hidden="!hasGoods"
       class="cascade-col"
       v-for="(col, index) in cascadeCol"
       :key="index"
@@ -34,6 +38,10 @@
   display: flex;
   flex-direction: column;
 }
+.not-find {
+  margin: 30px;
+  font-size: 150%;
+}
 </style>
 
 <script>
@@ -41,7 +49,7 @@ import CommodityCard from "./CommodityCard.vue";
 
 export default {
   name: "GoodsCascade",
-  props: ["casType"],
+  props: ["casType", "casKeyword"],
   components: { CommodityCard },
   computed: {},
   data() {
@@ -50,19 +58,45 @@ export default {
       cascadeCol: [[], [], [], []],
       loading: false,
       loaded: false,
+      hasGoods: true,
     };
   },
 
   async mounted() {
     let res = "";
-    if (this.$props.casType === "commodity") {
-      res = await this.axios.post("good/allgood/", {});
-      this.allGoods = res.data.good;
-    } else if (this.$props.casType === "demand") {
-      res = await this.axios.post("demand/alldemand/", {});
-      this.allGoods = res.data.demand;
+    if (this.$props.casKeyword !== "") {
+      // show searching result
+      if (this.$props.casType === "commodity") {
+        res = await this.axios.post("search/", {
+          type: 0,
+          key: this.$props.casKeyword,
+        });
+        this.allGoods = res.data.object;
+      } else if (this.$props.casType === "demand") {
+        res = await this.axios.post("search/", {
+          type: 0,
+          key: this.$props.casKeyword,
+        });
+        console.log(res.data.len);
+        this.allGoods = res.data.object;
+      }
+    } else {
+      // show all goods
+      if (this.$props.casType === "commodity") {
+        res = await this.axios.post("good/allgood/", {});
+        this.allGoods = res.data.good;
+      } else if (this.$props.casType === "demand") {
+        res = await this.axios.post("demand/alldemand/", {});
+        this.allGoods = res.data.demand;
+      }
     }
-    if (this.allGoods.length === 0) return;
+
+    if (this.allGoods.length === 0) {
+      this.hasGoods = false;
+      console.log("no good");
+      this.loaded = true;
+      return;
+    }
     this.cascadeCol[3].push(this.allGoods.pop());
     this.loaded = true;
   },
