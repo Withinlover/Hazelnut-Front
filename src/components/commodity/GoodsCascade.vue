@@ -77,7 +77,7 @@ export default {
           type: 0,
           key: this.$props.casKeyword,
         });
-        console.log(res.data.len);
+        // console.log(res.data.len);
         this.allGoods = res.data.object;
       }
     } else {
@@ -93,7 +93,7 @@ export default {
 
     if (this.allGoods.length === 0) {
       this.hasGoods = false;
-      console.log("no good");
+      // console.log("no good");
       this.loaded = true;
       return;
     }

@@ -231,11 +231,11 @@ export default {
     async applyForTrade() {
       let res = "";
       try {
-        console.log({
-          token: this.$store.state.token, //当前登录用户的token
-          objectid: this.$props.goodId, // 商品ID或需求ID
-          type: `${this.commoType === "出" ? 0 : 1}`, // 0表示商品,1表示需求
-        });
+        // console.log({
+        //   token: this.$store.state.token, //当前登录用户的token
+        //   objectid: this.$props.goodId, // 商品ID或需求ID
+        //   type: `${this.commoType === "出" ? 0 : 1}`, // 0表示商品,1表示需求
+        // });
         res = await this.axios.post("trade/apply/", {
           token: this.$store.state.token, //当前登录用户的token
           objectid: this.$props.goodId, // 商品ID或需求ID

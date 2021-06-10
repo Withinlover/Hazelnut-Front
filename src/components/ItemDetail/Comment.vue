@@ -335,7 +335,7 @@ export default {
       this.getApply();
     },
     setReplyTo(id, name) {
-      console.log(id);
+      // console.log(id);
       this.replyTo = id;
       this.inputPlaceHoldertext = "回复" + name + ":";
 
