@@ -198,14 +198,18 @@ export default {
             this.$message.error(res.data["message"]);
             this.message = res.data["message"];
           } else {
-            console.log(res.data);
+            // console.log(res.data);
             this.$store.commit("setToken", res.data["token"]);
+            this.$store.commit("setLevel", res.data["level"]);
+            console.log(this.$store.state.level);
+
             this.message = res.data["message"];
             this.$message.success(res.data["message"]);
+
             this.sleep(1000).then(() => {
               this.$router.push({ path: "/commodity" });
             });
-            console.log(this.$router.isLogin);
+            // console.log(this.$router.isLogin);
           }
         });
       }

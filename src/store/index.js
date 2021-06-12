@@ -8,6 +8,7 @@ const store = new Vuex.Store({
         return {
             isLogin: sessionStorage.getItem('token') ? true : false,
             token: sessionStorage.getItem('token') ? sessionStorage.getItem('token') : "",
+            level: sessionStorage.getItem('level') ? sessionStorage.getItem('level') : -2,
             dotIsHidden: true,
         }
     },
@@ -21,6 +22,11 @@ const store = new Vuex.Store({
             state.isLogin = false
             state.token = ''
             sessionStorage.setItem('token', '')
+        },
+        setLevel(state, level) {
+            console.log("SetLevel " + level);
+            state.level = level;
+            sessionStorage.setItem('level', level);
         },
         updateDot(state, value) {
             state.dotIsHidden = value;
