@@ -36,7 +36,22 @@
         <el-divider />
         <div class="description">{{ commoInfo.description }}</div>
         <div class="button-row">
-          <el-button class="button" type="danger" round>举报</el-button>
+          <el-button
+            v-if="!own && this.$store.state.level !== -1"
+            class="button"
+            type="danger"
+            @click="report"
+            round
+            >举报</el-button
+          >
+          <el-button
+            v-else
+            class="button"
+            type="danger"
+            @click="deleteGood"
+            round
+            >下架</el-button
+          >
           <el-button
             class="button"
             type="primary"
@@ -50,7 +65,6 @@
           <!-- commoInfo.isSold -->
         </div>
       </div>
-      <!-- {{ data }} -->
     </div>
   </div>
 </template>
@@ -231,15 +245,10 @@ export default {
     async applyForTrade() {
       let res = "";
       try {
-        // console.log({
-        //   token: this.$store.state.token, //当前登录用户的token
-        //   objectid: this.$props.goodId, // 商品ID或需求ID
-        //   type: `${this.commoType === "出" ? 0 : 1}`, // 0表示商品,1表示需求
-        // });
         res = await this.axios.post("trade/apply/", {
           token: this.$store.state.token, //当前登录用户的token
           objectid: this.$props.goodId, // 商品ID或需求ID
-          type: `${this.commoType === "出" ? 0 : 1}`, // 0表示商品,1表示需求
+          type: `${this.$props.commoType === "出" ? 0 : 1}`, // 0表示商品,1表示需求
         });
       } catch (e) {
         this.$router.push({ path: "/error" });
@@ -263,6 +272,7 @@ export default {
       // this.$router.go(this.$router.currentRoute);
       this.getDetail();
     },
+
     async getDetail() {
       let res = "";
 
@@ -284,9 +294,11 @@ export default {
       }
 
       let data = res.data;
-      this.data = res.data;
+      // this.data = res.data;
+      this.own = data.own; //
       this.imageUrls = data.imageUrls;
       this.commoInfo = {
+        id: data.id,
         title: data.title,
         price: data.price,
         releaser: {
@@ -300,11 +312,62 @@ export default {
         canTrade: data.canTrade,
       };
     },
+    async report() {
+      let res;
+      try {
+        res = await this.axios.post("good/report/", {
+          id: this.$props.goodId,
+          type: this.$props.commoType === "出" ? 0 : 1,
+        });
+      } catch (e) {
+        // this.$router.
+        // return;
+      }
+      if (res.data.result === 1) {
+        this.$notify({
+          title: res.data.message,
+          message: "",
+          type: "success",
+        });
+      } else {
+        this.$notify(
+          this.$notify.error({
+            title: "举报失败",
+            message: "等会再试试吧",
+          })
+        );
+      }
+    },
+    async deleteGood() {
+      let res = "";
+      // try {
+      res = await this.axios.post("good/delete/", {
+        id: this.$props.goodId, // 商品/需求ID
+        type: this.$props.commoType === "出" ? 0 : 1, // 0商品 1需求
+      });
+      // } catch (e) {}
+      let data = res.data;
+      if (res.data.result === 1) {
+        this.$notify({
+          title: res.data.message,
+          message: data.message,
+          type: "success",
+        });
+      } else {
+        this.$notify(
+          this.$notify.error({
+            title: res.data.message,
+            message: "等会再试试吧",
+          })
+        );
+      }
+    },
   },
 
   data() {
     return {
       data: "",
+      own: false,
       imageUrls: ["https://via.placeholder.com/500"],
       window: {
         width: 0,
