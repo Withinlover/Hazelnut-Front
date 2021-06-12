@@ -1,14 +1,72 @@
 <template>
   <el-card shadow="hover" class="card">
-    <el-row type="flex" justify="center" align="middle">
-      <el-col :span="10">  
-        <h1> > 用以下信息联系该用户 </h1> 
+    <el-row>
+      <el-col :span="4">
+        <el-tag>
+          用户名
+          <i class="el-icon-user"></i>
+        </el-tag>
       </el-col>
-      <el-col :span="10"> 
-        <user-watch-message-card :initialUserID="this.userID"/>
+      <el-col :span="8">
+        <p>{{ showData.name }}</p>
+      </el-col>
+
+      <el-col :span="4">
+        <el-tag>
+          手机号码
+          <i class="el-icon-mobile-phone"></i>
+        </el-tag>
+      </el-col>
+      <el-col :span="8">
+        <p>{{ showData.telephone }}</p>
       </el-col>
     </el-row>
-    <user-watch-info :initialUserID="this.userID"/>
+
+    <el-row>
+      <el-col :span="4">
+        <el-tag>
+          邮箱
+          <i class="el-icon-message"></i>
+        </el-tag>
+      </el-col>
+      <el-col :span="8">
+        <p>{{ showData.email }}</p>
+      </el-col>
+
+      <el-col :span="4">
+        <el-tag>
+          性别
+          <i class="el-icon-male"></i>
+        </el-tag>
+      </el-col>
+      <el-col :span="8">
+        <p>{{ showData.sex }}</p>
+      </el-col>
+    </el-row>
+
+    <el-row>
+
+      <el-col :span="4">
+        <el-tag>
+          年级
+          <i class="el-icon-office-building"></i>
+        </el-tag>
+      </el-col>
+      <el-col :span="8">
+        <p>{{ showData.grade }}</p>
+      </el-col>
+      
+      <el-col :span="4">
+        <el-tag>
+          校区
+          <i class="el-icon-location-outline"></i>
+        </el-tag>
+      </el-col>
+      <el-col :span="8">
+        <p>{{ showData.location }}</p>
+      </el-col>
+    </el-row>
+
   </el-card>
 </template>
 
@@ -38,8 +96,6 @@ h1 {
 </style>
 
 <script>
-import UserWatchInfo from './UserWatchHeaderCardItems/UserWatchInfo.vue';
-import UserWatchMessageCard from './UserWatchMessageCard.vue';
 const map = {
   sex: ["男", "女"],
   grade: ["大一", "大二", "大三", "大四"],
@@ -47,8 +103,7 @@ const map = {
 };
 
 export default {
-  components: { UserWatchInfo, UserWatchMessageCard },
-  name: "UserWatchInfoCard",
+  name: "UserWatchInfo",
   props: ["initialUserID"],
 
   data() {

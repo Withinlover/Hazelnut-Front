@@ -3,7 +3,6 @@
     <el-col :span="14">
       <user-watch-header-card :initialUserID="userID"/>
       <user-watch-info-card :initialUserID="userID"/>
-      <user-watch-message-card :initialUserID="userID" />
     </el-col>
   </el-row>
 </template>
@@ -26,7 +25,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.userID)
+    // console.log(this.userID)
   },
   
 };
