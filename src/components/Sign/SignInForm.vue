@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <div id="hide" class="hide">{{ message }}</div>
+    <!-- <div id="hide" class="hide">{{ message }}</div> -->
     <span>欢迎来到小型二手货交易平台</span>
     <!-- <span>欢迎来到 Hazelnut 平台</span> -->
     <el-row class="forms" v-show="radio == 0">
