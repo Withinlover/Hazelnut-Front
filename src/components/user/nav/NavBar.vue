@@ -15,16 +15,13 @@
       </div>
       <div id="credit">
         <router-link to="/user/history">
-          <p class="menu-item">{{userCredit}}</p>
+          <p class="menu-item">{{ userCredit }}</p>
           <span class="menu-text menu-item">信用</span>
         </router-link>
       </div>
       <div id="base">
-        <el-avatar
-          :size="80"
-          :src="userImgUrl">
-        </el-avatar>
-        <div style="font-size:1.5rem;">{{userName}}</div>
+        <el-avatar :size="80" :src="userImgUrl"> </el-avatar>
+        <div style="font-size: 1.5rem">{{ userName }}</div>
       </div>
     </div>
 
@@ -32,7 +29,8 @@
       <el-menu
         active-text-color="#B59E8C"
         :default-active="this.$route.path"
-        router>
+        router
+      >
         <el-menu-item index="/user">
           <i class="el-icon-s-custom"></i>
           <span>个人资料</span>
@@ -55,7 +53,7 @@
 </template>
 
 <style scoped>
-#user-info{
+#user-info {
   position: relative;
   margin: auto;
   margin-top: 48px;
@@ -65,10 +63,12 @@
   border: solid #ffffff 1.6px;
   box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
-#user-info a{
+#user-info a {
   text-decoration: none;
 }
-#follow,#favorites,#credit{
+#follow,
+#favorites,
+#credit {
   position: absolute;
   height: 48px;
   width: 48px;
@@ -76,35 +76,35 @@
   border-radius: 100%;
   box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
-#follow{
+#follow {
   left: -13.28px;
-  top:16px;
+  top: 16px;
 }
-#favorites{
-  top:16px;
+#favorites {
+  top: 16px;
   right: -13.28px;
 }
-#credit{
+#credit {
   bottom: -24px;
   left: 56px;
 }
-#credit p{
+#credit p {
   margin: 0px;
   font-weight: bolder;
 }
-.menu-item{
-  color: rgb(110, 91,80);
+.menu-item {
+  color: rgb(110, 91, 80);
 }
-.menu-text{
+.menu-text {
   display: block;
 }
-#base{
+#base {
   margin: 24px;
 }
-#base .el-avatar{
+#base .el-avatar {
   box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
 }
-#user-menu > *{
+#user-menu > * {
   margin-top: 32px;
   background-color: transparent;
 }
@@ -112,34 +112,44 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      userImgUrl:'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-      userName:'正在加载',
-      userCredit:'?'
-    }
+      userImgUrl:
+        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      userName: "正在加载",
+      userCredit: "?",
+    };
   },
-  methods:{
-    getBaseInfo(){
-      this.axios.post('/user/getuser/',{
-        token:this.$store.state.token
-      }).then(res =>{
-        this.userImgUrl=res.data.url === 'NULL'? this.userImgUrl:res.data.url
-        this.userName=res.data.name
-        this.userCredit=res.data.score<0? '?':res.data.score.toFixed(1)
-      },reason =>{
-        this.$message({
-          message:'请求超时，请检查网络设置',
-          type:'error'
+  methods: {
+    getBaseInfo() {
+      this.axios
+        .post("/user/getuser/", {
+          token: this.$store.state.token,
         })
-      })
+        .then(
+          (res) => {
+            this.userImgUrl =
+              res.data.url === "NULL" ? this.userImgUrl : res.data.url;
+            this.userName = res.data.name;
+            this.userCredit =
+              res.data.score === null || res.data.score < 0
+                ? "?"
+                : res.data.score.toFixed(1);
+          },
+          (reason) => {
+            this.$message({
+              message: "请求超时，请检查网络设置",
+              type: "error",
+            });
+          }
+        );
     },
-    updateAvatar(imgUrl){
-      this.userImgUrl=imgUrl
-    }
+    updateAvatar(imgUrl) {
+      this.userImgUrl = imgUrl;
+    },
   },
-  mounted(){
-    this.getBaseInfo()
-  }
-}
+  mounted() {
+    this.getBaseInfo();
+  },
+};
 </script>

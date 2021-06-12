@@ -8,7 +8,6 @@
           :interval="5000"
           :direction="carouselDirect"
         >
-          <!-- {{imageUrls}} -->
           <el-carousel-item v-for="item in imageUrls" :key="item">
             <img class="commo-image" :src="item" />
           </el-carousel-item>
@@ -121,6 +120,7 @@
   font-weight: 900;
   font-size: 2em;
   margin: 10px;
+  margin-top: 30px;
   text-align: center;
 }
 .commo-type {
