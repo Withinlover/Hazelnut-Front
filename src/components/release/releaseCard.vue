@@ -102,8 +102,13 @@
       </el-form-item>
 
       <el-form-item label="商品图片" style="line-height: 0px">
-        <el-col :span="7" v-for="img in imgUrls" :key="img.id" :offset="img.id % 3 == 0 ? 0 : 1">
-          <el-card :body-style="{ padding: '0px'}" >
+        <el-col
+          :span="7"
+          v-for="img in imgUrls"
+          :key="img.id"
+          :offset="img.id % 3 == 0 ? 0 : 1"
+        >
+          <el-card :body-style="{ padding: '0px' }">
             <img :src="img.url" class="image" width="100%" />
           </el-card>
         </el-col>
@@ -131,10 +136,16 @@
 .imgBlock {
   display: inline-block;
 }
+
+el-form-buttom {
+  margin-top: 20px;
+}
 </style>
 
 <script>
+import updateButton from "./updateButton.vue";
 export default {
+  components: { updateButton },
   name: "release",
   mounted() {
     console.log(this.$store.state.token);
@@ -163,9 +174,8 @@ export default {
   methods: {
     checkPrice(price) {
       console.log(price);
-      var pattern = new RegExp("^\\d*(\\.\\d{1,2})?$")
-      if (pattern.test(price) === false)
-        return false;
+      var pattern = new RegExp("^\\d*(\\.\\d{1,2})?$");
+      if (pattern.test(price) === false) return false;
       return parseFloat(price) <= 20000;
     },
     next() {
@@ -174,10 +184,11 @@ export default {
           this.$message.error("请填写标题");
         } else if (this.form.region === "") {
           this.$message.error("请选择商品分类");
-        } else if (this.form.price === "" || !this.checkPrice(this.form.price)) {
-          this.$message.error(
-            "请正确填写商品价格(不超过 20000元，如：11.5)"
-          );
+        } else if (
+          this.form.price === "" ||
+          !this.checkPrice(this.form.price)
+        ) {
+          this.$message.error("请正确填写商品价格(不超过 20000元，如：11.5)");
         } else {
           var url, data;
           if (this.form.type == 2) url = "/good/upload/";
