@@ -1,13 +1,15 @@
 <template>
   <div class="sign">
     <div class="backgroundColor"></div>
-    <el-row :gutter="0">
-      <el-col class="middleContent">
-        <el-col :xs="8" :sm="12" :md="14" :lg="15" :xl="16"> </el-col>
-        <el-col :xs="16" :sm="12" :md="9" :lg="7" :xl="5">
-          <sign-in-form />
-        </el-col>
-        <el-col :xs="0" :sm="0" :md="1" :lg="2" :xl="3"> </el-col>
+    <el-row type="flex" justify="space-around" align="middle">
+      <el-col :lg="12" :md="12" :sm="12" :xs="12">
+        <el-row class="backgroundImage" style="margin: 0"></el-row>
+        <el-row style="margin-top: 0; font-size: 18px">
+          {{ text }}
+        </el-row>
+      </el-col>
+      <el-col :lg="6" :md="7" :sm="9" :xs="10">
+        <sign-in-form />
       </el-col>
     </el-row>
   </div>
@@ -15,9 +17,17 @@
 
 <style scoped>
 .backgroundColor {
-  background: #B7989146;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #94716b46, #b7989146);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #94716B46, #B7989146); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #b7989146; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #94716b46,
+    #b7989146
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #94716b46,
+    #b7989146
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   position: fixed;
   top: 0;
   left: 0;
@@ -26,12 +36,12 @@
   z-index: -100;
 }
 
-.middleContent {
+.backgroundImage {
+  height: 40vh;
   background-image: url("../assets/logo.png");
-  background-repeat: no-repeat;
   background-size: contain;
-  background-position-x: 20%;
-  background-position-y: 55%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .el-radio-group {
@@ -96,10 +106,15 @@ import SignInForm from "../components/Sign/SignInForm.vue";
 
 export default {
   components: { SignInForm },
+  data() {
+    return {
+      text: "理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本",
+    };
+  },
   mounted() {
     if (this.$store.state.isLogin == true) {
-      this.$router.push({path: '/commodity'});  
+      this.$router.push({ path: "/commodity" });
     }
-  }
+  },
 };
 </script>
