@@ -23,7 +23,7 @@
           <el-radio label="2" border>发布商品</el-radio>
         </el-radio-group>
         <el-divider></el-divider>
-        <el-select v-model="form.region" placeholder="请选择商品分类">
+        <el-select v-model="form.region" placeholder="请选择分类">
           <el-option
             v-for="category in categoris"
             :key="category.id"
