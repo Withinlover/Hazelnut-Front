@@ -2,9 +2,6 @@
   <div id="app">
     <base-nav-bar ref="navbar"></base-nav-bar>
     <router-view />
-    <div class="absolute">
-      <vue-canvas-nest :config="config" />
-    </div>
   </div>
 </template>
 
@@ -32,10 +29,8 @@
 
 <script>
 import BaseNavBar from "./components/navbar/BaseNavBar.vue";
-import vueCanvasNest from 'vue-canvas-nest'; 
-
 export default {
-  components: { BaseNavBar, vueCanvasNest },
+  components: { BaseNavBar },
   data() {
     return {
       config: {
