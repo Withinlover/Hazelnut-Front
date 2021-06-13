@@ -24,7 +24,7 @@
         <div class="title">
           <span class="commo-type">{{ commoType }}</span
           >{{ commoInfo.title }}
-          <span :hidden="own">
+          <span :hidden="own || !$store.state.isLogin">
             <span :hidden="commoInfo.isCollect">
               <i class="el-icon-star-off collect" @click="collectItem" />
             </span>
@@ -55,7 +55,7 @@
         </div>
         <el-divider />
         <div class="description">{{ commoInfo.description }}</div>
-        <div class="button-row">
+        <div class="button-row" v-if="$store.state.isLogin">
           <el-button
             v-if="!own && this.$store.state.level !== -1"
             class="button"
@@ -81,6 +81,7 @@
             >{{ commoInfo.isSold ? "已卖出" : "申请交易" }}</el-button
           >
         </div>
+        <div v-else class="button-row">请先登录</div>
       </div>
     </div>
   </div>
