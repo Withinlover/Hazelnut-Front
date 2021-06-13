@@ -58,6 +58,7 @@ export default {
         console.log(res.data);
         if (res.data.result === 1) {
           this.isBanned = res.data.isban;
+          this.$emit("setBan", this.isBanned)
         }
       });
 
@@ -110,8 +111,6 @@ export default {
         console.log(res.data);
         if (res.data.result === 1) 
           this.updateInfo();
-        console.log(this.isBanned)
-        this.$emit("setBan", this.isBanned)
       })
     },
     
