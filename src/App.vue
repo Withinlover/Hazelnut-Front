@@ -2,7 +2,7 @@
   <div id="app">
     <base-nav-bar ref="navbar"></base-nav-bar>
     <router-view />
-    <div ref="a"></div>
+    <vue-canvas-nest :config="config" />
   </div>
 </template>
 
@@ -21,7 +21,19 @@
 
 <script>
 import BaseNavBar from "./components/navbar/BaseNavBar.vue";
+import vueCanvasNest from 'vue-canvas-nest'; 
+
 export default {
-  components: { BaseNavBar },
+  components: { BaseNavBar, vueCanvasNest },
+  data() {
+    return {
+      config: {
+        color: '0,0,255',
+        opacity: 0.7,
+        zIndex: -2,
+        count: 99,
+      },
+    }
+  }
 };
 </script>
