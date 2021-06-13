@@ -24,6 +24,14 @@
         <div class="title">
           <span class="commo-type">{{ commoType }}</span
           >{{ commoInfo.title }}
+          <span :hidden="own">
+            <span :hidden="commoInfo.isCollect">
+              <i class="el-icon-star-off collect" @click="collectItem" />
+            </span>
+            <span :hidden="!commoInfo.isCollect">
+              <i class="el-icon-star-on collect" @click="unCollectItem" />
+            </span>
+          </span>
         </div>
         <div class="brief-line">
           <div class="price">
@@ -31,11 +39,17 @@
             <span class="priceNum">{{ commoInfo.price }}</span>
           </div>
           <div class="release-info">
-            <div class="releaser">
-              <img class="avatar" :src="commoInfo.releaser.avatar" />
-              <span class="name">{{ commoInfo.releaser.name }}</span>
-              <span class="rate">{{ commoInfo.releaser.credit }}</span>
-            </div>
+            <router-link
+              class="releaser"
+              tag="div"
+              :to="'/user/watch/' + commoInfo.releaser.id"
+            >
+              <div class="releaser">
+                <img class="avatar" :src="commoInfo.releaser.avatar" />
+                <span class="name">{{ commoInfo.releaser.name }}</span>
+                <span class="rate">{{ commoInfo.releaser.credit }}</span>
+              </div>
+            </router-link>
             <div class="release-data">发布于:{{ commoInfo.date }}</div>
           </div>
         </div>
@@ -66,9 +80,6 @@
             @click="applyForTrade"
             >{{ commoInfo.isSold ? "已卖出" : "申请交易" }}</el-button
           >
-          <!-- {{ commoInfo.isSold }}{{ !commoInfo.canTrade }} -->
-          <!-- {{ this.data.isSold }} -->
-          <!-- commoInfo.isSold -->
         </div>
       </div>
     </div>
@@ -80,7 +91,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
 }
 .commo {
   border: 0.1px solid rgb(110, 91, 80, 0.5);
@@ -121,6 +131,9 @@
 .detail-text {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 380px;
 }
 .title {
   font-family: Helvetica, Tahoma, Arial, STXihei, SimSun, "宋体", Heiti, "黑体",
@@ -140,6 +153,9 @@
   border-radius: 20%;
   vertical-align: middle;
 }
+.collect {
+  color: gold;
+}
 .brief-line {
   display: flex;
   flex-direction: row;
@@ -156,7 +172,9 @@
 .rmb {
   font-size: smaller;
 }
-
+route-link .avatar {
+  margin-left: 10px;
+}
 .avatar {
   height: 25px;
   width: 25px;
@@ -175,6 +193,7 @@
   margin-left: 10px;
   margin-bottom: 7px;
   align-items: center;
+  width: 100;
 }
 .name {
   align-self: center;
@@ -195,10 +214,9 @@
   font-size: smaller;
 }
 .el-divider--horizontal {
-  margin: 8px 0;
+  margin-left: 10px;
+  margin-right: 10px;
   background: 0 0;
-  width: 90%;
-  align-self: center;
   border-top: 1px solid #e8eaec;
 }
 .description {
@@ -274,18 +292,18 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify.error({
-          title: "申请交易失败",
-          message: "换个商品看看吧",
-        });
+        this.$notify(
+          this.$notify.error({
+            title: "申请交易失败",
+            message: "换个商品看看吧",
+          })
+        );
       }
-      // this.$router.go(this.$router.currentRoute);
       this.getDetail();
     },
 
     async getDetail() {
       let res = "";
-
       try {
         if (this.$props.commoType === "出") {
           res = await this.axios.post("good/goodinfo/", {
@@ -319,6 +337,7 @@ export default {
         date: data.date,
         description: data.description,
         isSold: data.isSold,
+        isCollect: data.iscollect,
         canTrade: data.canTrade,
       };
     },
@@ -349,12 +368,50 @@ export default {
 
         this.getDetail();
       } else {
-        this.$notify.error({
-          title: res.data.message,
-          message: "",
-        });
+        this.$notify(
+          this.$notify.error({
+            title: res.data.message,
+            message: "",
+          })
+        );
       }
     },
+    async unCollectItem() {
+      let res = "";
+      try {
+        if (this.$props.commoType === "出") {
+          res = await this.axios.post("good/uncollect/", {
+            goodid: this.$props.goodId,
+            token: this.$store.state.isLogin ? this.$store.state.token : null,
+          });
+        } else if (this.$props.commoType === "收") {
+          res = await this.axios.post("demand/uncollect/", {
+            demandid: this.$props.goodId,
+            token: this.$store.state.isLogin ? this.$store.state.token : null,
+          });
+        }
+      } catch (e) {
+        this.$router.push({ path: "/error" });
+        return;
+      }
+      if (res.data.result === 1) {
+        this.$notify({
+          title: res.data.message,
+          message: "",
+          type: "success",
+        });
+
+        this.getDetail();
+      } else {
+        this.$notify(
+          this.$notify.error({
+            title: res.data.message,
+            message: "",
+          })
+        );
+      }
+    },
+
     async report() {
       let res;
       try {
@@ -363,8 +420,8 @@ export default {
           type: this.$props.commoType === "出" ? 0 : 1,
         });
       } catch (e) {
-        // this.$router.
-        // return;
+        this.$router.go(this.$router.currentRoute);
+        return;
       }
       if (res.data.result === 1) {
         this.$notify({
@@ -373,10 +430,12 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify.error({
-          title: res.data.message,
-          message: "等会再试试吧",
-        });
+        this.$notify(
+          this.$notify.error({
+            title: res.data.message,
+            message: "等会再试试吧",
+          })
+        );
       }
     },
 
@@ -399,10 +458,12 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify.error({
-          title: res.data.message,
-          message: "等会再试试吧",
-        })
+        this.$notify(
+          this.$notify.error({
+            title: res.data.message,
+            message: "等会再试试吧",
+          })
+        );
       }
     },
   },
@@ -426,6 +487,7 @@ export default {
           name: "",
           avatar: "",
           credit: 0,
+          isCollect: false,
         },
       },
     };
