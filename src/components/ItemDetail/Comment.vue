@@ -71,6 +71,7 @@
                     tag="div"
                     :to="'/user/watch/' + comment.userid"
                   >
+                    <!-- {{ "/user/watch/" + comment.userid }} -->
                     {{ comment.username }}
                   </router-link>
                 </div>
