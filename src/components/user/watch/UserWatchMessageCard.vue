@@ -1,12 +1,12 @@
 <template>
-  <el-card shadow="hover" class="card">
+  <!-- <el-card shadow="hover" class="card"> -->
     <el-row>
       <el-button @click="follow" v-show="!isFollowing"> 关注 </el-button>
       <el-button @click="unFollow" v-show="isFollowing"> 取消关注 </el-button>
       <el-button @click="ban" v-show="!isBanned && this.$store.state.level == -1"> 封禁该用户 </el-button>
       <el-button @click="ban" v-show="isBanned && this.$store.state.level == -1"> 解封该用户 </el-button>
     </el-row>
-  </el-card>
+  <!-- </el-card> -->
 </template>
 
 <style scoped>
