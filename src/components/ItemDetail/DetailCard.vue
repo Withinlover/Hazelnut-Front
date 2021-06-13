@@ -17,6 +17,14 @@
         <div class="title">
           <span class="commo-type">{{ commoType }}</span
           >{{ commoInfo.title }}
+          <span :hidden="own">
+            <span :hidden="commoInfo.isCollect">
+              <i class="el-icon-star-off collect" @click="collectItem" />
+            </span>
+            <span :hidden="!commoInfo.isCollect">
+              <i class="el-icon-star-on collect" @click="unCollectItem" />
+            </span>
+          </span>
         </div>
         <div class="brief-line">
           <div class="price">
@@ -59,9 +67,6 @@
             @click="applyForTrade"
             >{{ commoInfo.isSold ? "已卖出" : "申请交易" }}</el-button
           >
-          <!-- {{ commoInfo.isSold }}{{ !commoInfo.canTrade }} -->
-          <!-- {{ this.data.isSold }} -->
-          <!-- commoInfo.isSold -->
         </div>
       </div>
     </div>
@@ -113,6 +118,9 @@
 .detail-text {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 380px;
 }
 .title {
   font-family: Helvetica, Tahoma, Arial, STXihei, SimSun, "宋体", Heiti, "黑体",
@@ -131,6 +139,9 @@
   background: red;
   border-radius: 20%;
   vertical-align: middle;
+}
+.collect {
+  color: gold;
 }
 .brief-line {
   display: flex;
@@ -187,10 +198,9 @@
   font-size: smaller;
 }
 .el-divider--horizontal {
-  margin: 8px 0;
+  margin-left: 10px;
+  margin-right: 10px;
   background: 0 0;
-  width: 90%;
-  align-self: center;
   border-top: 1px solid #e8eaec;
 }
 .description {
@@ -269,13 +279,11 @@ export default {
           })
         );
       }
-      // this.$router.go(this.$router.currentRoute);
       this.getDetail();
     },
 
     async getDetail() {
       let res = "";
-
       try {
         if (this.$props.commoType === "出") {
           res = await this.axios.post("good/goodinfo/", {
@@ -289,12 +297,11 @@ export default {
           });
         }
       } catch (e) {
-        this.$router.push({ path: "/error" });
+        // this.$router.push({ path: "/error" });
         return;
       }
 
       let data = res.data;
-      // this.data = res.data;
       this.own = data.own; //
       this.imageUrls = data.imageUrls;
       this.commoInfo = {
@@ -309,9 +316,81 @@ export default {
         date: data.date,
         description: data.description,
         isSold: data.isSold,
+        isCollect: data.iscollect,
         canTrade: data.canTrade,
       };
     },
+    async collectItem() {
+      let res = "";
+      try {
+        if (this.$props.commoType === "出") {
+          res = await this.axios.post("good/collect/", {
+            goodid: this.$props.goodId,
+            token: this.$store.state.isLogin ? this.$store.state.token : null,
+          });
+        } else if (this.$props.commoType === "收") {
+          res = await this.axios.post("demand/collect/", {
+            goodid: this.$props.goodId,
+            token: this.$store.state.isLogin ? this.$store.state.token : null,
+          });
+        }
+      } catch (e) {
+        this.$router.push({ path: "/error" });
+        return;
+      }
+      if (res.data.result === 1) {
+        this.$notify({
+          title: res.data.message,
+          message: "",
+          type: "success",
+        });
+
+        this.getDetail();
+      } else {
+        this.$notify(
+          this.$notify.error({
+            title: res.data.message,
+            message: "",
+          })
+        );
+      }
+    },
+    async unCollectItem() {
+      let res = "";
+      try {
+        if (this.$props.commoType === "出") {
+          res = await this.axios.post("good/uncollect/", {
+            goodid: this.$props.goodId,
+            token: this.$store.state.isLogin ? this.$store.state.token : null,
+          });
+        } else if (this.$props.commoType === "收") {
+          res = await this.axios.post("demand/uncollect/", {
+            goodid: this.$props.goodId,
+            token: this.$store.state.isLogin ? this.$store.state.token : null,
+          });
+        }
+      } catch (e) {
+        this.$router.push({ path: "/error" });
+        return;
+      }
+      if (res.data.result === 1) {
+        this.$notify({
+          title: res.data.message,
+          message: "",
+          type: "success",
+        });
+
+        this.getDetail();
+      } else {
+        this.$notify(
+          this.$notify.error({
+            title: res.data.message,
+            message: "",
+          })
+        );
+      }
+    },
+
     async report() {
       let res;
       try {
@@ -320,7 +399,7 @@ export default {
           type: this.$props.commoType === "出" ? 0 : 1,
         });
       } catch (e) {
-        // this.$router.
+        // this.$router.go(this.$router.currentRoute);
         // return;
       }
       if (res.data.result === 1) {
@@ -332,12 +411,13 @@ export default {
       } else {
         this.$notify(
           this.$notify.error({
-            title: "举报失败",
+            title: res.data.message,
             message: "等会再试试吧",
           })
         );
       }
     },
+
     async deleteGood() {
       let res = "";
       // try {
@@ -367,6 +447,7 @@ export default {
   data() {
     return {
       data: "",
+      starKey: 0,
       own: false,
       imageUrls: ["https://via.placeholder.com/500"],
       window: {
@@ -380,6 +461,7 @@ export default {
           name: "",
           avatar: "",
           credit: 0,
+          isCollect: false,
         },
       },
     };
