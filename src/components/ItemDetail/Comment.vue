@@ -4,7 +4,16 @@
     <div class="applyTran">
       <div class="apply-row" v-for="applier in applyForTrade" :key="applier.id">
         <div class="apply-text">
-          <span class="applier-name">{{ applier.name }} </span>
+          <!-- {{ applyForTrade }} -->
+          <span class="applier-name"
+            ><router-link
+              class="router"
+              tag="div"
+              :to="'/user/watch/' + applier.userid"
+              >{{ applier.name }}
+            </router-link></span
+          >
+
           申请交易
         </div>
         <div class="buttons">
@@ -50,7 +59,14 @@
               <img class="commAva" :src="comment.url" />
               <div class="display-text">
                 <div class="comm-name">
-                  {{ comment.username }}
+                  <!-- {{ comment }} -->
+                  <router-link
+                    class="router"
+                    tag="div"
+                    :to="'/user/watch/' + comment.userid"
+                  >
+                    {{ comment.username }}
+                  </router-link>
                 </div>
                 <div class="comm-time">
                   {{ comment.sendtime }}
@@ -76,7 +92,13 @@
               :key="reply.id"
             >
               <div class="sub-comm-name">
-                {{ reply.username }}
+                <router-link
+                  class="router"
+                  tag="div"
+                  :to="'/user/watch/' + reply.userid"
+                >
+                  {{ reply.username }}
+                </router-link>
               </div>
               :
               {{ reply.text }}
@@ -119,6 +141,9 @@ el-divider {
   width: 300px;
 }
 
+.router {
+  display: inline-block;
+}
 .newComm {
   display: flex;
   align-self: flex-start;
@@ -298,14 +323,14 @@ export default {
 
       if (res.data.result === 1) {
         this.$notify({
-          title: "已达成交易",
+          title: res.data.message,
           message: "记得和卖家交易哦",
           type: "success",
         });
       } else {
         this.$notify(
           this.$notify.error({
-            title: "同意交易失败",
+            title: res.data.message,
             message: "等会再试试吧",
           })
         );

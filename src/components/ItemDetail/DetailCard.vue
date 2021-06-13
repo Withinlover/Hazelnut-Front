@@ -32,11 +32,17 @@
             <span class="priceNum">{{ commoInfo.price }}</span>
           </div>
           <div class="release-info">
-            <div class="releaser">
-              <img class="avatar" :src="commoInfo.releaser.avatar" />
-              <span class="name">{{ commoInfo.releaser.name }}</span>
-              <span class="rate">{{ commoInfo.releaser.credit }}</span>
-            </div>
+            <router-link
+              class="releaser"
+              tag="div"
+              :to="'/user/watch/' + commoInfo.releaser.id"
+            >
+              <div class="releaser">
+                <img class="avatar" :src="commoInfo.releaser.avatar" />
+                <span class="name">{{ commoInfo.releaser.name }}</span>
+                <span class="rate">{{ commoInfo.releaser.credit }}</span>
+              </div>
+            </router-link>
             <div class="release-data">发布于:{{ commoInfo.date }}</div>
           </div>
         </div>
@@ -159,7 +165,9 @@
 .rmb {
   font-size: smaller;
 }
-
+route-link .avatar {
+  margin-left: 10px;
+}
 .avatar {
   height: 25px;
   width: 25px;
@@ -178,6 +186,7 @@
   margin-left: 10px;
   margin-bottom: 7px;
   align-items: center;
+  width: 100;
 }
 .name {
   align-self: center;
@@ -309,6 +318,7 @@ export default {
         title: data.title,
         price: data.price,
         releaser: {
+          id: data.userid,
           name: data.name,
           avatar: data.avatar,
           credit: data.credit,
@@ -330,7 +340,7 @@ export default {
           });
         } else if (this.$props.commoType === "收") {
           res = await this.axios.post("demand/collect/", {
-            goodid: this.$props.goodId,
+            demandid: this.$props.goodId,
             token: this.$store.state.isLogin ? this.$store.state.token : null,
           });
         }
@@ -365,7 +375,7 @@ export default {
           });
         } else if (this.$props.commoType === "收") {
           res = await this.axios.post("demand/uncollect/", {
-            goodid: this.$props.goodId,
+            demandid: this.$props.goodId,
             token: this.$store.state.isLogin ? this.$store.state.token : null,
           });
         }
