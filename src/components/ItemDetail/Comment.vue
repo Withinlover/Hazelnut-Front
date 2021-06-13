@@ -37,7 +37,8 @@
     <el-divider v-if="owned" />
 
     <!-- 增加评论 -->
-    <div class="newComm">
+
+    <div v-if="this.$store.state.isLogin" class="newComm">
       <img class="commAva" :src="userInfo.avatar" />
       <el-input
         class="newCommIn"
@@ -48,6 +49,11 @@
       <el-button class="commit-button" type="primary" @click="postCommnet" round
         >评论</el-button
       >
+    </div>
+    <div v-else class="please-login">
+      发表评论前需要先
+      <router-link to="/" class="router">登陆</router-link>
+      哦
     </div>
 
     <!-- 查看所有评论 -->
@@ -143,6 +149,10 @@ el-divider {
 
 .router {
   display: inline-block;
+  color: #877;
+}
+.please-login {
+  margin: 15px;
 }
 .newComm {
   display: flex;

@@ -306,7 +306,7 @@ export default {
           });
         }
       } catch (e) {
-        // this.$router.push({ path: "/error" });
+        this.$router.push({ path: "/error" });
         return;
       }
 
@@ -329,6 +329,7 @@ export default {
         isCollect: data.iscollect,
         canTrade: data.canTrade,
       };
+      console.log(this.commoInfo);
     },
     async collectItem() {
       let res = "";
@@ -409,8 +410,8 @@ export default {
           type: this.$props.commoType === "出" ? 0 : 1,
         });
       } catch (e) {
-        // this.$router.go(this.$router.currentRoute);
-        // return;
+        this.$router.go(this.$router.currentRoute);
+        return;
       }
       if (res.data.result === 1) {
         this.$notify({
@@ -430,12 +431,15 @@ export default {
 
     async deleteGood() {
       let res = "";
-      // try {
-      res = await this.axios.post("good/delete/", {
-        id: this.$props.goodId, // 商品/需求ID
-        type: this.$props.commoType === "出" ? 0 : 1, // 0商品 1需求
-      });
-      // } catch (e) {}
+      try {
+        res = await this.axios.post("good/delete/", {
+          id: this.$props.goodId, // 商品/需求ID
+          type: this.$props.commoType === "出" ? 0 : 1, // 0商品 1需求
+        });
+      } catch (e) {
+        this.$router.go(this.$router.currentRoute);
+        return;
+      }
       let data = res.data;
       if (res.data.result === 1) {
         this.$notify({
