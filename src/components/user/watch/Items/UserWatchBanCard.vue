@@ -4,7 +4,7 @@
       Warning: 
     </span>
     <span class="text">
-      此用户已被系统管理员封禁，详情请联系<a href="mailto:18377221@buaa.eedu.cn">Marvolo</a>
+      此用户已被系统管理员封禁，详情请联系 <a href="mailto:18377221@buaa.eedu.cn"> Marvolo </a> 
     </span>
   </el-card>
 </template>
@@ -38,37 +38,18 @@
   color: red;
   font-weight: bold;
 }
+
+a {
+  color: blue;
+  text-decoration: none;
+}
+
 </style>
 
 <script>
 
 export default {
   name: "UserWatchBanCard",
-  props: ["initialUserID"],
-  data () {
-    return {
-      userID: this.initialUserID,
-      username: "-1",
-      isBanned: false, 
-    }
-  },
-  methods: {
-    updateInfo() {
-      var url, data; 
-      url = '/user/isban/';
-      data = {
-        id: this.userID,
-      }
-      console.log(this.id);
-      this.axios.post(url, data).then((res) => {
-        if (res.data.result === 1) {
-          this.isBanned = res.data.isban;
-        }
-      });
-    },
-  }, 
-  mounted() {
-    this.updateInfo();
-  }
+  props: ["isBanned"],
 }
 </script>

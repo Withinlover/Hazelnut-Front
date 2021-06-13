@@ -5,7 +5,7 @@
         <h1> > 用以下信息联系该用户 </h1> 
       </el-col>
       <el-col :span="10"> 
-        <user-watch-message-card :initialUserID="this.userID"/>
+        <user-watch-message-card :initialUserID="this.userID" @setBan="setBan"/>
       </el-col>
     </el-row>
     <user-watch-info :initialUserID="this.userID"/>
@@ -106,6 +106,9 @@ export default {
           }
         );
     },
+    setBan(isBanned) {
+      this.$emit("setBan", isBanned);
+    }
   },
   mounted() {
     this.getInfo();

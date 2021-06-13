@@ -111,6 +111,7 @@ export default {
         if (res.data.result === 1) 
           this.updateInfo();
         console.log(this.isBanned)
+        this.$emit("setBan", this.isBanned)
       })
     },
     
