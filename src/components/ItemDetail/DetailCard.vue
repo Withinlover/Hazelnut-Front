@@ -262,12 +262,10 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify(
-          this.$notify.error({
-            title: "申请交易失败",
-            message: "换个商品看看吧",
-          })
-        );
+        this.$notify.error({
+          title: "申请交易失败",
+          message: "换个商品看看吧",
+        });
       }
       // this.$router.go(this.$router.currentRoute);
       this.getDetail();
@@ -330,12 +328,10 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "等会再试试吧",
-          })
-        );
+        this.$notify.error({
+          title: res.data.message,
+          message: "等会再试试吧",
+        });
       }
     },
 
@@ -358,12 +354,10 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "等会再试试吧",
-          })
-        );
+        this.$notify.error({
+          title: res.data.message,
+          message: "等会再试试吧",
+        })
       }
     },
   },
