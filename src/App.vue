@@ -2,7 +2,9 @@
   <div id="app">
     <base-nav-bar ref="navbar"></base-nav-bar>
     <router-view />
-    <vue-canvas-nest :config="config" />
+    <div class="absolute">
+      <vue-canvas-nest :config="config" />
+    </div>
   </div>
 </template>
 
@@ -15,6 +17,15 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.absolute {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -999;
 }
 </style>
 
