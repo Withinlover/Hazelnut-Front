@@ -11,7 +11,7 @@
           <p class="contact"> {{contact}} <a :href="'mailto:' + email">{{email}}</a></p>
         </el-row>
       </el-col>
-      <el-col :lg="6" :md="7" :sm="9" :xs="10">
+      <el-col :lg="6.5" :md="7" :sm="9" :xs="10">
         <sign-in-form />
       </el-col>
     </el-row>
