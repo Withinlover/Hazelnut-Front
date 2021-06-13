@@ -41,7 +41,7 @@ export default {
       config: {
         color: '0,0,255',
         opacity: 0.7,
-        zIndex: -2,
+        zIndex: -99,
         count: 99,
       },
     }

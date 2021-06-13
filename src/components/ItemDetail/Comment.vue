@@ -134,6 +134,7 @@
   overflow: hidden;
   padding: 5px;
   padding-bottom: 20px;
+  background-color: white;
 }
 .card-nor {
   width: 800px;

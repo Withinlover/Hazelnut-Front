@@ -80,6 +80,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
 }
 .commo {
   border: 0.1px solid rgb(110, 91, 80, 0.5);
