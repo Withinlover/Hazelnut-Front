@@ -8,11 +8,18 @@
           :interval="5000"
           :direction="carouselDirect"
         >
-          <el-carousel-item v-for="item in imageUrls" :key="item">
-            <img class="commo-image" :src="item" />
+          <el-carousel-item v-for="(item, idx) in imageUrls" :key="item">
+            <img class="commo-image" :src="item" @click="popUoImg(idx)" />
           </el-carousel-item>
         </el-carousel>
       </div>
+
+      <el-dialog :visible.sync="dialogVisible" class="popup">
+        <div>
+          <img :src="imageUrls[popImageIdx]" width="100%" />
+        </div>
+      </el-dialog>
+
       <div class="detail-text">
         <div class="title">
           <span class="commo-type">{{ commoType }}</span
@@ -247,6 +254,10 @@ export default {
     this.getDetail();
   },
   methods: {
+    popUoImg(idx) {
+      this.popImageIdx = idx;
+      this.dialogVisible = true;
+    },
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
@@ -329,7 +340,6 @@ export default {
         isCollect: data.iscollect,
         canTrade: data.canTrade,
       };
-      console.log(this.commoInfo);
     },
     async collectItem() {
       let res = "";
@@ -461,7 +471,9 @@ export default {
   data() {
     return {
       data: "",
+      dialogVisible: false,
       starKey: 0,
+      popImageIdx: 0,
       own: false,
       imageUrls: ["https://via.placeholder.com/500"],
       window: {
