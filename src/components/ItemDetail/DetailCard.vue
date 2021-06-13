@@ -17,14 +17,6 @@
         <div class="title">
           <span class="commo-type">{{ commoType }}</span
           >{{ commoInfo.title }}
-          <span :hidden="own">
-            <span :hidden="commoInfo.isCollect">
-              <i class="el-icon-star-off collect" @click="collectItem" />
-            </span>
-            <span :hidden="!commoInfo.isCollect">
-              <i class="el-icon-star-on collect" @click="unCollectItem" />
-            </span>
-          </span>
         </div>
         <div class="brief-line">
           <div class="price">
@@ -32,17 +24,11 @@
             <span class="priceNum">{{ commoInfo.price }}</span>
           </div>
           <div class="release-info">
-            <router-link
-              class="releaser"
-              tag="div"
-              :to="'/user/watch/' + commoInfo.releaser.id"
-            >
-              <div class="releaser">
-                <img class="avatar" :src="commoInfo.releaser.avatar" />
-                <span class="name">{{ commoInfo.releaser.name }}</span>
-                <span class="rate">{{ commoInfo.releaser.credit }}</span>
-              </div>
-            </router-link>
+            <div class="releaser">
+              <img class="avatar" :src="commoInfo.releaser.avatar" />
+              <span class="name">{{ commoInfo.releaser.name }}</span>
+              <span class="rate">{{ commoInfo.releaser.credit }}</span>
+            </div>
             <div class="release-data">发布于:{{ commoInfo.date }}</div>
           </div>
         </div>
@@ -73,6 +59,9 @@
             @click="applyForTrade"
             >{{ commoInfo.isSold ? "已卖出" : "申请交易" }}</el-button
           >
+          <!-- {{ commoInfo.isSold }}{{ !commoInfo.canTrade }} -->
+          <!-- {{ this.data.isSold }} -->
+          <!-- commoInfo.isSold -->
         </div>
       </div>
     </div>
@@ -124,9 +113,6 @@
 .detail-text {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  width: 380px;
 }
 .title {
   font-family: Helvetica, Tahoma, Arial, STXihei, SimSun, "宋体", Heiti, "黑体",
@@ -146,9 +132,6 @@
   border-radius: 20%;
   vertical-align: middle;
 }
-.collect {
-  color: gold;
-}
 .brief-line {
   display: flex;
   flex-direction: row;
@@ -165,9 +148,7 @@
 .rmb {
   font-size: smaller;
 }
-route-link .avatar {
-  margin-left: 10px;
-}
+
 .avatar {
   height: 25px;
   width: 25px;
@@ -186,7 +167,6 @@ route-link .avatar {
   margin-left: 10px;
   margin-bottom: 7px;
   align-items: center;
-  width: 100;
 }
 .name {
   align-self: center;
@@ -207,9 +187,10 @@ route-link .avatar {
   font-size: smaller;
 }
 .el-divider--horizontal {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 8px 0;
   background: 0 0;
+  width: 90%;
+  align-self: center;
   border-top: 1px solid #e8eaec;
 }
 .description {
@@ -288,11 +269,13 @@ export default {
           })
         );
       }
+      // this.$router.go(this.$router.currentRoute);
       this.getDetail();
     },
 
     async getDetail() {
       let res = "";
+
       try {
         if (this.$props.commoType === "出") {
           res = await this.axios.post("good/goodinfo/", {
@@ -326,82 +309,9 @@ export default {
         date: data.date,
         description: data.description,
         isSold: data.isSold,
-        isCollect: data.iscollect,
         canTrade: data.canTrade,
       };
-      console.log(this.commoInfo);
     },
-    async collectItem() {
-      let res = "";
-      try {
-        if (this.$props.commoType === "出") {
-          res = await this.axios.post("good/collect/", {
-            goodid: this.$props.goodId,
-            token: this.$store.state.isLogin ? this.$store.state.token : null,
-          });
-        } else if (this.$props.commoType === "收") {
-          res = await this.axios.post("demand/collect/", {
-            demandid: this.$props.goodId,
-            token: this.$store.state.isLogin ? this.$store.state.token : null,
-          });
-        }
-      } catch (e) {
-        this.$router.push({ path: "/error" });
-        return;
-      }
-      if (res.data.result === 1) {
-        this.$notify({
-          title: res.data.message,
-          message: "",
-          type: "success",
-        });
-
-        this.getDetail();
-      } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "",
-          })
-        );
-      }
-    },
-    async unCollectItem() {
-      let res = "";
-      try {
-        if (this.$props.commoType === "出") {
-          res = await this.axios.post("good/uncollect/", {
-            goodid: this.$props.goodId,
-            token: this.$store.state.isLogin ? this.$store.state.token : null,
-          });
-        } else if (this.$props.commoType === "收") {
-          res = await this.axios.post("demand/uncollect/", {
-            demandid: this.$props.goodId,
-            token: this.$store.state.isLogin ? this.$store.state.token : null,
-          });
-        }
-      } catch (e) {
-        this.$router.push({ path: "/error" });
-        return;
-      }
-      if (res.data.result === 1) {
-        this.$notify({
-          title: res.data.message,
-          message: "",
-          type: "success",
-        });
-
-        this.getDetail();
-      } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "",
-          })
-        );
-      }
-    },
-
     async report() {
       let res;
       try {
@@ -410,8 +320,8 @@ export default {
           type: this.$props.commoType === "出" ? 0 : 1,
         });
       } catch (e) {
-        this.$router.go(this.$router.currentRoute);
-        return;
+        // this.$router.
+        // return;
       }
       if (res.data.result === 1) {
         this.$notify({
@@ -461,7 +371,6 @@ export default {
   data() {
     return {
       data: "",
-      starKey: 0,
       own: false,
       imageUrls: ["https://via.placeholder.com/500"],
       window: {
@@ -475,7 +384,6 @@ export default {
           name: "",
           avatar: "",
           credit: 0,
-          isCollect: false,
         },
       },
     };
