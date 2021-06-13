@@ -71,6 +71,7 @@
                     tag="div"
                     :to="'/user/watch/' + comment.userid"
                   >
+                    <!-- {{ "/user/watch/" + comment.userid }} -->
                     {{ comment.username }}
                   </router-link>
                 </div>
@@ -134,6 +135,7 @@
   overflow: hidden;
   padding: 5px;
   padding-bottom: 20px;
+
 }
 .card-nor {
   width: 800px;
