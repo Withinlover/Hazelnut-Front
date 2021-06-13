@@ -5,10 +5,13 @@
       <el-col :lg="12" :md="12" :sm="12" :xs="12">
         <el-row class="backgroundImage" style="margin: 0"></el-row>
         <el-row style="margin-top: 0; font-size: 18px">
-          {{ text }}
+          <p class="title"> {{title}} </p>
+          <p class="context"> {{text1}} </p>
+          <p class="context"> {{text2}} </p>
+          <p class="contact"> {{contact}} <a :href="'mailto:' + email">{{email}}</a></p>
         </el-row>
       </el-col>
-      <el-col :lg="6" :md="7" :sm="9" :xs="10">
+      <el-col :lg="6.5" :md="7" :sm="9" :xs="10">
         <sign-in-form />
       </el-col>
     </el-row>
@@ -16,6 +19,26 @@
 </template>
 
 <style scoped>
+.title {
+  font-weight: bold;
+}
+
+.context {
+  font-size: 16px;
+  text-align: left;
+  text-indent: 2em;
+}
+
+.contact {
+  font-size: 16px;
+  text-align: left;
+  text-indent: 2em;
+}
+
+.contact a {
+  text-decoration: none;
+}
+
 .backgroundColor {
   background: #b7989146; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -37,7 +60,7 @@
 }
 
 .backgroundImage {
-  height: 40vh;
+  height: 35vh;
   background-image: url("../assets/logo.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -108,7 +131,11 @@ export default {
   components: { SignInForm },
   data() {
     return {
-      text: "理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本理论上这里有一个很长很长的文本",
+      title: "欢迎来到小型二手货交易平台。",
+      text1: "本网站面向所有北航学生开放注册，目的是提供一个二手商品流通周转的平台。",
+      text2: "你可以在这里出售，购买二手闲置物品，也可以发布需求等待其他同学前来交易。",
+      contact: "如果有任何使用上的问题，请联系管理员", 
+      email: "18377221@buaa.eedu.cn"
     };
   },
   mounted() {
