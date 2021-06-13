@@ -320,7 +320,6 @@ export default {
         isSold: data.isSold,
         canTrade: data.canTrade,
       };
-<<<<<<< HEAD
     },
     async collectItem() {
       let res = "";
@@ -349,15 +348,11 @@ export default {
 
         this.getDetail();
       } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "",
-          })
-        );
+        this.$notify.error({
+          title: res.data.message,
+          message: "",
+        });
       }
-=======
->>>>>>> withinlover
     },
     async report() {
       let res;
@@ -414,12 +409,9 @@ export default {
   data() {
     return {
       data: "",
-<<<<<<< HEAD
       dialogVisible: false,
       starKey: 0,
       popImageIdx: 0,
-=======
->>>>>>> withinlover
       own: false,
       imageUrls: ["https://via.placeholder.com/500"],
       window: {
