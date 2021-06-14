@@ -26,7 +26,10 @@
           @read="read(item)">
         </banned-notice>
         <report-notice
-          v-else-if="item.name==='商品举报通知'">
+          v-else-if="item.name==='商品举报通知'"
+          :isRead="item.isread"
+          :id="item.id"
+          @read="read(item)">
         </report-notice>
         <accept-notice
           v-else-if="item.name==='申请通过通知'"
@@ -35,7 +38,10 @@
           @read="read(item)">
         </accept-notice>
         <refuse-notice
-          v-else>
+          v-else
+          :isRead="item.isread"
+          :id="item.id"
+          @read="read(item)">
         </refuse-notice>
       </div>
     </div>
