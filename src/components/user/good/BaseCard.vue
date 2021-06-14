@@ -19,6 +19,7 @@
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(2px);
   box-shadow: 2px 2px 3px 1px #ffebb3;
+  cursor: pointer;
 }
 .base-card:hover{
   box-shadow: 0px 0px 10px 5px #ffcc99;
