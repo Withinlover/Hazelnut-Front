@@ -11,7 +11,8 @@
     </follow-list>
     <logo-hint
       v-else
-      :hint="hint">
+      :hint="hint"
+      style="margin-top:70px;">
     </logo-hint>
 
     <pag-bar

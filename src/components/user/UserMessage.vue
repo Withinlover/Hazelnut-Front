@@ -41,7 +41,8 @@
     </div>
     <logo-hint
       v-else
-      hint="您暂时还没有通知哦">
+      hint="您暂时还没有通知哦"
+      style="margin-top:70px;">
     </logo-hint>
 
     <pag-bar
@@ -56,7 +57,7 @@
 <style scoped>
 h1{
   font-size: 30px;
-  margin-bottom: 90px;
+  margin-bottom: 70px;
 }
 .pag-bar{
   margin-top: 20px;
