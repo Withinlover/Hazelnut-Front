@@ -1,8 +1,10 @@
 <template>
-  <div class="base-notice">
+  <div :class="['base-notice',isHoverTitle?'hover-title':'']">
     <div 
       class="base-info" 
-      @click="onClick">
+      @click="onClick"
+      @mouseover="isHoverTitle=true"
+      @mouseout="isHoverTitle=false">
       <i :class="icon"></i>
       <p>{{message}}</p>
       <div :class="isRead?'read':'unread'">
@@ -10,7 +12,9 @@
       </div>
     </div>
     <div 
-      class="base-notice-box"
+      :class="['base-notice-box',isHoverContent? 'hover-content':'']"
+      @mouseover="isHoverContent=true"
+      @mouseout="isHoverContent=false"
       v-if="showDetail">
       <slot></slot>
     </div>
@@ -28,7 +32,7 @@
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(3px);
 }
-.base-notice:hover{
+.hover-title{
   box-shadow: 0px 0px 4px 1px #ffcc99;
   border: solid 1.5px #ffcc99;
 }
@@ -71,7 +75,11 @@
   align-items: center;
   border: solid 1.5px #dddddd;
   border-radius: 20px;
-  cursor: default;
+  cursor: pointer;
+}
+.hover-content{
+  box-shadow: 0px 0px 4px 1px #ffcc99;
+  border: solid 1.5px #ffcc99;
 }
 </style>
 
@@ -93,7 +101,9 @@ export default {
   },
   data(){
     return {
-      showDetail:false
+      showDetail:false,
+      isHoverTitle:false,
+      isHoverContent:false
     }
   },
   methods:{
