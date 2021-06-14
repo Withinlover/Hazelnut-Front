@@ -1,12 +1,11 @@
 <template>
   <div class="follow-item">
-    <el-avatar
-      :size="50"
-      :src="avatarUrl">
-    </el-avatar>
+    <img :src="avatarUrl" @click="enterUserWatch"/>
     <div class="follow-info">
       <div class="follow-info-name">
-        <p>{{name}}</p>
+        <p @click="enterUserWatch">
+          {{name}}
+        </p>
         <el-rate
           v-model="score"
           disabled
@@ -37,6 +36,15 @@
   width: 50rem;
   margin: auto;
 }
+img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor:pointer;
+}
+img:hover{
+  box-shadow: 0px 0px 5px 2px rgb(224, 209, 193);
+}
 .follow-info{
   display: flex;
   flex-direction: column;
@@ -54,6 +62,10 @@
   margin: 0rem;
   margin-right: 1rem;
   font-weight:bolder;
+  cursor: pointer;
+}
+.follow-info-name p:hover{
+  color: rgb(224, 209, 193);
 }
 .follow-info-location{
   display: flex;
@@ -98,9 +110,16 @@ export default {
     location:{
       type:String,
       required:true
+    },
+    userId:{
+      type:true,
+      required:true
     }
   },
   methods:{
+    enterUserWatch(){
+      this.$router.push('/user/watch/'+this.userId)
+    },
     cancelFollow(){
       this.axios.post('/user/unfollow/',{
         token:this.$store.state.token,

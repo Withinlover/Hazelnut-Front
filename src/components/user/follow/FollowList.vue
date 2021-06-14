@@ -8,6 +8,7 @@
       :location="follow.location"
       :name="follow.name"
       :score="follow.score"
+      :userId="follow.userId"
       @cancelFollow="cancelFollow(index)">
     </follow-item>
   </div>

@@ -78,6 +78,7 @@ export default {
         tmp.location=res.data.location[i]<0? map.location[0]:map.location[res.data.location[i]+1]
         tmp.score=res.data.score[i]
         tmp.avatarUrl=res.data.url[i] === 'NULL'? map.defaultAvatar:res.data.url[i]
+        tmp.userId=res.data.id
         this.follows.push(tmp)
       }
     })
