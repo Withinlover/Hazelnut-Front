@@ -2,11 +2,12 @@
   <div id="user-info-form">
     <el-dialog
       title="修改资料"
-      :visible.sync="visible">
+      :visible.sync="visible"
+      width="600px">
       <el-form
         ref="form" 
         :model="formData" 
-        label-width="80px" 
+        label-width="80px"
         :rules="rules">
         <el-form-item label="用户名">
           <el-input 
@@ -76,7 +77,7 @@
 <style scoped>
 .el-form{
   margin: auto;
-  width: 40rem;
+  width: 500px;
   position: relative;
   left:-1.3rem;
 }

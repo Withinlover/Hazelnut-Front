@@ -2,7 +2,8 @@
   <div id="user-password-form">
     <el-dialog
       title="修改密码"
-      :visible.sync="visible">
+      :visible.sync="visible"
+      width="600px">
       <el-form
         :rule="rules"
         ref="form"

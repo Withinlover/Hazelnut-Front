@@ -3,7 +3,7 @@
     <el-dialog
       title="修改头像" 
       :visible.sync="visible"
-      width="25%">
+      width="300px">
       <el-avatar :src="avatarUrl" :size="150"></el-avatar>
 
       <el-upload
