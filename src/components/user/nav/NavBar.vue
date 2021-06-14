@@ -21,7 +21,7 @@
       </div>
       <div id="base">
         <el-avatar :size="80" :src="userImgUrl"> </el-avatar>
-        <div style="font-size: 1.5rem">{{ userName }}</div>
+        <div style="font-size: 1.5rem;user-select: none;">{{ userName }}</div>
       </div>
     </div>
 

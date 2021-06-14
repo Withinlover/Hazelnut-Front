@@ -44,6 +44,7 @@
 h1{
   font-size: 30px;
   margin-bottom: 130px;
+  user-select: none;
 }
 .el-row{
   margin-bottom: 1rem;

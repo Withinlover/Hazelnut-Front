@@ -33,6 +33,7 @@
 <style scoped>
 h1{
   font-size: 30px;
+  user-select: none;
 }
 </style>
 

@@ -37,6 +37,8 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
 }
 .base-info i{
   padding: 2px;
@@ -69,6 +71,7 @@
   align-items: center;
   border: solid 1.5px #dddddd;
   border-radius: 20px;
+  cursor: default;
 }
 </style>
 

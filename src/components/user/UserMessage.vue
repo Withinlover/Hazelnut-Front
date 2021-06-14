@@ -64,6 +64,7 @@
 h1{
   font-size: 30px;
   margin-bottom: 70px;
+  user-select: none;
 }
 .pag-bar{
   margin-top: 20px;
