@@ -1,7 +1,13 @@
 <template>
   <div id="user-info-form">
-    <el-dialog title="修改资料" :visible.sync="visible">
-      <el-form ref="form" :model="formData" label-width="80px" :rules="rules">
+    <el-dialog
+      title="修改资料"
+      :visible.sync="visible">
+      <el-form
+        ref="form" 
+        :model="formData" 
+        label-width="80px" 
+        :rules="rules">
         <el-form-item label="用户名">
           <el-input 
             v-model="formData.name" 

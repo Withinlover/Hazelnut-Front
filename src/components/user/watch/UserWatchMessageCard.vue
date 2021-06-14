@@ -26,7 +26,6 @@
 export default {
   name: "UserWatchMessageCard",
   props: ["initialUserID"],
-
   data() {
     return {
       userID: this.initialUserID,

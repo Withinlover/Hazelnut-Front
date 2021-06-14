@@ -15,6 +15,9 @@
           <el-button type="primary" @click="clickChangeAvatar">修改头像</el-button>
         </el-col>
         <el-col :span="5">
+          <el-button type="primary" @click="clickChangePassword">修改密码</el-button>
+        </el-col>
+        <el-col :span="5">
           <el-button type="primary" @click="clickSignOut">登出账号</el-button>
         </el-col>
       </el-row>
@@ -29,6 +32,10 @@
       ref="avatarForm"
       @finishUpdate="handleAvatarUpdate">
     </user-avatar-form>
+
+    <user-password-form
+      ref="passwordForm">
+    </user-password-form>
   </div>
 </template>
 
@@ -60,12 +67,14 @@ h1{
 <script>
 import UserInfoForm from './form/UserInfoForm.vue'
 import UserAvatarForm from './form/UserAvatarForm.vue'
+import UserPasswordForm from './form/UserPasswordForm.vue'
 import UserShowForm from './form/UserShowForm.vue'
 
 export default {
     components:{
       UserAvatarForm,
       UserInfoForm,
+      UserPasswordForm,
       UserShowForm
     },
     methods:{
@@ -74,6 +83,9 @@ export default {
       },
       clickChangeAvatar(){
         this.$refs.avatarForm.open()
+      },
+      clickChangePassword(){
+        this.$refs.passwordForm.open()
       },
       clickSignOut(){
         this.$store.commit('clearToken')
