@@ -21,10 +21,11 @@ const store = new Vuex.Store({
         clearToken(state) {
             state.isLogin = false
             state.token = ''
+            state.level = -2
             sessionStorage.setItem('token', '')
+            sessionStorage.setItem('level', -2)
         },
         setLevel(state, level) {
-            console.log("SetLevel " + level);
             state.level = level;
             sessionStorage.setItem('level', level);
         },
