@@ -36,9 +36,9 @@
   border-radius: 20px;
 }
 .accept{
-  margin-top: 10px;
-  margin-bottom: 10px;
   width: 75%;
+  padding-top: 7px;
+  padding-bottom: 7px;
   font-size: 16px;
   font-weight: bold;
   color: #999999;

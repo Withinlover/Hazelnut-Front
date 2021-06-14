@@ -16,7 +16,6 @@
 .banned-box{
   margin: 0px auto 10px auto;
   width: 530px;
-  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,6 +23,9 @@
   border-radius: 20px;
 }
 .banned{
+  width: 75%;
+  padding-top: 7px;
+  padding-bottom: 7px;
   font-size: 16px;
   font-weight: bold;
   color: #999999;

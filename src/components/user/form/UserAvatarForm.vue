@@ -11,7 +11,8 @@
         :headers="headers"
         :on-success="handleSuccess"
         :on-error="handleError"
-        :show-file-list="false">
+        :show-file-list="false"
+        list-type="picture">
         <el-button type="primary">上传头像</el-button>
       </el-upload>
     </el-dialog>
