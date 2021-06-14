@@ -7,7 +7,7 @@
           {{name}}
         </p>
         <el-rate
-          v-model="score"
+          v-model="fixedScore"
           disabled
           show-score
           text-color="#ff9900"
@@ -114,6 +114,11 @@ export default {
     userId:{
       type:true,
       required:true
+    }
+  },
+  data(){
+    return {
+      fixedScore:Number(this.score.toFixed(1))
     }
   },
   methods:{
