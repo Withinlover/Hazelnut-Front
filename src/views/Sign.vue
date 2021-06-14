@@ -12,9 +12,13 @@
         </el-row>
       </el-col>
       <el-col :lg="6.5" :md="7" :sm="9" :xs="10">
-        <sign-in-form />
+        <sign-in-form @forgetPassword="forgetPassword"/>
       </el-col>
     </el-row>
+    <user-password-form
+      ref="passwordForm"
+      :forgetPassword="true">
+    </user-password-form>
   </div>
 </template>
 
@@ -126,9 +130,13 @@
 
 <script>
 import SignInForm from "../components/Sign/SignInForm.vue";
+import UserPasswordForm from '../components/user/form/UserPasswordForm.vue'
 
 export default {
-  components: { SignInForm },
+  components: { 
+    SignInForm,
+    UserPasswordForm,   
+  },
   data() {
     return {
       title: "欢迎来到小型二手货交易平台。",
@@ -137,6 +145,12 @@ export default {
       contact: "如果有任何使用上的问题，请联系管理员", 
       email: "18377221@buaa.eedu.cn"
     };
+  },
+  methods: {
+    forgetPassword() {
+      console.log("Sign");
+      this.$refs.passwordForm.open();
+    }
   },
   mounted() {
     if (this.$store.state.isLogin == true) {

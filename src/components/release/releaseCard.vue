@@ -285,10 +285,11 @@ export default {
         this.categoris = [];
         for (var i in categoris) {
           this.categoris[i] = {
-            id: i,
+            id: parseInt(i) + 1,
             name: categoris[i],
           };
         }
+        console.log(this.categoris)
       } else {
         this.$message.error("后端跑路了");
       }

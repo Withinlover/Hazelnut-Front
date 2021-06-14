@@ -29,13 +29,11 @@
           <i class="el-icon-lock" slot="prepend"></i>
         </el-input>
       </div>
-      <!-- <el-row>
+      <el-row>
         <el-col :span="6" :offset="18">
-          <router-link to="/user/info">
-            <span style="font-size: 12px;">忘记密码？</span>
-          </router-link>
+          <a href="#" @click="forgetPassword">忘记密码？</a>
         </el-col>
-      </el-row> -->
+      </el-row>
     </el-row>
 
     <el-row class="forms" v-show="radio == 1 || radio == 2">
@@ -110,6 +108,17 @@
 </template>
 
 <style scoped>
+
+a {
+  color: blue;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+a:active {
+  color: red;
+}
+
 .hide {
   position: absolute;
   top: 0;
@@ -167,8 +176,11 @@
 </style>
 
 <script>
+import UserPasswordForm from '../user/form/UserPasswordForm.vue'
+
 export default {
   name: "SignInForm",
+  components: { UserPasswordForm },
   data() {
     return {
       radio: 0,
@@ -184,7 +196,9 @@ export default {
     sleep(time) {
       return new Promise((resolve) => setTimeout(resolve, time));
     },
-
+    forgetPassword() {
+      this.$emit("forgetPassword");
+    },
     onSignIn() {
       if (this.radio === 1 || this.radio == 2) this.radio = 0;
       else {
