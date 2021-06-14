@@ -1,12 +1,13 @@
 <template>
   <div id="user-page">
-    <div id="background"></div>
-    <div class="aside">
+    <div id="user-page-background">
+    </div>
+    <div id="user-page-aside">
       <nav-bar
         ref="navbar">
       </nav-bar>
     </div>
-    <div class="main">
+    <div id="user-page-main">
       <router-view
         @updateAvatar="handleAvatarUpdate">
       </router-view>
@@ -25,7 +26,7 @@
   display: flex;
   flex-direction: row;
 }
-#background{
+#user-page-background{
   position: fixed;
   background: #FFFFFF;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to bottom, #dddddd,#FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
@@ -36,11 +37,11 @@
   bottom: 0;
   z-index: -100;
 }
-.aside{
+#user-page-aside{
   width: 330px;
   min-width: 250px;
 }
-.main{
+#user-page-main{
   width:1000px;
   min-width: 800px;
   margin:auto;

@@ -4,47 +4,32 @@
     @read="read"
     icon="el-icon-s-claim"
     message="申请通过通知">
-    <div class="accept-box">
-      <div class="accept">
-        {{text}}
-      </div>
-      <div class="after-rate" v-if="isRate">
-        已评分
-      </div>
-      <div class="rate" v-else>
-        <el-rate
-          v-model="rate"
-          allow-half
-          :colors="colors"
-          show-score
-          @change="submitRate">
-        </el-rate>
-      </div>
+    <div class="accept">
+      {{text}}
+    </div>
+    <div class="after-rate" v-if="isRate">
+      已评分
+    </div>
+    <div class="rate" v-else>
+      <el-rate
+        v-model="rate"
+        allow-half
+        :colors="colors"
+        show-score
+        @change="submitRate">
+      </el-rate>
     </div>
   </base-notice>
 </template>
 
 <style scoped>
-.accept-box{
-  margin: 0px auto 10px auto;
-  width: 530px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: solid 1.5px #dddddd;
-  border-radius: 20px;
-}
 .accept{
-  width: 75%;
-  padding-top: 7px;
-  padding-bottom: 7px;
   font-size: 16px;
   font-weight: bold;
   color: #999999;
 }
 .after-rate{
-  margin-bottom: 5px;
+  margin-top: 5px;
   padding: 5px 10px;
   border: solid 1px #dddddd;
   border-radius: 20px;

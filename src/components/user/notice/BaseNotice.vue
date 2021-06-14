@@ -9,7 +9,11 @@
         {{isRead?'已读':'未读'}}
       </div>
     </div>
-    <slot v-if="showDetail"></slot>
+    <div 
+      class="base-notice-box"
+      v-if="showDetail">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -54,6 +58,17 @@
   border-radius: 20px;
   color: rgb(110, 91,80);
   font-weight: bold;
+}
+.base-notice-box{
+  margin: 0px auto 10px auto;
+  padding: 7px 66px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid 1.5px #dddddd;
+  border-radius: 20px;
 }
 </style>
 
