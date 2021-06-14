@@ -4,9 +4,7 @@
     @read="read"
     icon="el-icon-s-claim"
     message="申请通过通知">
-    <div
-      class="accept-box"
-      v-if="isAccept">
+    <div class="accept-box">
       <div class="accept">
         {{text}}
       </div>
@@ -21,13 +19,6 @@
           show-score
           @change="submitRate">
         </el-rate>
-      </div>
-    </div>
-    <div 
-      class="refuse-box"
-      v-else>
-      <div class="refuse">
-        {{text}}
       </div>
     </div>
   </base-notice>
@@ -63,21 +54,6 @@
 .rate{
   margin: 0px auto 10px 202px;
 }
-.refuse-box{
-  margin: 0px auto 10px auto;
-  width: 530px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: solid 1.5px #dddddd;
-  border-radius: 20px;
-}
-.refuse{
-  font-size: 16px;
-  font-weight: bold;
-  color: #999999;
-}
 </style>
 
 <script>
@@ -103,11 +79,6 @@ export default {
       isRate:true,
       rate:0,
       colors:['#99A9BF', '#F7BA2A', '#FF9900']
-    }
-  },
-  computed:{
-    isAccept(){
-      return this.text.indexOf('确认')>=0
     }
   },
   methods:{

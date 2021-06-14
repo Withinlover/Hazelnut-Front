@@ -2,7 +2,7 @@
   <base-notice
     :isRead="isRead"
     @read="read"
-    icon="el-icon-warning"
+    icon="el-icon-error"
     message="商品举报通知">
     <div class="report-box">
       <div class="report">
