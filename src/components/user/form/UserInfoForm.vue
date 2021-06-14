@@ -125,10 +125,7 @@ export default {
   methods:{
     open(){
       this.visible=true
-      setTimeout(()=>{
-        this.$refs.form.clearValidate()
-        this.getInfo()
-      },0)
+      this.getInfo()
     },
     close(){
       this.visible=false
@@ -152,6 +149,9 @@ export default {
           message:'请求超时，请检查网络设置',
           type:'error'
         })
+      })
+      .then(res=>{
+        this.$refs.form.clearValidate()
       })
     },
     updateInfo(){
