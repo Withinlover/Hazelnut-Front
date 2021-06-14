@@ -74,10 +74,12 @@ export default {
     },
     switchToGood(){
       this.isGood=true
+      this.curPage=1
       this.updateGood()
     },
     switchToDemand(){
       this.isGood=false
+      this.curPage=1
       this.updateGood()
     },
     updateGood(){

@@ -37,7 +37,7 @@
   font-weight: bold;
 }
 .rate{
-  margin: 0px auto 10px 202px;
+  margin: 5px auto 0px 35%;
 }
 </style>
 

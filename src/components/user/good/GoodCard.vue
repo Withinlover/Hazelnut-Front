@@ -8,7 +8,7 @@
       <div class="good-info-base">
         <div class="good-name-box">
           <p class="good-name">
-            {{goodName}}
+            {{lessGoodName}}
           </p>
         </div>
         <div class="good-price-box">
@@ -41,16 +41,17 @@
 }
 .good-name-box{
   width: 84px;
-  height: 66px;
-  padding:0px 8px;
+  height: 46px;
+  padding:10px 8px;
   border-radius: 20px;
   border: 1px #dddddd solid;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .good-name{
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
 }
 .good-price-box{
@@ -114,6 +115,11 @@ export default {
     goodInfo:{
       type:String,
       required:true
+    }
+  },
+  data(){
+    return {
+      lessGoodName:this.goodName.length>12? this.goodName.substr(0,12)+'...':this.goodName
     }
   }
 }

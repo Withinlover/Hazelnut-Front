@@ -44,7 +44,7 @@
   align-items: center;
 }
 .good-name {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
 }
 .good-price {
@@ -98,7 +98,7 @@ export default {
       })
       .then((res) => {
         this.data = res.data;
-        this.goodName = res.data.title;
+        this.goodName = res.data.title.length>12? res.data.title.substr(0,12)+'...':res.data.title
         this.goodPrice = res.data.price.toFixed(1);
         this.goodImg = res.data.imageUrls.length ? res.data.imageUrls[0] : "";
       });
