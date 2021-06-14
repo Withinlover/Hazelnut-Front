@@ -19,8 +19,7 @@
     </history-list>
     <logo-hint
       v-else
-      :hint="hint"
-      style="margin-top:10px;">
+      :hint="hint">
     </logo-hint>
     
     <pag-bar

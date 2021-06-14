@@ -11,6 +11,7 @@
   border-radius: 50px;
   width:500px;
   margin:auto;
+  margin-top: 10px;
   background-color: rgb(255, 255, 255,0.4);
   backdrop-filter: blur(3px);
   box-shadow: 6px 6px 5px #ffebb3;
