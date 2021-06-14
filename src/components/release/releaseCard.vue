@@ -23,7 +23,7 @@
           <el-radio label="2" border>发布商品</el-radio>
         </el-radio-group>
         <el-divider></el-divider>
-        <el-select v-model="form.region" placeholder="请选择商品分类">
+        <el-select v-model="form.region" placeholder="请选择分类">
           <el-option
             v-for="category in categoris"
             :key="category.id"
@@ -60,6 +60,7 @@
           :headers="headers"
           :action="getUrl()"
           list-type="picture-card"
+          :before-upload="beforeAvatarUpload"
           :on-success="handleSuccess"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
@@ -249,6 +250,19 @@ export default {
         this.imgUrls[item] = { id: item, url: fileList[item].response.path };
       }
       console.log(this.imgUrls);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isPNG = file.type === "image/png";
+      const isLt5M = file.size / 1024 / 1024 < 5;
+
+      if (!isJPG && !isPNG) {
+        this.$message.error("上传图片只能是 JPG / PNG 格式!");
+      }
+      if (!isLt5M) {
+        this.$message.error("上传图片大小不能超过 5MB!");
+      }
+      return (isJPG || isPNG) && isLt5M;
     },
     getUrl() {
       if (this.form.type == 2)
