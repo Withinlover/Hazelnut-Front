@@ -65,7 +65,8 @@
           </el-button>
           <el-button 
             type="primary"
-            @click="close">
+            @click="close"
+            style="width:98px;">
             取消
           </el-button>
         </el-form-item>

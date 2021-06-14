@@ -34,7 +34,8 @@
     </user-avatar-form>
 
     <user-password-form
-      ref="passwordForm">
+      ref="passwordForm"
+      :forgetPassword="false">
     </user-password-form>
   </div>
 </template>
