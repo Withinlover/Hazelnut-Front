@@ -285,7 +285,7 @@ export default {
         this.categoris = [];
         for (var i in categoris) {
           this.categoris[i] = {
-            id: i,
+            id: i + 1,
             name: categoris[i],
           };
         }
