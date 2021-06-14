@@ -25,12 +25,18 @@
           :id="item.id"
           @read="read(item)">
         </banned-notice>
-        <finish-notice
-          v-else
+        <report-notice
+          v-else-if="item.name==='商品举报通知'">
+        </report-notice>
+        <accept-notice
+          v-else-if="item.name==='申请通过通知'"
           :isRead="item.isread"
           :id="item.id"
           @read="read(item)">
-        </finish-notice>
+        </accept-notice>
+        <refuse-notice
+          v-else>
+        </refuse-notice>
       </div>
     </div>
     <logo-hint
@@ -61,7 +67,9 @@ h1{
 import ReplyNotice from './notice/ReplyNotice.vue'
 import ApplyNotice from './notice/ApplyNotice.vue'
 import BannedNotice from './notice/BannedNotice.vue'
-import FinishNotice from './notice/FinishNotice.vue'
+import AcceptNotice from './notice/AcceptNotice.vue'
+import RefuseNotice from './notice/RefuseNotice.vue'
+import ReportNotice from './notice/ReportNotice.vue'
 import LogoHint from './hint/LogoHint.vue'
 import PagBar from './nav/PagBar.vue'
 
@@ -70,7 +78,9 @@ export default {
     ReplyNotice,
     ApplyNotice,
     BannedNotice,
-    FinishNotice,
+    ReportNotice,
+    RefuseNotice,
+    AcceptNotice,
     LogoHint,
     PagBar
   },
