@@ -2,6 +2,7 @@
   <base-notice
     :isRead="isRead"
     @read="read"
+    @clickContent="clickContent"
     icon="el-icon-chat-dot-round"
     message="留言回复通知">
     <div class="reply">
@@ -37,7 +38,9 @@ export default {
   },
   data(){
     return {
-      text:''
+      text:'',
+      isGood:false,
+      objectId:0
     }
   },
   methods:{
@@ -46,8 +49,14 @@ export default {
         id:this.id
       }).then(res =>{
         this.text=res.data.text
+        this.isGood=res.data.type==0
+        this.objectId=res.data.objectid
       })
       this.$emit('read')
+    },
+    clickContent(){
+      let url=this.isGood? '/commodity/item/':'/demand/item/'
+      this.$router.push(url+this.objectId)
     }
   }
 }

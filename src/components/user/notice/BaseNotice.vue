@@ -2,7 +2,7 @@
   <div :class="['base-notice',isHoverTitle?'hover-title':'']">
     <div 
       class="base-info" 
-      @click="onClick"
+      @click="clickTitle"
       @mouseover="isHoverTitle=true"
       @mouseout="isHoverTitle=false">
       <i :class="icon"></i>
@@ -15,6 +15,7 @@
       :class="['base-notice-box',isHoverContent? 'hover-content':'']"
       @mouseover="isHoverContent=true"
       @mouseout="isHoverContent=false"
+      @click="clickContent"
       v-if="showDetail">
       <slot></slot>
     </div>
@@ -107,13 +108,16 @@ export default {
     }
   },
   methods:{
-    onClick(){
+    clickTitle(){
       if(this.showDetail){
         this.$emit('close')
       }else{
         this.$emit('read')
       }
       this.showDetail=!this.showDetail
+    },
+    clickContent(){
+      this.$emit('clickContent')
     }
   }
 }

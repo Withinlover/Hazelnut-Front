@@ -2,6 +2,7 @@
   <base-notice
     :isRead="isRead"
     @read="read"
+    @clickContent="clickContent"
     icon="el-icon-s-claim"
     message="申请通过通知">
     <div class="accept">
@@ -10,7 +11,7 @@
     <div class="after-rate" v-if="isRate">
       已评分
     </div>
-    <div class="rate" v-else>
+    <div class="rate" v-else @click="clickRateBox($event)">
       <el-rate
         v-model="rate"
         allow-half
@@ -61,6 +62,8 @@ export default {
   data(){
     return {
       text:'',
+      isGood:false,
+      objectId:0,
       isRate:true,
       rate:0,
       colors:['#99A9BF', '#F7BA2A', '#FF9900']
@@ -73,6 +76,8 @@ export default {
       }).then(res =>{
         this.text=res.data.text
         this.isRate=res.data.score
+        this.isGood=res.data.type==0
+        this.objectId=res.data.objectid
       })
       this.$emit('read')
     },
@@ -92,6 +97,13 @@ export default {
           message:'请求超时，请检查网络设置'
         })
       })
+    },
+    clickContent(){
+      let url=this.isGood? '/commodity/item/':'/demand/item/'
+      this.$router.push(url+this.objectId)
+    },
+    clickRateBox(event){
+      event.stopPropagation()
     }
   }
 }

@@ -112,7 +112,6 @@ export default {
   methods:{
     updatePage(page){
       this.currentPage=page
-      console.log(this.pageSize)
     },
     read(item){
       item.isread=true

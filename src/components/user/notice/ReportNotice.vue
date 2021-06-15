@@ -2,6 +2,7 @@
   <base-notice
     :isRead="isRead"
     @read="read"
+    @clickContent="clickContent"
     icon="el-icon-error"
     message="商品举报通知">
     <div class="report">
@@ -38,6 +39,8 @@ export default {
   data(){
     return {
       text:'',
+      isGood:false,
+      objectId:0
     }
   },
   methods:{
@@ -46,8 +49,14 @@ export default {
         id:this.id
       }).then(res =>{
         this.text=res.data.text
+        this.isGood=res.data.type==0
+        this.objectId=res.data.objectid
       })
       this.$emit('read')
+    },
+    clickContent(){
+      let url=this.isGood? '/commodity/item/':'/demand/item/'
+      this.$router.push(url+this.objectId)
     }
   }
 }
