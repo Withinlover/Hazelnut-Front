@@ -56,8 +56,13 @@
         <el-divider />
         <div class="description">{{ commoInfo.description }}</div>
         <div class="button-row" v-if="$store.state.isLogin">
+          <!-- own : {{ own }} $store.state.level : {{ $store.state.level }} !own and
+          $store.state.level !== -1:
+          {{ !own && $store.state.level !== -1 }} store not -1 :{{
+            $store.state.level !== '-1'
+          }} -->
           <el-button
-            v-if="!own && this.$store.state.level !== -1"
+            v-if="!own && $store.state.level !== '-1'"
             class="button"
             type="danger"
             @click="report"
@@ -445,7 +450,7 @@ export default {
           type: this.$props.commoType === "出" ? 0 : 1, // 0商品 1需求
         });
       } catch (e) {
-        this.$router.go(this.$router.currentRoute);
+        // this.$router.go(this.$router.currentRoute);
         return;
       }
       let data = res.data;
