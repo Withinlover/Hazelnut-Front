@@ -92,6 +92,15 @@
 <script>
 export default {
   data(){
+    var checkTelephone=(rule,value,callback)=>{
+      if(value==''){
+        return callback(new Error('手机号码不能为空'))
+      }else if(!/\d{11}/.test(value)){
+        return callback(new Error('手机号码必须为11位纯数字'))
+      }else{
+        return callback()
+      }
+    }
     return {
       formData:{
         name:'',
@@ -114,7 +123,7 @@ export default {
           { required: true, message: '校区不能为空', trigger: 'change' }
         ],
         telephone:[
-          { required: true, message: '手机号码不能为空', trigger: 'change' }
+          { validate:checkTelephone, trigger: 'change' }
         ],
         grade:[
           { required: true, message: '年级不能为空', trigger: 'change' }
