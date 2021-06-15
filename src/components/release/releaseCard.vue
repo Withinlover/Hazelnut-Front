@@ -85,7 +85,7 @@
         <span
           >{{ form.type == 2 ? "商品：" : "需求：" }}
           {{
-            form.region == "" ? form.region : categoris[form.region].name
+            form.region == "" ? form.region : categoris[form.region - 1].name
           }}</span
         >
       </el-form-item>
@@ -212,7 +212,7 @@ export default {
               console.log(this.headers);
               this.active += 1;
             } else {
-              this.$message.error("来自后端的消息：" + res.data["message"]);
+              this.$message.error(res.data["message"]);
             }
           });
         }

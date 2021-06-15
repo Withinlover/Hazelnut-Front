@@ -140,10 +140,13 @@ export default {
       this.visible=false
     },
     clickSendValidate(){
+      console.log(this.form.username)
       this.axios.post('user/changepassword/',{
-        token:this.$store.state.token,
-        status:0
+        // token:this.$store.state.token,
+        status:0,
+        username: this.form.username,
       }).then(res=>{
+        console.log(res.data)
         this.isSend=true
         this.$message({
           type:'success',
@@ -155,7 +158,8 @@ export default {
       this.$refs.form.validate(valid=>{
         if(valid){
           this.axios.post('user/changepassword/',{
-            token:this.$store.state.token,
+            // token:this.$store.state.token,
+            username: this.form.username,
             status:1,
             password:this.form.password1,
             code:this.form.validate
