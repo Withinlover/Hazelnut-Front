@@ -30,7 +30,7 @@
         </el-input>
       </div>
       <el-row>
-        <el-col :span="6" :offset="18">
+        <el-col :span="24" :offset="0" style="text-align:right">
           <a href="#" @click="forgetPassword">忘记密码？</a>
         </el-col>
       </el-row>
