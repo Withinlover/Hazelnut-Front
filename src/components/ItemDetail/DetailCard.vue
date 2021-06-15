@@ -75,13 +75,16 @@
           <el-button
             class="button"
             type="primary"
-            :disabled="!commoInfo.canTrade"
+            :disabled="commoInfo.isSold"
             round
             @click="applyForTrade"
-            >{{ commoInfo.isSold ? "已卖出" : "申请交易" }}</el-button
+            >{{ commoInfo.isSold == 1 ? "已卖出" : "申请交易" }}</el-button
           >
+          <!-- {{ commoInfo.isSold }}{{ commoInfo.isSold ? "已卖出" : "申请交易" }} -->
         </div>
-        <div v-else class="button-row">请先登录</div>
+        <div v-else class="button-row">
+          请先 <router-link to="/" class="router"> 登录 </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -92,6 +95,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.router {
+  display: inline-block;
+  color: #877;
 }
 .commo {
   border: 0.1px solid rgb(110, 91, 80, 0.5);
@@ -296,7 +303,7 @@ export default {
         this.$notify(
           this.$notify.error({
             title: "申请交易失败",
-            message: "换个商品看看吧",
+            message: res.data.message,
           })
         );
       }
