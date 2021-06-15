@@ -75,8 +75,9 @@
           <el-button
             class="button"
             type="primary"
-            :disabled="commoInfo.isSold"
+            :disabled="commoInfo.isSold === 1"
             round
+            :key="soldId"
             @click="applyForTrade"
             >{{ commoInfo.isSold == 1 ? "已卖出" : "申请交易" }}</el-button
           >
@@ -482,6 +483,7 @@ export default {
       dialogVisible: false,
       starKey: 0,
       popImageIdx: 0,
+      soldId: 0,
       own: false,
       imageUrls: ["https://via.placeholder.com/500"],
       window: {
