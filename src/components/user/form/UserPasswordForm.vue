@@ -8,7 +8,7 @@
         :rules="rules"
         ref="form"
         :model="form"
-        label-width="92px">
+        label-width="93px">
         <el-form-item label="用户名">
           <el-input 
             v-model="form.username"
@@ -27,7 +27,8 @@
           <el-button
             type="primary"
             @click="clickSendValidate"
-            :disabled="isSend">
+            :disabled="isSend"
+            style="width:107px;">
             发送验证码
           </el-button>
         </el-form-item>
