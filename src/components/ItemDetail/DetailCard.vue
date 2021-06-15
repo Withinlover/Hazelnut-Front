@@ -301,12 +301,10 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify(
-          this.$notify.error({
-            title: "申请交易失败",
-            message: res.data.message,
-          })
-        );
+        this.$notify.error({
+          title: "申请交易失败",
+          message: res.data.message,
+        });
       }
       this.getDetail();
     },
@@ -374,16 +372,12 @@ export default {
           message: "",
           type: "success",
         });
-
         this.getDetail();
-      } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "",
-          })
-        );
-      }
+      } else
+        this.$notify.error({
+          title: res.data.message,
+          message: "",
+        });
     },
     async unCollectItem() {
       let res = "";
@@ -412,12 +406,10 @@ export default {
 
         this.getDetail();
       } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "",
-          })
-        );
+        this.$notify.error({
+          title: res.data.message,
+          message: "",
+        });
       }
     },
 
@@ -439,12 +431,9 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "等会再试试吧",
-          })
-        );
+        this.$notify.error({
+          title: res.data.message,
+        });
       }
     },
 
@@ -467,12 +456,10 @@ export default {
           type: "success",
         });
       } else {
-        this.$notify(
-          this.$notify.error({
-            title: res.data.message,
-            message: "等会再试试吧",
-          })
-        );
+        this.$notify.error({
+          title: res.data.message,
+          message: "等会再试试吧",
+        });
       }
     },
   },
