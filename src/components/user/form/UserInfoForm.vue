@@ -123,7 +123,7 @@ export default {
           { required: true, message: '校区不能为空', trigger: 'change' }
         ],
         telephone:[
-          { validate:checkTelephone, trigger: 'change' }
+          { validator:checkTelephone, trigger: 'change' }
         ],
         grade:[
           { required: true, message: '年级不能为空', trigger: 'change' }
