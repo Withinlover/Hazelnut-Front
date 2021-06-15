@@ -52,7 +52,7 @@
     </div>
     <div v-else class="please-login">
       发表评论前需要先
-      <router-link to="/" class="router">登陆</router-link>
+      <router-link to="/" class="router">登录</router-link>
       哦
     </div>
 
@@ -85,6 +85,7 @@
               {{ comment.text }}
             </span>
             <div
+              :hidden="!$store.state.isLogin"
               class="reply-comm-button"
               @click="setReplyTo(comment.id, comment.username)"
             >
