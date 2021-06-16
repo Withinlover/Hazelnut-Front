@@ -208,6 +208,7 @@ route-link .avatar {
   margin-bottom: 7px;
   align-items: center;
   width: 100;
+  cursor: pointer;
 }
 .name {
   align-self: center;

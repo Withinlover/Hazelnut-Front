@@ -45,6 +45,7 @@
         id="newCommInput"
         v-model="inputContent"
         :placeholder="inputPlaceHoldertext"
+        @keyup.enter.native="postCommnet"
       />
       <el-button class="commit-button" type="primary" @click="postCommnet" round
         >评论</el-button
@@ -62,7 +63,11 @@
         <div clas="one-comm">
           <div class="comm-layer0">
             <div class="display-info">
-              <img class="commAva" :src="comment.url" />
+              <img
+                @click="enterUserWatch(comment.userid)"
+                class="commAva" 
+                :src="comment.url"
+                style="cursor:pointer;" />
               <div class="display-text">
                 <div class="comm-name">
                   <!-- {{ comment }} -->
@@ -70,6 +75,7 @@
                     class="router"
                     tag="div"
                     :to="'/user/watch/' + comment.userid"
+                    style="cursor:pointer;"
                   >
                     <!-- {{ "/user/watch/" + comment.userid }} -->
                     {{ comment.username }}
@@ -89,6 +95,7 @@
               :hidden="!$store.state.isLogin"
               class="reply-comm-button"
               @click="setReplyTo(comment.id, comment.username)"
+              style="cursor:pointer;"
             >
               <i class="el-icon-chat-line-square" /> 回复
             </div>
@@ -104,6 +111,7 @@
                   class="router"
                   tag="div"
                   :to="'/user/watch/' + reply.userid"
+                  style="cursor:pointer;"
                 >
                   {{ reply.username }}
                 </router-link>
@@ -424,6 +432,9 @@ export default {
       this.inputPlaceHoldertext = "请输入评论";
       this.getComment();
     },
+    enterUserWatch(userId){
+      this.$router.push('/user/watch/'+userId)
+    }
   },
 };
 </script>
