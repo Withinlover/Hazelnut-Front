@@ -132,10 +132,10 @@ export default {
         this.name=res.data.name,
         this.email=res.data.email,
         this.wxid=res.data.wxid == -1? '尚未填写微信号':res.data.wxid,
-        this.telephone=res.data.telephone == -1? '尚未填写手机号':res.data.telephone,
-        this.sex=res.data.sex == -1? '尚未填写性别':map.sex[res.data.sex],
-        this.grade=res.data.grade == -1? '尚未填写年级':map.grade[res.data.grade-1],
-        this.location=res.data.location == -1? '尚未填写校区':map.location[res.data.location]
+        this.telephone=res.data.telephone == ""? '尚未填写手机号':res.data.telephone,
+        this.sex=res.data.sex == null? '尚未填写性别':map.sex[res.data.sex],
+        this.grade=res.data.grade == null? '尚未填写年级':map.grade[res.data.grade-1],
+        this.location=res.data.location == null? '尚未填写校区':map.location[res.data.location]
       },reason =>{
         this.$message({
           message:'请求超时，请检查网络设置',
