@@ -24,7 +24,7 @@
         <div class="title">
           <span class="commo-type">{{ commoType }}</span
           >{{ commoInfo.title }}
-          <span :hidden="own || !$store.state.isLogin">
+          <span :hidden="own || !$store.state.isLogin" style="cursor:pointer;">
             <span :hidden="commoInfo.isCollect">
               <i class="el-icon-star-off collect" @click="collectItem" />
             </span>
