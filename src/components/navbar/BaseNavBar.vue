@@ -9,7 +9,7 @@
     </el-row>
 
     <el-row id="nav-right">
-      <router-link to="/user/message/" style="font-size: 2.2rem">
+      <router-link to="/user/message" style="font-size: 2.2rem">
         <el-badge
           id="DotBell"
           :value="1"
