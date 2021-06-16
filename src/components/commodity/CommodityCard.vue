@@ -20,6 +20,7 @@
   padding: 10px;
   width: 250px;
   margin: 10px;
+  cursor: pointer;
 }
 .bottom {
   margin-top: 13px;

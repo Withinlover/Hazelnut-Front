@@ -36,13 +36,18 @@
 
     <div class="icon-group">
       <div class="f">
-        <div @click="scrollToTop()" class="icon-circle-back">
+        <div
+          @click="scrollToTop()"
+          class="icon-circle-back"
+          style="cursor:pointer;">
           <i class="el-icon-arrow-up iconAbs" />
         </div>
       </div>
 
       <router-link tag="div" to="/release">
-        <div class="icon-circle-back">
+        <div
+          class="icon-circle-back"
+          style="cursor:pointer;">
           <i class="el-icon-plus iconAbs"></i>
         </div>
       </router-link>
