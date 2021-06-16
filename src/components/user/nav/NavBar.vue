@@ -21,7 +21,7 @@
       </div>
       <div id="base">
         <el-avatar :size="80" :src="userImgUrl"> </el-avatar>
-        <div style="font-size: 1.5rem;user-select: none;">{{ userName }}</div>
+        <div id="base-user-name">{{ userName }}</div>
       </div>
     </div>
 
@@ -100,9 +100,18 @@
 }
 #base {
   margin: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 #base .el-avatar {
   box-shadow: 0px 0px 3px 2px rgb(224, 209, 193);
+}
+#base-user-name{
+  margin-top: 3px;
+  font-size: 22px;
+  user-select: none;
 }
 #user-menu > * {
   margin-top: 32px;
