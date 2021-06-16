@@ -39,7 +39,11 @@
     <!-- 增加评论 -->
 
     <div v-if="this.$store.state.isLogin" class="newComm">
-      <img class="commAva" :src="userInfo.avatar" />
+      <img
+        class="commAva"
+        :src="userInfo.avatar"
+        @click="enterUserWatch(userInfo.id)"
+        style="cursor:pointer;"/>
       <el-input
         class="newCommIn"
         id="newCommInput"
@@ -279,11 +283,12 @@ export default {
     // all comments
     this.getComment();
 
-    //  user avatar
+    //  user info
     let user = await this.axios.post("user/getuser/", {
       token: this.$store.state.token,
     });
     this.userInfo.avatar = user.data.url;
+    this.userInfo.id=user.data.id;
 
     // trade list
     this.getApply();
