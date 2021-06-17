@@ -118,7 +118,7 @@ export default {
           this.form.name = res.data.title;
           this.form.price = res.data.price;
           this.form.desc = res.data.description;
-          // this.form.region = res.data.region
+          this.form.region = res.data.region
         }
       });
 
