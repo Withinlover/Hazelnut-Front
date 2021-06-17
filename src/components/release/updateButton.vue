@@ -180,7 +180,11 @@ export default {
       console.log(data);
       this.axios.post(url, data).then((res) => {
         console.log(res.data);
-        if (res.data.result === 1) this.centerDialogVisible = false;
+        if (res.data.result === 1) {
+          this.$message.success("修改成功！");
+          this.$emit("finishUpdate");
+          this.centerDialogVisible = false;
+        }
       });
     }
   },
