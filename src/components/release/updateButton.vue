@@ -103,7 +103,7 @@ export default {
     };
   },
   methods: {
-    getInfo() {
+    async getInfo() {
       var url, data;
       url = "/good/goodinfo/";
       if (this.type === 1) url = "demand/demandinfo/";
