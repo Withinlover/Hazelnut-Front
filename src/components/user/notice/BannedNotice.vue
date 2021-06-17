@@ -4,7 +4,7 @@
     @read="read"
     @clickContent="clickContent"
     icon="el-icon-circle-close"
-    message="商品封禁通知">
+    message="商品下架通知">
     <div class="banned">
       {{text}}
     </div>
