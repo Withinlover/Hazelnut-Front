@@ -1,27 +1,24 @@
 <template>
   <base-card
-    class="good-card"
+    class="favorite-card"
     :isDemand="isDemand"
     :goodId="goodId"
-    :imgUrl="imgUrl"
-    :hasOption="true"
-    :options="options"
-    @clickOption="handleOption">
-    <div class="good-info">
-      <div class="good-info-base">
-        <div class="good-name-box">
-          <p class="good-name">
+    :imgUrl="imgUrl">
+    <div class="favorite-info">
+      <div class="favorite-info-base">
+        <div class="favorite-name-box">
+          <p class="favorite-name">
             {{lessGoodName}}
           </p>
         </div>
-        <div class="good-price-box">
-          <p class="good-price">
+        <div class="favorite-price-box">
+          <p class="favorite-price">
             ￥{{goodPrice}}
           </p>
         </div>
       </div>
-      <div class="good-info-text-box">
-        <p class="good-info-text">
+      <div class="favorite-info-text-box">
+        <p class="favorite-info-text">
           {{lessGoodInfo}}
         </p>
       </div>
@@ -30,19 +27,19 @@
 </template>
 
 <style scoped>
-.good-info{
+.favorite-info{
   margin: auto;
   margin-top: 15px;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-.good-info-base{
+.favorite-info-base{
   display: flex;
   flex-direction: column;
   margin-right: 4px;
 }
-.good-name-box{
+.favorite-name-box{
   width: 84px;
   height: 46px;
   padding:10px 8px;
@@ -53,11 +50,11 @@
   align-items: center;
   overflow: hidden;
 }
-.good-name{
+.favorite-name{
   font-size: 15px;
   font-weight: bold;
 }
-.good-price-box{
+.favorite-price-box{
   margin-top: 4px;
   width: 100px;
   height: 30px;
@@ -67,13 +64,13 @@
   align-content: center;
   justify-content: center;
 }
-.good-price{
+.favorite-price{
   margin: auto;
   font-size: 20px;
   color: crimson;
   font-weight: bold;
 }
-.good-info-text-box{
+.favorite-info-text-box{
   width: 140px;
   height: 90px;
   padding: 5px 5px;
@@ -83,7 +80,7 @@
   align-content: center;
   justify-content: center;
 }
-.good-info-text{
+.favorite-info-text{
   margin: auto;
   font-size: 15px;
 }
@@ -125,23 +122,7 @@ export default {
   data(){
     return {
       lessGoodName:this.goodName.length>12? this.goodName.substr(0,12)+'...':this.goodName,
-      lessGoodInfo:this.goodInfo.length>35? this.goodInfo.substr(0,35)+'...':this.goodInfo,
-      options:['修改','下架']
-    }
-  },
-  methods:{
-    handleOption(option){
-      if(option==0){
-        this.updateGood()
-      }else if(option==1){
-        this.deleteGood()
-      }
-    },
-    updateGood(){
-
-    },
-    deleteGood(){
-
+      lessGoodInfo:this.goodInfo.length>35? this.goodInfo.substr(0,35)+'...':this.goodInfo
     }
   }
 }

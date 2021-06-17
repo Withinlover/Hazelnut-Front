@@ -15,7 +15,8 @@
       :isDemand="!isGood"
       :curPage="curPage"
       :goodList="goods"
-      :pageSize="pageSize">
+      :pageSize="pageSize"
+      :isFavorite="true">
     </good-list>
     <logo-hint
       v-else

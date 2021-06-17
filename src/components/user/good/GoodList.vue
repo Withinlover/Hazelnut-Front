@@ -1,15 +1,29 @@
 <template>
   <div id="good-list">
-    <good-card
-      v-for="good in goods"
-      :key="good.id"
-      :isDemand="isDemand"
-      :goodId="good.id"
-      :goodInfo="good.info"
-      :goodName="good.name"
-      :goodPrice="good.price.toFixed(1)"
-      :imgUrl="good.url">
-    </good-card>
+    <template v-if="isFavorite">
+      <favorite-card
+        v-for="good in goods"
+        :key="good.id"
+        :isDemand="isDemand"
+        :goodId="good.id"
+        :goodInfo="good.info"
+        :goodName="good.name"
+        :goodPrice="good.price.toFixed(1)"
+        :imgUrl="good.url">
+      </favorite-card>
+    </template>
+    <template v-else>
+      <good-card
+        v-for="good in goods"
+        :key="good.id"
+        :isDemand="isDemand"
+        :goodId="good.id"
+        :goodInfo="good.info"
+        :goodName="good.name"
+        :goodPrice="good.price.toFixed(1)"
+        :imgUrl="good.url">
+      </good-card>
+    </template>
   </div>
 </template>
 
@@ -25,10 +39,12 @@
 
 <script>
 import GoodCard from './GoodCard.vue'
+import FavoriteCard from './FavoriteCard.vue'
 
 export default {
   components:{
-    GoodCard
+    GoodCard,
+    FavoriteCard
   },
   props:{
     goodList:{
@@ -44,6 +60,10 @@ export default {
       required:true
     },
     isDemand:{
+      type:Boolean,
+      required:true
+    },
+    isFavorite:{
       type:Boolean,
       required:true
     }

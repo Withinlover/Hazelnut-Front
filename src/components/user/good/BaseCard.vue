@@ -1,9 +1,30 @@
 <template>
   <div
-    class="base-card"
+    :class="['base-card',{'hover-card':isHoverCard}]"
+    @mouseover="isHoverCard=true"
+    @mouseout="isHoverCard=false"
     @click="clickCard">
-    <div class="base-img">
+    <div :class="['base-img',{'base-img-option':hasOption}]">
       <img :src="imgUrl" />
+    </div>
+    <div
+      :class="['base-option',{'hover-option':isHoverOption}]"
+      @mouseover="hoverOption($event)"
+      @click="clickOption($event)"
+      v-if="hasOption">
+      <el-dropdown
+        @command="handleCommand"
+        @visible-change="handleMenuVisible">
+        <i class="el-icon-circle-plus-outline base-option-icon"></i>
+        <el-dropdown-menu>
+          <el-dropdown-item
+            v-for="(item,index) in options"
+            :key="index"
+            :command="index">
+            {{item}}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <slot></slot>
   </div>
@@ -20,16 +41,20 @@
   backdrop-filter: blur(2px);
   box-shadow: 2px 2px 3px 1px #ffebb3;
   cursor: pointer;
+  position: relative;
 }
-.base-card:hover{
+.hover-card{
   box-shadow: 0px 0px 10px 5px #ffcc99;
   border: solid 1.5px #ffcc99;
 }
 .base-img{
-  width: 90%;
+  width: 70%;
   height: 50%;
   margin: auto;
   margin-top:12px;
+}
+.base-img-option{
+  position: relative;
 }
 img{
   max-width: 100%;
@@ -37,6 +62,26 @@ img{
   border-radius: 30px;
   border: #dddddd 1px solid;
   object-fit:contain;
+}
+.base-option{
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  right: 15px;
+  top: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.base-option-icon{
+  width:30px;
+  height:30px;
+  font-size:30px;
+  color: #dddddd;
+}
+.hover-option i{
+  color:#ffcc99;
 }
 </style>
 
@@ -54,6 +99,18 @@ export default {
     imgUrl:{
       type:String,
       required:true
+    },
+    hasOption:{
+      type:Boolean
+    },
+    options:{
+      type:Array
+    }
+  },
+  data(){
+    return {
+      isHoverCard:false,
+      isHoverOption:false
     }
   },
   methods:{
@@ -62,6 +119,24 @@ export default {
         this.$router.push('/demand/item/'+this.goodId)
       }else{
         this.$router.push('/commodity/item/'+this.goodId)
+      }
+    },
+    handleCommand(index){
+      this.$emit('clickOption',index)
+    },
+    hoverOption(event){
+      event.stopPropagation()
+      this.isHoverCard=false
+      this.isHoverOption=true
+    },
+    clickOption(event){
+      event.stopPropagation()
+    },
+    handleMenuVisible(state){
+      if(state){
+        this.isHoverOption=true
+      }else{
+        this.isHoverOption=false
       }
     }
   }
