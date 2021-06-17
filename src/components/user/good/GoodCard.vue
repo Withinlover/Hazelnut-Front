@@ -26,6 +26,13 @@
         </p>
       </div>
     </div>
+
+    <update-button
+      ref="updateButton"
+      :initId="goodId"
+      :initText="goodInfo"
+      :initType="isDemand?1:0">
+    </update-button>
   </base-card>
 </template>
 
@@ -91,10 +98,12 @@
 
 <script>
 import BaseCard from './BaseCard.vue'
+import UpdateButton from '../../release/updateButton.vue'
 
 export default {
   components:{
-    BaseCard
+    BaseCard,
+    UpdateButton
   },
   props:{
     isDemand:{
@@ -138,7 +147,7 @@ export default {
       }
     },
     updateGood(){
-
+      this.$refs.updateButton.show()
     },
     deleteGood(){
       this.axios.post('good/delete/',{

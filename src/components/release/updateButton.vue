@@ -1,8 +1,8 @@
 <template>
   <span>
-    <a id="updateButton" href="#" @click="show()">
+    <!-- <a id="updateButton" href="#" @click="show()">
       {{ text }}
-    </a>
+    </a> -->
 
     <el-dialog
       title="编辑"
