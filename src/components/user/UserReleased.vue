@@ -17,7 +17,8 @@
       :goodList="goods"
       :pageSize="pageSize"
       :isFavorite="false"
-      @deleteGood="handleDelete">
+      @deleteGood="handleDelete"
+      @updateGood="handleUpdate">
     </good-list>
     <logo-hint
       v-else
@@ -29,6 +30,13 @@
       :total="total"
       :pageSize="pageSize">
     </pag-bar>
+
+    <update-button
+      ref="updateButton"
+      :initId="updateForm.goodId"
+      :initText="updateForm.goodInfo"
+      :initType="isGood?0:1">
+    </update-button>
   </div>
 </template>
 
@@ -44,20 +52,26 @@ import LogoHint from './hint/LogoHint.vue'
 import ButtonBar from './nav/ButtonBar.vue'
 import PagBar from './nav/PagBar.vue'
 import GoodList from './good/GoodList.vue'
+import UpdateButton from  '../release/updateButton.vue'
 
 export default {
   components:{
     LogoHint,
     ButtonBar,
     PagBar,
-    GoodList
+    GoodList,
+    UpdateButton
   },
   data(){
     return {
       pageSize:4,
       curPage:1,
       goods:[],
-      isGood:true
+      isGood:true,
+      updateForm:{
+        goodId:0,
+        goodInfo:''
+      }
     }
   },
   computed:{
@@ -105,6 +119,10 @@ export default {
     },
     handleDelete(index){
       this.goods.splice(index,1)
+    },
+    handleUpdate(index){
+      this.updateForm.goodId=this.goods[index].id
+      this.$refs.updateButton.show()
     }
   }
 }

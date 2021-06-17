@@ -22,7 +22,8 @@
         :goodName="good.name"
         :goodPrice="good.price.toFixed(1)"
         :imgUrl="good.url"
-        @deleteGood="handleDelete(index)">
+        @deleteGood="handleDelete(index)"
+        @updateGood="handleUpdate(index)">
       </good-card>
     </template>
   </div>
@@ -76,8 +77,13 @@ export default {
       return this.goodList.slice(start,end)
     }
   },
-  handleDelete(index){
-    this.$emit('deleteGood',this.pageSize*(this.curPage-1)+index)
+  methods:{
+    handleDelete(index){
+      this.$emit('deleteGood',this.pageSize*(this.curPage-1)+index)
+    },
+    handleUpdate(index){
+      this.$emit('updateGood',this.pageSize*(this.curPage-1)+index)
+    }
   }
 }
 </script>
