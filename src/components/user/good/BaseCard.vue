@@ -81,11 +81,11 @@ img{
   line-height: 30px;
   color: #dddddd;
   border-radius: 50%;
-  border: solid 2.5px #f0f0f0;
+  border: solid 1.7px #f0f0f0;
 }
 .hover-option i{
   color:#ffcc99;
-  border:solid 2.5px #ffebb3;
+  border:solid 1.7px #ffebb3;
 }
 </style>
 
