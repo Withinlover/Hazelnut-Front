@@ -15,7 +15,7 @@
       <el-dropdown
         @command="handleCommand"
         @visible-change="handleMenuVisible">
-        <i class="el-icon-circle-plus-outline base-option-icon"></i>
+        <i class="el-icon-more base-option-icon"></i>
         <el-dropdown-menu>
           <el-dropdown-item
             v-for="(item,index) in options"
@@ -77,11 +77,15 @@ img{
 .base-option-icon{
   width:30px;
   height:30px;
-  font-size:30px;
+  font-size:25px;
+  line-height: 30px;
   color: #dddddd;
+  border-radius: 50%;
+  border: solid 1.5px #f0f0f0;
 }
 .hover-option i{
   color:#ffcc99;
+  border:solid 1.5px #ffebb3;
 }
 </style>
 
