@@ -122,6 +122,7 @@ export default {
     },
     handleUpdate(index){
       this.updateForm.goodId=this.goods[index].id
+      this.$refs.updateButton.getInfo()
       this.$refs.updateButton.show()
     }
   }
