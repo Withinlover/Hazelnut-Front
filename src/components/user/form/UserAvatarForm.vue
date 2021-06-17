@@ -12,7 +12,8 @@
         :on-success="handleSuccess"
         :on-error="handleError"
         :show-file-list="false"
-        list-type="picture">
+        list-type="picture"
+        accept=".png,.jpg">
         <el-button type="primary">上传头像</el-button>
       </el-upload>
     </el-dialog>
