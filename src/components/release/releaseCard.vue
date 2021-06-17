@@ -59,6 +59,7 @@
         <el-upload
           :headers="headers"
           :action="getUrl()"
+          ref="upload"
           list-type="picture-card"
           :before-upload="beforeAvatarUpload"
           :on-success="handleSuccess"
@@ -228,6 +229,15 @@ export default {
       }
     },
     cancel() {
+      this.$refs.upload.clearFiles()
+      this.form = {
+        name: "",
+        region: "",
+        type: "1",
+        desc: "",
+        price: "",
+        rate: 1,
+      },
       this.active = 0;
     },
     finish() {
