@@ -20,7 +20,7 @@
           @read="read(item)">
         </apply-notice>
         <banned-notice
-          v-else-if="item.name==='商品封禁通知'"
+          v-else-if="item.name==='商品下架通知'"
           :isRead="item.isread"
           :id="item.id"
           @read="read(item)">

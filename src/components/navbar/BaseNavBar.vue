@@ -23,7 +23,7 @@
       <router-link
         to="/user"
         exact-active-class=""
-        active-class="router-link-exact-active"
+        :active-class="isUserActive?'router-link-exact-active':''"
       >
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-xinxibar_zhanghu" />
@@ -146,6 +146,16 @@ export default {
     return {
       dotIsHidden: false,
     };
+  },
+  computed:{
+    isUserActive(){
+      return true
+      // return this.$route.matched.any(item=>{
+      //   return item.path.includes('/user')
+      // }) && !this.$route.matched.any(item=>{
+      //   return item.path.includes('/user/watch')
+      // })
+    }
   },
   methods: {
     hasNewInfo() {
