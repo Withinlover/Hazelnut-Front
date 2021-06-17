@@ -42,7 +42,7 @@
             发布需求
           </el-row>
           <el-row class="context">
-            {{num.trade}}
+            {{num.demand}}
           </el-row>
         </el-col>
       </el-col>
