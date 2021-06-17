@@ -205,9 +205,14 @@ export default {
             if (res.data["result"] === 1) {
               console.log(res.data);
               this.releaseID = res.data["id"];
-              this.$message.success(
-                "创建商品成功，您的商品 ID: " + this.releaseID
-              );
+              if (this.form.type == 2) 
+                this.$message.success(
+                  "创建商品成功，您的商品 ID: " + this.releaseID
+                );
+              else
+                this.$message.success(
+                  "创建需求成功，您的需求 ID: " + this.releaseID
+                );
               this.headers.authorization = this.releaseID;
               console.log(this.headers);
               this.active += 1;
