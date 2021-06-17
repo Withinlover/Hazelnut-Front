@@ -141,7 +141,16 @@ export default {
 
     },
     deleteGood(){
-
+      this.axios.post('good/delete/',{
+        id:this.goodId,
+        type:this.isDemand? 1:0
+      }).then(res=>{
+        this.$message({
+          type:'success',
+          message:'下架商品成功'
+        })
+        this.$emit('deleteGood')
+      })
     }
   }
 }

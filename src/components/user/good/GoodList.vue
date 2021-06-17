@@ -14,14 +14,15 @@
     </template>
     <template v-else>
       <good-card
-        v-for="good in goods"
+        v-for="(good,index) in goods"
         :key="good.id"
         :isDemand="isDemand"
         :goodId="good.id"
         :goodInfo="good.info"
         :goodName="good.name"
         :goodPrice="good.price.toFixed(1)"
-        :imgUrl="good.url">
+        :imgUrl="good.url"
+        @deleteGood="handleDelete(index)">
       </good-card>
     </template>
   </div>
@@ -74,6 +75,9 @@ export default {
       let end=Math.min(this.goodList.length,start+this.pageSize)
       return this.goodList.slice(start,end)
     }
+  },
+  handleDelete(index){
+    this.$emit('deleteGood',this.pageSize*(this.curPage-1)+index)
   }
 }
 </script>

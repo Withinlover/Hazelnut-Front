@@ -16,7 +16,8 @@
       :curPage="curPage"
       :goodList="goods"
       :pageSize="pageSize"
-      :isFavorite="false">
+      :isFavorite="false"
+      @deleteGood="handleDelete">
     </good-list>
     <logo-hint
       v-else
@@ -101,6 +102,9 @@ export default {
           this.goods.push(tmp)
         }
       })
+    },
+    handleDelete(index){
+      this.goods.splice(index,1)
     }
   }
 }
