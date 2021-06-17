@@ -13,6 +13,19 @@
         />
       </el-col>
     </el-row>
+    <p class="title"> 看看 {{ this.userName }} 都想买什么：</p>
+    <el-row>
+      <el-col :span="24" :offset="0">
+        <user-watch-cascade
+          casType="demand"
+          :casKeyword="casKeyword"
+          :casCata="selectType"
+          :key="casKey"
+          :allGoods="goods"
+          :userID="userID"
+        />
+      </el-col>
+    </el-row>
   </el-card>
 </template>
 

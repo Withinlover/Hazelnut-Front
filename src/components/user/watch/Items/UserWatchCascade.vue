@@ -84,6 +84,22 @@ export default {
             this.allGoods.push(tmp);
           }
       });
+    } else if (this.$props.casType === "demand") {
+      await this.axios.post("demand/getdemand/", {
+        id: this.userID,
+      }).then((res) => {
+        this.allGoods = [];
+          let length = res.data.name.length;
+          for (let i = 0; i < length; i++) {
+            let tmp = {};
+            tmp.id = res.data.id[i];
+            tmp.name = res.data.name[i];
+            tmp.info = res.data.description[i];
+            tmp.price = res.data.price[i];
+            tmp.urls = res.data.url[i];
+            this.allGoods.push(tmp);
+          }
+      });
     }
     console.log(this.allGoods)
     if (this.allGoods.length === 0) {
