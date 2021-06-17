@@ -109,7 +109,7 @@ export default {
       if (this.type === 1) url = "demand/demandinfo/";
       data = {
         token: this.$store.state.token,
-        id: 0,
+        id: this.initId,
       };
 
       this.axios.post(url, data).then((res) => {
